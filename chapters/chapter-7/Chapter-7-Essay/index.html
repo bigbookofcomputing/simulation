@@ -1,0 +1,3535 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="A comprehensive guide to the foundations of stochastic simulation">
+      
+      
+        <meta name="author" content="Big Book of Computing">
+      
+      
+        <link rel="canonical" href="https://bigbookofcomputing.github.io/chapters/chapter-7/Chapter-7-Essay/">
+      
+      
+        <link rel="prev" href="../../chapter-6/Chapter-6-Essay/">
+      
+      
+        <link rel="next" href="../../chapter-8/Chapter-8-Essay/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/logo.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>Chapter-7 Molecular Dynamics (MD) - Big Book of Computing | Simulation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+      <link rel="stylesheet" href="../../../static/styles.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  
+
+
+  
+  
+
+<script id="__analytics">function __md_analytics(){function e(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],e("js",new Date),e("config","G-ECS7B3X8JM"),document.addEventListener("DOMContentLoaded",(function(){document.forms.search&&document.forms.search.query.addEventListener("blur",(function(){this.value&&e("event","search",{search_term:this.value})}));document$.subscribe((function(){var t=document.forms.feedback;if(void 0!==t)for(var a of t.querySelectorAll("[type=submit]"))a.addEventListener("click",(function(a){a.preventDefault();var n=document.location.pathname,d=this.getAttribute("data-md-value");e("event","feedback",{page:n,data:d}),t.firstElementChild.disabled=!0;var r=t.querySelector(".md-feedback__note [data-md-value='"+d+"']");r&&(r.hidden=!1)})),t.hidden=!1})),location$.subscribe((function(t){e("config","G-ECS7B3X8JM",{page_path:t.pathname})}))}));var t=document.createElement("script");t.async=!0,t.src="https://www.googletagmanager.com/gtag/js?id=G-ECS7B3X8JM",document.getElementById("__analytics").insertAdjacentElement("afterEnd",t)}</script>
+  
+    <script>if("undefined"!=typeof __md_analytics){var consent=__md_get("__consent");consent&&consent.analytics&&__md_analytics()}</script>
+  
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#chapter-7-molecular-dynamics" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="Big Book of Computing | Simulation" class="md-header__button md-logo" aria-label="Big Book of Computing | Simulation" data-md-component="logo">
+      
+  <img src="../../../assets/logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Big Book of Computing | Simulation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Chapter-7 Molecular Dynamics (MD)
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1M8 13h8v-2H8zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4a5 5 0 0 0 5-5 5 5 0 0 0-5-5"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h10a5 5 0 0 0 5-5 5 5 0 0 0-5-5m0 8a3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3 3 3 0 0 1-3 3"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="indigo"  aria-label="Switch to system preference"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to system preference" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h10a5 5 0 0 0 5-5 5 5 0 0 0-5-5M7 15a3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3 3 3 0 0 1-3 3"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/bigbookofcomputing/simulation" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../contents/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Contents
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../introduction/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Introduction
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../chapter-1/Chapter-1-Essay/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Chapters
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../chapter-1/Chapter-1-WorkBook/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  WorkBooks
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../chapter-1/Chapter-1-CodeBook/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  CodeBooks
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Big Book of Computing | Simulation" class="md-nav__button md-logo" aria-label="Big Book of Computing | Simulation" data-md-component="logo">
+      
+  <img src="../../../assets/logo.png" alt="logo">
+
+    </a>
+    Big Book of Computing | Simulation
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/bigbookofcomputing/simulation" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contents/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contents
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introduction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapters
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Chapters
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-1/Chapter-1-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-1 Foundations of Stochastic Simulation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-2/Chapter-2-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-2 The Ising Model
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-3/Chapter-3-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-3 Lattice Gauge Theory
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-4/Chapter-4-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-4 Monte Carlo Option Pricing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-5/Chapter-5-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-5 Stochastic Systems Biology
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-6/Chapter-6-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-6 Advanced Monte Carlo Methods
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-7 Molecular Dynamics (MD)
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-7 Molecular Dynamics (MD)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Introduction
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#chapter-outline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Chapter Outline
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#71-from-sampling-to-dynamics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.1 From Sampling to Dynamics
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7.1 From Sampling to Dynamics">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#motivation-from-random-walks-to-real-motions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Motivation: From Random Walks to Real Motions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#conceptual-bridge-forces-replace-probabilities" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Conceptual Bridge: Forces Replace Probabilities
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-velocityverlet-algorithm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Velocity–Verlet Algorithm
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#key-takeaways" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key Takeaways
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#72-the-velocityverlet-algorithm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.2 The Velocity–Verlet Algorithm
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7.2 The Velocity–Verlet Algorithm">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#motivation-why-we-need-better-integrators" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Motivation: Why We Need Better Integrators
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#recalling-newtons-equations-and-taylor-expansion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Recalling Newton's Equations and Taylor Expansion
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-velocityverlet-algorithm-in-three-steps" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Velocity–Verlet Algorithm in Three Steps
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-harmonic-oscillator-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Harmonic Oscillator Example
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#choosing-the-time-step" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Choosing the Time Step
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Summary
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#73-periodic-boundary-conditions-and-neighbor-lists" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.3 Periodic Boundary Conditions and Neighbor Lists
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7.3 Periodic Boundary Conditions and Neighbor Lists">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#simulating-infinite-matter-in-a-finite-box" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Simulating Infinite Matter in a Finite Box
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#periodic-boundary-conditions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Periodic Boundary Conditions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#computational-efficiency-the-mathcalon2-problem" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Computational Efficiency: The \(\mathcal{O}(N^2)\) Problem
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#neighbor-lists-the-mathcalon-solution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Neighbor Lists: The \(\mathcal{O}(N)\) Solution
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#extensions-for-large-scale-systems" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Extensions for Large-Scale Systems
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#74-thermostats-and-ensembles" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.4 Thermostats and Ensembles
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7.4 Thermostats and Ensembles">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#motivation-from-mechanics-to-thermodynamics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Motivation: From Mechanics to Thermodynamics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-classical-thermodynamic-ensembles-in-md" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Classical Thermodynamic Ensembles in MD
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#thermostats-for-the-nvt-ensemble" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Thermostats for the NVT Ensemble
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Thermostats for the NVT Ensemble">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-berendsen-thermostat" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Berendsen Thermostat
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-nosehoover-thermostat" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Nosé–Hoover Thermostat
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#barostats-for-the-npt-ensemble" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Barostats for the NPT Ensemble
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#75-computing-observables" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.5 Computing Observables
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7.5 Computing Observables">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#751-thermodynamic-observables-energy-and-pressure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.5.1 Thermodynamic Observables (Energy and Pressure)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7.5.1 Thermodynamic Observables (Energy and Pressure)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#energy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Energy
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pressure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pressure
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-8/Chapter-8-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-8 The Stochastic Calculus (SDEs)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-9/Chapter-9-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-9 Black-Scholes-Merton (BSM)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-10/Chapter-10-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-10 Neuroscience (Hodgkin-Huxley)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-11/Chapter-11-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-11 Agent-Based & Network Models
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-12/Chapter-12-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-12 Collective Behavior & Pattern Formation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-13/Chapter-13-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-13 Collective Behavior & Pattern Formation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-14/Chapter-14-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-14 Computational Neuroscience
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-15/Chapter-15-Essay.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-15 Graph and Network Models
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    WorkBooks
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    WorkBooks
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-1/Chapter-1-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-1 Foundations of Stochastic Simulation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-2/Chapter-2-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-2 The Ising Model
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-3/Chapter-3-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-3 Lattice Gauge Theory
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-4/Chapter-4-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-4 Monte Carlo Option Pricing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-5/Chapter-5-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-5 Stochastic Systems Biology
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-6/Chapter-6-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-6 Advanced Monte Carlo Methods
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Chapter-7-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-7 Molecular Dynamics (MD)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-8/Chapter-8-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-8 The Stochastic Calculus (SDEs)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-9/Chapter-9-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-9 Black-Scholes-Merton (BSM)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-10/Chapter-10-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-10 Neuroscience (Hodgkin-Huxley)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-11/Chapter-11-WorkBook" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-11 Agent-Based & Network Models
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-12/Chapter-12-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-12 Collective Behavior & Pattern Formation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-13/Chapter-13-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-13 Collective Behavior & Pattern Formation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-14/Chapter-14-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-14 Computational Neuroscience
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-15/Chapter-15-WorkBook.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-15 Graph and Network Models
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CodeBooks
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    CodeBooks
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-1/Chapter-1-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-1 Foundations of Stochastic Simulation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-2/Chapter-2-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-2 The Ising Model
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-3/Chapter-3-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-3 Lattice Gauge Theory
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-4/Chapter-4-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-4 Monte Carlo Option Pricing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-5/Chapter-5-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-5 Stochastic Systems Biology
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-6/Chapter-6-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-6 Advanced Monte Carlo Methods
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Chapter-7-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-7 Molecular Dynamics (MD)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-8/Chapter-8-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-8 The Stochastic Calculus (SDEs)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-9/Chapter-9-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-9 Black-Scholes-Merton (BSM)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-10/Chapter-10-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-10 Neuroscience (Hodgkin-Huxley)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-11/Chapter-11-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-11 Agent-Based & Network Models
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-12/Chapter-12-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-12 Collective Behavior & Pattern Formation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-13/Chapter-13-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-13 Collective Behavior & Pattern Formation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-14/Chapter-14-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-14 Computational Neuroscience
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-15/Chapter-15-CodeBook.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-15 Graph and Network Models
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Introduction
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#chapter-outline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Chapter Outline
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#71-from-sampling-to-dynamics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.1 From Sampling to Dynamics
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7.1 From Sampling to Dynamics">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#motivation-from-random-walks-to-real-motions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Motivation: From Random Walks to Real Motions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#conceptual-bridge-forces-replace-probabilities" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Conceptual Bridge: Forces Replace Probabilities
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-velocityverlet-algorithm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Velocity–Verlet Algorithm
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#key-takeaways" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key Takeaways
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#72-the-velocityverlet-algorithm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.2 The Velocity–Verlet Algorithm
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7.2 The Velocity–Verlet Algorithm">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#motivation-why-we-need-better-integrators" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Motivation: Why We Need Better Integrators
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#recalling-newtons-equations-and-taylor-expansion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Recalling Newton's Equations and Taylor Expansion
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-velocityverlet-algorithm-in-three-steps" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Velocity–Verlet Algorithm in Three Steps
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-harmonic-oscillator-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Harmonic Oscillator Example
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#choosing-the-time-step" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Choosing the Time Step
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Summary
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#73-periodic-boundary-conditions-and-neighbor-lists" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.3 Periodic Boundary Conditions and Neighbor Lists
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7.3 Periodic Boundary Conditions and Neighbor Lists">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#simulating-infinite-matter-in-a-finite-box" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Simulating Infinite Matter in a Finite Box
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#periodic-boundary-conditions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Periodic Boundary Conditions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#computational-efficiency-the-mathcalon2-problem" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Computational Efficiency: The \(\mathcal{O}(N^2)\) Problem
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#neighbor-lists-the-mathcalon-solution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Neighbor Lists: The \(\mathcal{O}(N)\) Solution
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#extensions-for-large-scale-systems" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Extensions for Large-Scale Systems
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#74-thermostats-and-ensembles" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.4 Thermostats and Ensembles
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7.4 Thermostats and Ensembles">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#motivation-from-mechanics-to-thermodynamics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Motivation: From Mechanics to Thermodynamics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-classical-thermodynamic-ensembles-in-md" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Classical Thermodynamic Ensembles in MD
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#thermostats-for-the-nvt-ensemble" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Thermostats for the NVT Ensemble
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Thermostats for the NVT Ensemble">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-berendsen-thermostat" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Berendsen Thermostat
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-nosehoover-thermostat" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Nosé–Hoover Thermostat
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#barostats-for-the-npt-ensemble" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Barostats for the NPT Ensemble
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#75-computing-observables" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.5 Computing Observables
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7.5 Computing Observables">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#751-thermodynamic-observables-energy-and-pressure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.5.1 Thermodynamic Observables (Energy and Pressure)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7.5.1 Thermodynamic Observables (Energy and Pressure)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#energy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Energy
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pressure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pressure
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+    <a href="https://github.com/bigbookofcomputing/simulation/edit/master/docs/chapters/chapter-7/Chapter-7-Essay.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+    
+      
+    
+    <a href="https://github.com/bigbookofcomputing/simulation/raw/master/docs/chapters/chapter-7/Chapter-7-Essay.md" title="View source of this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.2 8.2 0 0 1-1.23-2"/></svg>
+    </a>
+  
+
+
+<h1 id="chapter-7-molecular-dynamics"><strong>Chapter 7: Molecular Dynamics</strong></h1>
+<hr />
+<h2 id="introduction"><strong>Introduction</strong></h2>
+<p>Monte Carlo methods, while powerful for sampling equilibrium configurations, are fundamentally <strong>stochastic</strong> and provide no information about how systems evolve in real time. In nature, atoms and molecules do not hop randomly between configurations weighted by Boltzmann factors—they move <strong>continuously</strong> under the influence of deterministic forces, governed by Newton's equations of motion <span class="arithmatex">\(m \ddot{\mathbf{r}} = \mathbf{F}(\mathbf{r})\)</span>. To capture dynamic phenomena such as molecular diffusion, protein folding trajectories, vibrational spectra, and transport coefficients, we require a computational framework that integrates the classical equations of motion step-by-step in time. This fundamental limitation of MCMC motivates the transition from <strong>probability-driven sampling</strong> to <strong>force-driven dynamics</strong>.</p>
+<p>This chapter introduces <strong>Molecular Dynamics (MD)</strong>, a simulation technique that generates deterministic trajectories by numerically integrating Newton's laws. At the heart of MD lies the <strong>Velocity–Verlet algorithm</strong>, a symplectic integrator that preserves phase space volume and ensures excellent long-term energy conservation—critical for stable, multi-nanosecond simulations. To bridge finite simulation boxes to the thermodynamic limit, we employ <strong>periodic boundary conditions</strong> and the minimum image convention, eliminating artificial surface effects. Computational efficiency demands reducing the <span class="arithmatex">\(\mathcal{O}(N^2)\)</span> pairwise force calculation to <span class="arithmatex">\(\mathcal{O}(N)\)</span> scaling via <strong>neighbor lists</strong>. While isolated MD naturally samples the microcanonical (NVE) ensemble, we introduce <strong>thermostats</strong> (Nosé–Hoover) and <strong>barostats</strong> (Parrinello–Rahman) to control temperature and pressure, enabling simulations in the canonical (NVT) and isothermal–isobaric (NPT) ensembles that match experimental conditions.</p>
+<p>By the end of this chapter, you will master the complete MD workflow: implementing symplectic integrators, designing efficient force evaluation schemes, controlling thermodynamic ensembles, and extracting both equilibrium and dynamic observables. You will compute pressure via the virial theorem, diffusion coefficients from mean-squared displacement, and velocity autocorrelation functions that reveal molecular caging effects. These techniques form the computational foundation for studying liquids, proteins, polymers, and materials—systems where real-time dynamics are as important as equilibrium thermodynamics. This chapter bridges the gap between stochastic sampling (Chapters 1–6) and the data-driven inference methods of Part III, where MD trajectories become the training data for machine-learned force fields.</p>
+<hr />
+<h2 id="chapter-outline"><strong>Chapter Outline</strong></h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;"><strong>Sec.</strong></th>
+<th style="text-align: left;"><strong>Title</strong></th>
+<th style="text-align: left;"><strong>Core Ideas &amp; Examples</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>7.1</strong></td>
+<td style="text-align: left;">From Sampling to Dynamics</td>
+<td style="text-align: left;"><strong>Conceptual shift</strong>: MC random walks vs. MD deterministic trajectories <span class="arithmatex">\(m \ddot{\mathbf{r}} = \mathbf{F}\)</span>. <strong>Force replaces probability</strong>: <span class="arithmatex">\(\mathbf{F} = -\nabla E\)</span> drives motion, not Boltzmann weights <span class="arithmatex">\(e^{-\beta E}\)</span>. Velocity–Verlet algorithm with symplectic properties and <span class="arithmatex">\(\mathcal{O}(\Delta t^2)\)</span> accuracy.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>7.2</strong></td>
+<td style="text-align: left;">The Velocity–Verlet Algorithm</td>
+<td style="text-align: left;"><strong>Three-step integrator</strong>: Position update <span class="arithmatex">\(\mathbf{r}(t+\Delta t) = \mathbf{r}(t) + \mathbf{v}(t)\Delta t + \frac{1}{2}\mathbf{a}(t)\Delta t^2\)</span>, force evaluation, velocity update. <strong>Time-reversibility and symplectic structure</strong>: Phase space volume conservation, long-term energy stability. Harmonic oscillator test case with exact solutions.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>7.3</strong></td>
+<td style="text-align: left;">Periodic Boundary Conditions and Neighbor Lists</td>
+<td style="text-align: left;"><strong>PBC and minimum image convention</strong>: <span class="arithmatex">\(\mathbf{\Delta r} = \mathbf{r}_i - \mathbf{r}_j - L \cdot \text{round}((\mathbf{r}_i - \mathbf{r}_j)/L)\)</span>, eliminating surface effects. <strong>Computational efficiency</strong>: Neighbor lists with skin <span class="arithmatex">\(\delta\)</span>, reducing <span class="arithmatex">\(\mathcal{O}(N^2) \to \mathcal{O}(N)\)</span> scaling. Cell lists for large-scale systems.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>7.4</strong></td>
+<td style="text-align: left;">Thermostats and Ensembles</td>
+<td style="text-align: left;"><strong>NVE vs. NVT vs. NPT</strong>: Microcanonical (energy-conserving), canonical (temperature control), isothermal–isobaric (pressure control). <strong>Berendsen thermostat</strong>: Velocity rescaling with <span class="arithmatex">\(\lambda = \sqrt{1 + \frac{\Delta t}{\tau_T}(T_0/T_{\text{inst}} - 1)}\)</span>. <strong>Nosé–Hoover</strong>: Canonical ensemble via friction <span class="arithmatex">\(\xi \mathbf{v}\)</span>. Parrinello–Rahman barostat for NPT.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>7.5</strong></td>
+<td style="text-align: left;">Computing Observables</td>
+<td style="text-align: left;"><strong>Thermodynamic properties</strong>: Pressure via virial <span class="arithmatex">\(P = \frac{Nk_BT}{V} + \frac{1}{3V}\sum \mathbf{r}_{ij} \cdot \mathbf{F}_{ij}\)</span>. <strong>Transport coefficients</strong>: Mean-squared displacement <span class="arithmatex">\(\text{MSD}(\tau) = \langle \|\mathbf{r}(t+\tau) - \mathbf{r}(t)\|^2 \rangle\)</span>, diffusion <span class="arithmatex">\(D = \lim_{\tau \to \infty} \frac{1}{6\tau}\text{MSD}(\tau)\)</span>. Velocity autocorrelation function (VACF) and Green–Kubo relations.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>7.6</strong></td>
+<td style="text-align: left;">Chapter Summary &amp; Bridge</td>
+<td style="text-align: left;"><strong>MC vs. MD complementarity</strong>: Stochastic sampling vs. deterministic dynamics, equilibrium vs. time-dependent properties. Connection to Part III: MD trajectories as training data for machine-learned force fields, statistical inference for parameter fitting, bridge from simulation to data-driven modeling.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="71-from-sampling-to-dynamics"><strong>7.1 From Sampling to Dynamics</strong></h2>
+<hr />
+<h3 id="motivation-from-random-walks-to-real-motions"><strong>Motivation: From Random Walks to Real Motions</strong></h3>
+<p>In previous chapters, Monte Carlo (MC) methods provided a robust framework for <strong>sampling</strong> equilibrium configurations based on statistical physics, allowing us to measure macroscopic observables. These methods explore the configurational space through random, accepted jumps, without providing any insight into the system's actual time evolution.</p>
+<p>In contrast, systems in nature evolve <strong>continuously in time</strong>, driven by deterministic forces governed by Newton’s laws of motion. Atoms move, collide, and exchange energy through mechanisms fundamentally different from the probabilistic acceptance rules of MCMC.</p>
+<p>This chapter introduces <strong>Molecular Dynamics (MD)</strong>, a simulation technique that integrates the classical equations of motion to model the continuous, real-time dynamics of a system, showing <strong>how it gets there</strong> rather than just <strong>where it can go</strong>.</p>
+<hr />
+<h3 id="conceptual-bridge-forces-replace-probabilities"><strong>Conceptual Bridge: Forces Replace Probabilities</strong></h3>
+<p>In Monte Carlo simulations, the central quantity is the <strong>probability</strong> of a configuration <span class="arithmatex">\(X\)</span>, which is proportional to the Boltzmann weight:</p>
+<div class="arithmatex">\[P(X) \propto \mathrm{e}^{-\beta E(X)}.\]</div>
+<p>Molecular Dynamics shifts the focus entirely to the <strong>force</strong> <span class="arithmatex">\(\mathbf{F}_i\)</span> acting on each particle <span class="arithmatex">\(i\)</span>, which is derived from the negative gradient of the potential energy <span class="arithmatex">\(E\)</span>:</p>
+<div class="arithmatex">\[\mathbf{F}_i = -\nabla_i E(\mathbf{r}_1, \mathbf{r}_2, \dots, \mathbf{r}_N).\]</div>
+<p>The system's trajectory is then determined by <strong>integrating</strong> Newton's second law:</p>
+<div class="arithmatex">\[m_i \frac{d^2 \mathbf{r}_i}{dt^2} = \mathbf{F}_i.\]</div>
+<p>The key difference is conceptual: MC performs <strong>ensemble sampling</strong> via a random walk in configuration space, while MD performs <strong>time evolution</strong> via a deterministic trajectory in phase space. Both approaches yield the same equilibrium statistical physics, but MD additionally provides access to time-dependent properties.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Monte Carlo</th>
+<th style="text-align: left;">Molecular Dynamics</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Random jumps between states</td>
+<td style="text-align: left;"><strong>Continuous, deterministic trajectories</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;">Weighted by <span class="arithmatex">\(e^{-\beta E}\)</span></td>
+<td style="text-align: left;">Driven by <span class="arithmatex">\(\mathbf{F} = -\nabla E\)</span></td>
+</tr>
+<tr>
+<td style="text-align: left;">No concept of time or dynamics</td>
+<td style="text-align: left;"><strong>Real time evolution</strong> and dynamics</td>
+</tr>
+<tr>
+<td style="text-align: left;">Statistical equilibrium only</td>
+<td style="text-align: left;">Dynamics and equilibrium properties</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="the-velocityverlet-algorithm"><strong>The Velocity–Verlet Algorithm</strong></h3>
+<p>To numerically integrate Newton's equations, a stable and accurate time-stepping scheme is essential. The standard method in MD is the <strong>Velocity–Verlet algorithm</strong>: a second-order, time-reversible, and <strong>symplectic</strong> integrator. The symplectic nature ensures excellent long-term conservation of energy and phase space volume, which is critical for long MD runs.</p>
+<p>The Velocity-Verlet update advances positions <span class="arithmatex">\(\mathbf{r}\)</span> and velocities <span class="arithmatex">\(\mathbf{v}\)</span> for a time step <span class="arithmatex">\(\Delta t\)</span> using the current force <span class="arithmatex">\(\mathbf{F}(t)\)</span> and the new force <span class="arithmatex">\(\mathbf{F}(t+\Delta t)\)</span>:</p>
+<ol>
+<li><strong>Update positions:</strong>
+    $<span class="arithmatex">\(\mathbf{r}_i(t+\Delta t) = \mathbf{r}_i(t) + \mathbf{v}_i(t)\Delta t + \frac{1}{2}\frac{\mathbf{F}_i(t)}{m_i}\Delta t^2\)</span>$</li>
+<li><strong>Compute new forces</strong> <span class="arithmatex">\(\mathbf{F}_i(t+\Delta t)\)</span></li>
+<li><strong>Update velocities:</strong>
+    $<span class="arithmatex">\(\mathbf{v}_i(t+\Delta t) = \mathbf{v}_i(t) + \frac{1}{2m_i}\left[\mathbf{F}_i(t) + \mathbf{F}_i(t+\Delta t)\right]\Delta t\)</span>$</li>
+</ol>
+<p>The stability of this integrator is a hallmark of well-integrated molecular dynamics, keeping the total energy nearly constant in an isolated system.</p>
+<hr />
+<h3 id="key-takeaways"><strong>Key Takeaways</strong></h3>
+<ul>
+<li><strong>Molecular Dynamics (MD)</strong> simulates real-time motion by integrating <strong>Newton's equations</strong>.</li>
+<li>The <strong>Velocity–Verlet algorithm</strong> is the core integrator, chosen for its stability and energy conservation.</li>
+<li>MD provides access to <strong>dynamic observables</strong> (trajectories, time correlations, diffusion) that are inaccessible to equilibrium-focused Monte Carlo methods.</li>
+<li>The potential energy landscape defines the <strong>forces</strong> that drive this deterministic motion, replacing the probability weights that drive stochastic sampling.</li>
+</ul>
+<p>The transition from random exploration to deterministic motion marks the beginning of our exploration of time-dependent phenomena in complex systems.</p>
+<p><strong>Flowchart: Molecular Dynamics Simulation Workflow</strong></p>
+<pre class="mermaid"><code>flowchart TD
+    A[Initialize System] --&gt; B[Set Positions r, Velocities v, Box Size L]
+    B --&gt; C[Compute Initial Forces F = -∇E]
+    C --&gt; D[Calculate Initial Accelerations a = F/m]
+    D --&gt; E{Time Step Loop}
+
+    E --&gt; F[Update Positions: r + v*dt + 0.5*a*dt²]
+    F --&gt; G[Apply Periodic Boundary Conditions]
+    G --&gt; H[Rebuild Neighbor List if needed]
+    H --&gt; I[Compute Forces F_new at new positions]
+    I --&gt; J[Calculate New Accelerations a_new]
+    J --&gt; K[Update Velocities: v + 0.5*a+a_new*dt]
+    K --&gt; L[Update a ← a_new]
+
+    L --&gt; M{Apply Thermostat/Barostat?}
+    M --&gt;|Yes NVT/NPT| N[Rescale Velocities/Box]
+    M --&gt;|No NVE| O{Record Observables?}
+    N --&gt; O
+
+    O --&gt;|Every n steps| P[Save: Energy, Pressure, Temperature, Trajectory]
+    O --&gt;|Not this step| Q{More Steps?}
+    P --&gt; Q
+
+    Q --&gt;|Yes| E
+    Q --&gt;|No| R[Compute Final Averages and Correlations]
+    R --&gt; S[Output: MSD, VACF, Thermodynamic Properties]
+
+    style A fill:#e1f5ff
+    style C fill:#fff4e1
+    style I fill:#fff4e1
+    style P fill:#e1ffe1
+    style S fill:#e1ffe1</code></pre>
+<hr />
+<h2 id="72-the-velocityverlet-algorithm"><strong>7.2 The Velocity–Verlet Algorithm</strong></h2>
+<hr />
+<h3 id="motivation-why-we-need-better-integrators"><strong>Motivation: Why We Need Better Integrators</strong></h3>
+<p>When numerically simulating a physical system governed by Newton's equations, the choice of the time-stepping algorithm is critical for maintaining <strong>accuracy</strong> and <strong>energy conservation</strong> over long trajectories. A simple integration scheme, such as Euler’s method, introduces systematic errors that can cause the total energy of the system to drift, ultimately leading to unphysical results and destroying equilibrium properties over time.</p>
+<p>The <strong>Velocity–Verlet algorithm</strong> is the preferred integrator in Molecular Dynamics (MD) because it is a <strong>symplectic</strong> scheme, meaning it conserves the geometric structure of phase space. This characteristic prevents artificial energy drift and ensures long-term stability and time-reversibility, making it the workhorse for nearly all MD simulations.</p>
+<hr />
+<h3 id="recalling-newtons-equations-and-taylor-expansion"><strong>Recalling Newton's Equations and Taylor Expansion</strong></h3>
+<p>Molecular Dynamics is based on integrating Newton's second law for a system of <span class="arithmatex">\(N\)</span> particles:</p>
+<div class="arithmatex">\[m_i \frac{d^2 \mathbf{r}_i}{dt^2} = \mathbf{F}_i(\mathbf{r}_1, \ldots, \mathbf{r}_N)\]</div>
+<p>where <span class="arithmatex">\(\mathbf{F}_i\)</span> is the force acting on particle <span class="arithmatex">\(i\)</span>, derived from the potential energy <span class="arithmatex">\(E(\mathbf{r})\)</span> as <span class="arithmatex">\(\mathbf{F}_i = -\nabla_i E(\mathbf{r})\)</span>.</p>
+<p>The Velocity–Verlet algorithm is derived from truncated Taylor expansions of the position <span class="arithmatex">\(\mathbf{r}(t+\Delta t)\)</span> and velocity <span class="arithmatex">\(\mathbf{v}(t+\Delta t)\)</span> around time <span class="arithmatex">\(t\)</span>:</p>
+<div class="arithmatex">\[\mathbf{r}(t+\Delta t) = \mathbf{r}(t) + \mathbf{v}(t)\Delta t + \frac{1}{2}\mathbf{a}(t)\Delta t^2 + \mathcal{O}(\Delta t^3),\]</div>
+<p>where <span class="arithmatex">\(\mathbf{a}(t) = \mathbf{F}(t)/m\)</span> is the acceleration. The velocity update is constructed using the average acceleration over the interval <span class="arithmatex">\([t, t+\Delta t]\)</span>:</p>
+<div class="arithmatex">\[\mathbf{v}(t+\Delta t) = \mathbf{v}(t) + \frac{1}{2}\left[\mathbf{a}(t) + \mathbf{a}(t+\Delta t)\right]\Delta t + \mathcal{O}(\Delta t^3).\]</div>
+<p>This pairing yields a <strong>second-order accurate</strong> scheme, meaning errors scale as <span class="arithmatex">\(\mathcal{O}(\Delta t^2)\)</span>.</p>
+<hr />
+<h3 id="the-velocityverlet-algorithm-in-three-steps"><strong>The Velocity–Verlet Algorithm in Three Steps</strong></h3>
+<p>The integration is split into three sequential steps, often conceptualized as a "Kick-Drift-Kick" sequence:</p>
+<ol>
+<li><strong>Drift/First Kick (Position Update):</strong> Compute the new position <span class="arithmatex">\(\mathbf{r}(t+\Delta t)\)</span> using the current velocity <span class="arithmatex">\(\mathbf{v}(t)\)</span> and the current acceleration <span class="arithmatex">\(\mathbf{a}(t)\)</span>:
+    $<span class="arithmatex">\(\mathbf{r}_i(t+\Delta t) = \mathbf{r}_i(t) + \mathbf{v}_i(t)\Delta t + \frac{1}{2}\mathbf{a}_i(t)\Delta t^2\)</span>$</li>
+<li><strong>New Force Evaluation:</strong> Use the new position <span class="arithmatex">\(\mathbf{r}(t+\Delta t)\)</span> to compute the force <span class="arithmatex">\(\mathbf{F}(t+\Delta t)\)</span> and the new acceleration <span class="arithmatex">\(\mathbf{a}(t+\Delta t)\)</span>:
+    $<span class="arithmatex">\(\mathbf{F}_i(t+\Delta t) = -\nabla_i E(\mathbf{r}_1(t+\Delta t), \ldots, \mathbf{r}_N(t+\Delta t))\)</span>$</li>
+<li><strong>Final Kick (Velocity Update):</strong> Compute the final velocity <span class="arithmatex">\(\mathbf{v}(t+\Delta t)\)</span> using the average of the initial and final accelerations:
+    $<span class="arithmatex">\(\mathbf{v}_i(t+\Delta t) = \mathbf{v}_i(t) + \frac{1}{2}\left[\mathbf{a}_i(t) + \mathbf{a}_i(t+\Delta t)\right]\Delta t\)</span>$</li>
+</ol>
+<p>This structure ensures that the position update uses information available at time <span class="arithmatex">\(t\)</span>, and the final velocity update benefits from the acceleration calculated at the new position <span class="arithmatex">\(t+\Delta t\)</span>.</p>
+<p><strong>Pseudo-code: Velocity-Verlet MD Integration</strong></p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>Algorithm: Velocity_Verlet_MD(positions, velocities, forces, dt, n_steps)
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>  Input: initial positions r, velocities v, forces F, timestep dt, number of steps
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>  Output: trajectory of positions and velocities
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>  1. for i = 1 to N particles:
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>       a[i] ← F[i] / m[i]  // initial accelerations
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>  2. for step = 1 to n_steps:
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>       // Step 1: Update positions (drift + half kick)
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>       for i = 1 to N:
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>         r[i] ← r[i] + v[i]*dt + 0.5*a[i]*dt²
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>       // Apply periodic boundary conditions
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>       for i = 1 to N:
+</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>         r[i] ← r[i] - L * round(r[i]/L)
+</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>
+</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>       // Step 2: Compute new forces at updated positions
+</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>       F_new ← compute_forces(r)  // F_new[i] = -∇E(r)
+</span><span id="__span-0-19"><a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>       for i = 1 to N:
+</span><span id="__span-0-20"><a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>         a_new[i] ← F_new[i] / m[i]
+</span><span id="__span-0-21"><a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>
+</span><span id="__span-0-22"><a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>       // Step 3: Update velocities (second half kick)
+</span><span id="__span-0-23"><a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a>       for i = 1 to N:
+</span><span id="__span-0-24"><a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a>         v[i] ← v[i] + 0.5*(a[i] + a_new[i])*dt
+</span><span id="__span-0-25"><a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a>
+</span><span id="__span-0-26"><a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a>       // Update accelerations for next iteration
+</span><span id="__span-0-27"><a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a>       a ← a_new
+</span><span id="__span-0-28"><a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a>
+</span><span id="__span-0-29"><a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a>       // Record observables (energy, pressure, etc.)
+</span><span id="__span-0-30"><a id="__codelineno-0-30" name="__codelineno-0-30" href="#__codelineno-0-30"></a>       if step mod output_frequency == 0:
+</span><span id="__span-0-31"><a id="__codelineno-0-31" name="__codelineno-0-31" href="#__codelineno-0-31"></a>         save_snapshot(r, v, step*dt)
+</span><span id="__span-0-32"><a id="__codelineno-0-32" name="__codelineno-0-32" href="#__codelineno-0-32"></a>
+</span><span id="__span-0-33"><a id="__codelineno-0-33" name="__codelineno-0-33" href="#__codelineno-0-33"></a>  3. return trajectory
+</span></code></pre></div>
+<hr />
+<h3 id="the-harmonic-oscillator-example"><strong>The Harmonic Oscillator Example</strong></h3>
+<p>To demonstrate energy conservation, the Velocity–Verlet algorithm is often applied to a simple system, such as the 1D harmonic oscillator, where the potential energy is <span class="arithmatex">\(E = \frac{1}{2} k r^2\)</span> and the force is <span class="arithmatex">\(F = -k r\)</span>.</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># Code snippet to illustrate the core Velocity-Verlet loop (1D)</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="c1"># Based on the implementation in the provided files.</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="c1"># F = force(r)</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="c1"># a = F / m</span>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="c1"># # Step 1: update position</span>
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="c1"># r_new = r + v*dt + 0.5*a*dt**2</span>
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="c1"># # Step 2: compute new force</span>
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="c1"># F_new = force(r_new)</span>
+</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="c1"># a_new = F_new / m</span>
+</span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>
+</span><span id="__span-1-14"><a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a><span class="c1"># # Step 3: update velocity</span>
+</span><span id="__span-1-15"><a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a><span class="c1"># v_new = v + 0.5*(a + a_new)*dt</span>
+</span><span id="__span-1-16"><a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a>
+</span><span id="__span-1-17"><a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a><span class="c1"># # Bookkeeping</span>
+</span><span id="__span-1-18"><a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a><span class="c1"># r, v = r_new, v_new</span>
+</span></code></pre></div>
+<p>When run over many steps, the total energy <span class="arithmatex">\(E_{\text{tot}} = \frac{1}{2}m v^2 + \frac{1}{2} k r^2\)</span> remains nearly constant, confirming the numerical stability of the Velocity–Verlet integrator.</p>
+<hr />
+<h3 id="choosing-the-time-step"><strong>Choosing the Time Step</strong></h3>
+<p>The choice of the time step <span class="arithmatex">\(\Delta t\)</span> is a practical consideration balancing speed and accuracy. A time step that is too large will lead to <strong>numerical instability and energy drift</strong> because it fails to resolve the fastest oscillations in the system, such as high-frequency bond stretching vibrations. A common rule of thumb suggests that <span class="arithmatex">\(\Delta t\)</span> should be at least 50 times smaller than the period of the fastest oscillation.</p>
+<div class="admonition tip">
+<p class="admonition-title">Choosing the Right Time Step</p>
+<p>The time step <span class="arithmatex">\(\Delta t\)</span> must resolve the fastest motion in your system. Practical guidelines:</p>
+<ul>
+<li><strong>Bonded systems</strong> (e.g., water molecules): <span class="arithmatex">\(\Delta t \approx 1\)</span> fs (femtosecond) to capture O-H bond vibrations (~10 fs period)</li>
+<li><strong>Constraint algorithms</strong> (e.g., SHAKE/RATTLE): Allow <span class="arithmatex">\(\Delta t \approx 2\)</span> fs by freezing fastest bonds</li>
+<li><strong>Soft potentials</strong> (e.g., coarse-grained models): Can use <span class="arithmatex">\(\Delta t \approx 10-50\)</span> fs</li>
+</ul>
+<p><strong>Test</strong>: Run short NVE simulation and monitor total energy drift. Acceptable drift: <span class="arithmatex">\(\Delta E/E &lt; 10^{-4}\)</span> over 1 ns. If energy drifts significantly, halve <span class="arithmatex">\(\Delta t\)</span> and retest.</p>
+</div>
+<hr />
+<h3 id="summary"><strong>Summary</strong></h3>
+<p>The Velocity–Verlet algorithm is the fundamental engine of Molecular Dynamics, providing accurate, stable, and time-reversible integration of the equations of motion. It is the correct starting point for building sophisticated simulations of liquids, proteins, and materials.</p>
+<hr />
+<h2 id="73-periodic-boundary-conditions-and-neighbor-lists"><strong>7.3 Periodic Boundary Conditions and Neighbor Lists</strong></h2>
+<hr />
+<h3 id="simulating-infinite-matter-in-a-finite-box"><strong>Simulating Infinite Matter in a Finite Box</strong></h3>
+<p>A fundamental challenge in molecular simulation is bridging the gap between a computationally tractable finite system (typically a few hundred to a few thousand particles) and the <strong>thermodynamic limit</strong> of an infinite, bulk system. Real-world materials, such as gases, liquids, and crystals, exist in environments where internal particles are surrounded by neighbors in all directions. If a simulation were run in a vacuum (with open boundaries), particles near the edges would experience fewer interactions than those in the interior. This introduces unphysical surface effects, causes a systematic bias in properties like pressure and energy, and can lead to the evaporation of the simulated material.</p>
+<p>The standard solution in Molecular Dynamics (MD) to mitigate these <strong>finite-size effects</strong> is the use of <strong>Periodic Boundary Conditions (PBCs)</strong>.</p>
+<hr />
+<h3 id="periodic-boundary-conditions"><strong>Periodic Boundary Conditions</strong></h3>
+<p>Under PBCs, the finite simulation box (e.g., a cube of side length <span class="arithmatex">\(L\)</span>) is conceptually treated as one cell in an infinite, three-dimensional lattice of identical, infinitely repeating images. The finite box effectively becomes topologically equivalent to a torus.</p>
+<ul>
+<li><strong>Particle Trajectories:</strong> When a particle moves out of the primary simulation box across one boundary (e.g., <span class="arithmatex">\(x &gt; L\)</span>), it simultaneously re-enters the box from the opposite boundary (e.g., <span class="arithmatex">\(x = 0\)</span>). This mechanism maintains a constant number of particles (<span class="arithmatex">\(N\)</span>) and constant density within the defined volume (<span class="arithmatex">\(V\)</span>), preserving translational invariance and eliminating surface artifacts.</li>
+<li><strong>Minimum Image Convention (MIC):</strong> When calculating the interaction force or potential energy between two particles, <span class="arithmatex">\(\mathbf{r}_i\)</span> and <span class="arithmatex">\(\mathbf{r}_j\)</span>, the MIC dictates that particle <span class="arithmatex">\(i\)</span> interacts not with the particle <span class="arithmatex">\(j\)</span> itself, but with the <strong>nearest periodic image</strong> of particle <span class="arithmatex">\(j\)</span>.</li>
+</ul>
+<p>Mathematically, the vector distance <span class="arithmatex">\(\mathbf{\Delta r} = \mathbf{r}_i - \mathbf{r}_j\)</span> between two particles is calculated to find the shortest distance across the periodic boundaries:</p>
+<div class="arithmatex">\[\mathbf{\Delta r} = \mathbf{r}_i - \mathbf{r}_j - L \cdot \text{round}\left(\frac{\mathbf{r}_i - \mathbf{r}_j}{L}\right)\]</div>
+<p>where <span class="arithmatex">\(L\)</span> is the box length and the <span class="arithmatex">\(\text{round}\)</span> operation rounds to the nearest integer. This ensures that the distance components in all directions are contained within the interval <span class="arithmatex">\([-L/2, L/2]\)</span>.</p>
+<p>The MIC imposes a necessary constraint: to correctly capture all nearest-neighbor interactions, the interaction cutoff radius <span class="arithmatex">\(r_c\)</span> (discussed below) must be no greater than half the box length, <span class="arithmatex">\(r_c \le L/2\)</span>. If this condition is violated, a particle could interact simultaneously with the same image particle through two different boundaries, leading to non-physical, double interactions.</p>
+<div class="admonition example">
+<p class="admonition-title">Minimum Image Convention in Practice</p>
+<p>Consider a cubic box with <span class="arithmatex">\(L = 10\)</span> Å and two particles at positions:
+- Particle A: <span class="arithmatex">\(\mathbf{r}_A = (1.0, 5.0, 5.0)\)</span> Å
+- Particle B: <span class="arithmatex">\(\mathbf{r}_B = (9.5, 5.0, 5.0)\)</span> Å</p>
+<p><strong>Naive distance</strong>: <span class="arithmatex">\(|\mathbf{r}_A - \mathbf{r}_B| = 8.5\)</span> Å (along x-axis)</p>
+<p><strong>MIC distance</strong>: The nearest image of B is actually at <span class="arithmatex">\((-0.5, 5.0, 5.0)\)</span> through periodic wrapping, giving true distance <span class="arithmatex">\(|1.0 - (-0.5)| = 1.5\)</span> Å.</p>
+<p>This 6× reduction dramatically affects force calculations! Always apply MIC before computing <span class="arithmatex">\(r_{ij}\)</span> for forces.</p>
+</div>
+<hr />
+<h3 id="computational-efficiency-the-mathcalon2-problem"><strong>Computational Efficiency: The <span class="arithmatex">\(\mathcal{O}(N^2)\)</span> Problem</strong></h3>
+<p>For a system with <span class="arithmatex">\(N\)</span> particles, the direct calculation of all pairwise forces requires iterating through <span class="arithmatex">\(N(N-1)/2\)</span> unique pairs. This process scales as <span class="arithmatex">\(\mathcal{O}(N^2)\)</span> with respect to the number of particles. While feasible for small systems (<span class="arithmatex">\(N &lt; 10^3\)</span>), this computational cost quickly becomes <strong>prohibitive</strong> for large-scale MD simulations (<span class="arithmatex">\(N \ge 10^5\)</span>).</p>
+<p>However, most common interatomic potentials, such as the <strong>Lennard-Jones potential</strong>, exhibit a rapid decay with distance. Beyond a specific <strong>cutoff radius</strong> <span class="arithmatex">\(r_c\)</span>, the interaction energy becomes negligible, and the force approaches zero. This observation allows for significant computational optimization by restricting force calculations only to nearby pairs of particles.</p>
+<hr />
+<h3 id="neighbor-lists-the-mathcalon-solution"><strong>Neighbor Lists: The <span class="arithmatex">\(\mathcal{O}(N)\)</span> Solution</strong></h3>
+<p>To overcome the <span class="arithmatex">\(\mathcal{O}(N^2)\)</span> bottleneck, the concept of <strong>Neighbor Lists</strong> is employed. A neighbor list is a data structure that stores the indices of all particles <span class="arithmatex">\(j\)</span> that are within an interaction range of particle <span class="arithmatex">\(i\)</span>, thus dramatically reducing the number of force calculations required per time step.</p>
+<ul>
+<li><strong>The Cutoff Radius (<span class="arithmatex">\(r_c\)</span>) and Skin (<span class="arithmatex">\(\delta\)</span>):</strong> Instead of using only the interaction cutoff radius <span class="arithmatex">\(r_c\)</span>, the neighbor list is built using a slightly larger radius, <span class="arithmatex">\(r_L = r_c + \delta\)</span>, where <span class="arithmatex">\(\delta\)</span> is the <strong>skin distance</strong> (or buffer). This safety margin ensures that as particles move over several time steps, they do not leave the neighborhood defined by <span class="arithmatex">\(r_c\)</span> without the list being updated, thus avoiding missed interactions.</li>
+<li><strong>Update Frequency:</strong> Since the list includes the skin <span class="arithmatex">\(\delta\)</span>, it only needs to be rebuilt periodically (e.g., every 10 to 50 time steps), rather than every single integration step. The list is rebuilt when any particle has moved more than <span class="arithmatex">\(\delta/2\)</span> since the last update. This intermittent rebuilding is the source of the high efficiency.</li>
+</ul>
+<p>By calculating forces only for particles found in the neighbor list, the computational complexity for short-range force evaluations is reduced from <span class="arithmatex">\(\mathcal{O}(N^2)\)</span> to approximately <strong><span class="arithmatex">\(\mathcal{O}(N)\)</span></strong>. This is because the number of neighbors for any given particle is roughly constant, independent of the total system size <span class="arithmatex">\(N\)</span>, and the total calculation cost is proportional only to the total number of particles.</p>
+<hr />
+<h3 id="extensions-for-large-scale-systems"><strong>Extensions for Large-Scale Systems</strong></h3>
+<p>For very large systems, the process of searching through all pairs to build the neighbor list itself can become a performance bottleneck. To address this, the neighbor list method is often combined with <strong>Cell Lists</strong>.</p>
+<p>The <strong>Cell List</strong> method divides the simulation box into a grid of smaller, equal-sized cells, with the cell size slightly larger than the neighbor list cutoff <span class="arithmatex">\(r_L\)</span>. To find the neighbors of a particle, one only needs to search the cell the particle is in, plus the 26 surrounding cells (in 3D). This localized search further speeds up the neighbor-finding process, maintaining the overall <span class="arithmatex">\(\mathcal{O}(N)\)</span> scaling for the entire force-loop and making simulations of millions of particles feasible.</p>
+<hr />
+<h2 id="74-thermostats-and-ensembles"><strong>7.4 Thermostats and Ensembles</strong></h2>
+<hr />
+<h3 id="motivation-from-mechanics-to-thermodynamics"><strong>Motivation: From Mechanics to Thermodynamics</strong></h3>
+<p>The Molecular Dynamics (MD) simulations discussed so far operate in the <strong>Microcanonical Ensemble (NVE)</strong>, where the number of particles (<span class="arithmatex">\(N\)</span>), the volume (<span class="arithmatex">\(V\)</span>), and the total energy (<span class="arithmatex">\(E\)</span>) are conserved quantities. This is the natural outcome of integrating Newton's equations of motion in isolation using an energy-conserving scheme like Velocity-Verlet.</p>
+<p>However, many real-world experiments and simulations require controlling <strong>temperature (<span class="arithmatex">\(T\)</span>)</strong> or <strong>pressure (<span class="arithmatex">\(P\)</span>)</strong>. For example, chemical reactions often occur at constant temperature and pressure, corresponding to the <strong>Canonical (NVT)</strong> or <strong>Isothermal–Isobaric (NPT)</strong> ensembles, respectively. To model these systems, MD requires coupling the simulation to auxiliary mechanisms: <strong>thermostats</strong> for temperature control and <strong>barostats</strong> for pressure control.</p>
+<hr />
+<h3 id="the-classical-thermodynamic-ensembles-in-md"><strong>The Classical Thermodynamic Ensembles in MD</strong></h3>
+<p>The choice of ensemble dictates which physical variables are held constant and therefore which equations of motion or auxiliary constraints must be used:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Ensemble</th>
+<th style="text-align: left;">Conserved Quantities</th>
+<th style="text-align: left;">Controlled Variables</th>
+<th style="text-align: left;">Use Case</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>NVE</strong> (Microcanonical)</td>
+<td style="text-align: left;"><span class="arithmatex">\(N, V, E\)</span></td>
+<td style="text-align: left;">None (isolated system)</td>
+<td style="text-align: left;">Verifying energy conservation and integrator stability</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>NVT</strong> (Canonical)</td>
+<td style="text-align: left;"><span class="arithmatex">\(N, V, T\)</span></td>
+<td style="text-align: left;">Temperature (via Thermostat)</td>
+<td style="text-align: left;">Equilibrating the system, simulating phase behavior at fixed temperature</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>NPT</strong> (Isothermal–Isobaric)</td>
+<td style="text-align: left;"><span class="arithmatex">\(N, P, T\)</span></td>
+<td style="text-align: left;">Temperature &amp; Pressure (via Thermostat/Barostat)</td>
+<td style="text-align: left;">Simulating liquid densities, phase transitions, and real experimental conditions</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="thermostats-for-the-nvt-ensemble"><strong>Thermostats for the NVT Ensemble</strong></h3>
+<p>A <strong>thermostat</strong> is an algorithm that maintains the system's kinetic energy, and thus its temperature, near a target value <span class="arithmatex">\(T_0\)</span>. The instantaneous temperature is related to the kinetic energy (<span class="arithmatex">\(K\)</span>) by the equipartition theorem (for a 3D system): <span class="arithmatex">\(T_{\text{inst}} = \frac{2K}{(3N - N_c)k_B}\)</span>, where <span class="arithmatex">\(N_c\)</span> is the number of constraints.</p>
+<h4 id="the-berendsen-thermostat">The Berendsen Thermostat</h4>
+<p>The <strong>Berendsen thermostat</strong> is a simple method that weakly couples the system to an external heat bath. It operates by continually rescaling particle velocities by a factor <span class="arithmatex">\(\lambda\)</span> at each time step <span class="arithmatex">\(\Delta t\)</span>:</p>
+<div class="arithmatex">\[\lambda = \sqrt{1 + \frac{\Delta t}{\tau_T}\left(\frac{T_0}{T_{\text{inst}}} - 1\right)}\]</div>
+<p>where <span class="arithmatex">\(\tau_T\)</span> is a characteristic relaxation time. If the system is too hot (<span class="arithmatex">\(T_{\text{inst}} &gt; T_0\)</span>), <span class="arithmatex">\(\lambda &lt; 1\)</span>, and velocities are scaled down; if it is too cold, <span class="arithmatex">\(\lambda &gt; 1\)</span>, and velocities are scaled up.</p>
+<p>While effective for <strong>equilibration</strong>—quickly achieving the target temperature <span class="arithmatex">\(T_0\)</span>—the Berendsen thermostat does <strong>not</strong> generate the correct canonical ensemble. It artificially suppresses large fluctuations in kinetic energy, leading to incorrect calculations of fluctuation-dependent observables (e.g., specific heat).</p>
+<details class="question">
+<summary>When Should You Use Berendsen vs. Nosé–Hoover Thermostats?</summary>
+<p>The choice depends on your simulation phase and what you're measuring:</p>
+<p><strong>Use Berendsen for</strong>:
+- Initial equilibration (first 10-100 ps)
+- Quickly bringing system to target temperature
+- When you only care about structural properties (not fluctuations)</p>
+<p><strong>Use Nosé–Hoover for</strong>:
+- Production runs where you extract thermodynamic data
+- Computing heat capacity, energy fluctuations, or free energies
+- Any ensemble-sensitive observable</p>
+<p><strong>Best practice</strong>: Equilibrate with Berendsen (<span class="arithmatex">\(\tau_T \approx 0.1\)</span> ps), then switch to Nosé–Hoover (<span class="arithmatex">\(Q \approx Nk_BT\tau^2\)</span> with <span class="arithmatex">\(\tau \approx 1\)</span> ps) for production. Monitor temperature distribution—should match canonical <span class="arithmatex">\(P(T) \propto \sqrt{T} e^{-\beta(E-\langle E \rangle)^2/2k_B T^2}\)</span>.</p>
+</details>
+<h4 id="the-nosehoover-thermostat">The Nosé–Hoover Thermostat</h4>
+<p>The <strong>Nosé–Hoover thermostat</strong> is a deterministic method that explicitly generates the statistically correct <strong>canonical ensemble</strong>. It achieves this by modifying the equations of motion to include a dynamic friction term <span class="arithmatex">\(\xi \mathbf{v}_i\)</span>, effectively introducing an auxiliary thermostat variable (<span class="arithmatex">\(\xi\)</span>) and an associated thermal inertia (<span class="arithmatex">\(Q\)</span>):</p>
+<div class="arithmatex">\[\dot{\mathbf{v}}_i = \frac{\mathbf{F}_i}{m_i} - \xi \mathbf{v}_i, \quad \dot{\xi} = \frac{1}{Q}\left(\frac{K}{k_B T_0} - N\right).\]</div>
+<p>This method acts as a feedback loop: if the system's instantaneous kinetic energy <span class="arithmatex">\(K\)</span> is too high, the friction <span class="arithmatex">\(\xi\)</span> becomes positive and damps the velocities; if <span class="arithmatex">\(K\)</span> is too low, <span class="arithmatex">\(\xi\)</span> becomes negative and boosts the velocities. The Nosé–Hoover method is widely used for <strong>production runs</strong> because it rigorously samples the canonical distribution.</p>
+<hr />
+<h3 id="barostats-for-the-npt-ensemble"><strong>Barostats for the NPT Ensemble</strong></h3>
+<p>The <strong>Isothermal–Isobaric (NPT)</strong> ensemble requires controlling both temperature and pressure. This necessitates coupling the system to a <strong>barostat</strong>, which allows the simulation box volume (<span class="arithmatex">\(V\)</span>) to fluctuate dynamically to maintain a target external pressure <span class="arithmatex">\(P_0\)</span>.</p>
+<p>The theoretical framework for the NPT ensemble is based on sampling from a distribution proportional to <span class="arithmatex">\(P(X, V) \propto \mathrm{e}^{-\beta (E(X) + P_0 V)}\)</span>.</p>
+<ul>
+<li><strong>Pressure Calculation:</strong> The instantaneous pressure <span class="arithmatex">\(P_{\text{inst}}\)</span> is calculated using the <strong>Virial Theorem</strong>, which relates pressure to both kinetic energy and the contribution of interparticle forces.</li>
+<li><strong>Barostat Action:</strong> The barostat uses the difference between the instantaneous pressure <span class="arithmatex">\(P_{\text{inst}}\)</span> and the target pressure <span class="arithmatex">\(P_0\)</span> to scale the coordinates and the box volume.</li>
+</ul>
+<p>The <strong>Parrinello–Rahman barostat</strong> is a common, advanced method that allows the simulation box shape to fluctuate (not just its volume), enabling the study of phase transitions and crystalline structure changes. The simpler <strong>Berendsen barostat</strong> achieves pressure relaxation through analogous scaling factors applied to the box dimensions.</p>
+<hr />
+<h2 id="75-computing-observables"><strong>7.5 Computing Observables</strong></h2>
+<hr />
+<p>The primary purpose of running a Molecular Dynamics (MD) simulation is to generate trajectories of particle positions and velocities, <span class="arithmatex">\(\mathbf{r}(t)\)</span> and <span class="arithmatex">\(\mathbf{v}(t)\)</span>, from which <strong>macroscopic observables</strong> can be calculated. These observables bridge the gap between microscopic atomic motion and measurable bulk properties of the system.</p>
+<hr />
+<h3 id="751-thermodynamic-observables-energy-and-pressure">7.5.1 Thermodynamic Observables (Energy and Pressure)</h3>
+<p>These observables are typically computed as time averages over the production phase of the simulation, after the system has reached equilibrium in the chosen ensemble (<span class="arithmatex">\(NVE\)</span>, <span class="arithmatex">\(NVT\)</span>, or <span class="arithmatex">\(NPT\)</span>).</p>
+<h4 id="energy">Energy</h4>
+<p>The <strong>total energy</strong> (<span class="arithmatex">\(E_{\text{tot}}\)</span>) is the sum of the system's instantaneous <strong>Kinetic Energy</strong> (<span class="arithmatex">\(K\)</span>) and <strong>Potential Energy</strong> (<span class="arithmatex">\(U\)</span>):</p>
+<div class="arithmatex">\[E_{\text{tot}} = K + U = \frac{1}{2}\sum_{i=1}^{N} m_i |\mathbf{v}_i|^2 + E(\mathbf{r}_1, \dots, \mathbf{r}_N)\]</div>
+<ul>
+<li><strong>Kinetic Energy (<span class="arithmatex">\(K\)</span>)</strong> is directly related to the instantaneous temperature of the system.</li>
+<li><strong>Potential Energy (<span class="arithmatex">\(U\)</span>)</strong> is defined by the interparticle force field (e.g., Lennard-Jones).</li>
+</ul>
+<p>In the <span class="arithmatex">\(NVE\)</span> ensemble, monitoring <span class="arithmatex">\(E_{\text{tot}}\)</span> over time is the most crucial diagnostic test for the numerical accuracy and stability of the integrator (e.g., Velocity–Verlet).</p>
+<h4 id="pressure">Pressure</h4>
+<p>The <strong>pressure</strong> (<span class="arithmatex">\(P\)</span>) in the system is calculated using the <strong>Virial Theorem</strong>, which provides a link between macroscopic pressure and the microscopic forces and kinetic energy. The pressure equation consists of two main parts:</p>
+<p>$$P = \frac{N k_B T}{V} + \frac{1}{3V} \sum_{i</p>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../../chapter-6/Chapter-6-Essay/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Chapter-6 Advanced Monte Carlo Methods">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Chapter-6 Advanced Monte Carlo Methods
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../../chapter-8/Chapter-8-Essay/" class="md-footer__link md-footer__link--next" aria-label="Next: Chapter-8 The Stochastic Calculus (SDEs)">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Chapter-8 The Stochastic Calculus (SDEs)
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://bigbookofcomputing.github.io" target="_blank" rel="noopener" title="bigbookofcomputing.github.io" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://x.com/bigbookofcomputing" target="_blank" rel="noopener" title="x.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M459.4 151.7c.3 4.5.3 9.1.3 13.6 0 138.7-105.6 298.6-298.6 298.6-59.5 0-114.7-17.2-161.1-47.1 8.4 1 16.6 1.3 25.3 1.3 49.1 0 94.2-16.6 130.3-44.8-46.1-1-84.8-31.2-98.1-72.8 6.5 1 13 1.6 19.8 1.6 9.4 0 18.8-1.3 27.6-3.6-48.1-9.7-84.1-52-84.1-103v-1.3c14 7.8 30.2 12.7 47.4 13.3-28.3-18.8-46.8-51-46.8-87.4 0-19.5 5.2-37.4 14.3-53C87.4 130.8 165 172.4 252.1 176.9c-1.6-7.8-2.6-15.9-2.6-24C249.5 95.1 296.3 48 354.4 48c30.2 0 57.5 12.7 76.7 33.1 23.7-4.5 46.5-13.3 66.6-25.3-7.8 24.4-24.4 44.8-46.1 57.8 21.1-2.3 41.6-8.1 60.4-16.2-14.3 20.8-32.2 39.3-52.6 54.3"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.facebook.com/bigbookofcomputing" target="_blank" rel="noopener" title="www.facebook.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M512 256C512 114.6 397.4 0 256 0S0 114.6 0 256c0 120 82.7 220.8 194.2 248.5V334.2h-52.8V256h52.8v-33.7c0-87.1 39.4-127.5 125-127.5 16.2 0 44.2 3.2 55.7 6.4V172c-6-.6-16.5-1-29.6-1-42 0-58.2 15.9-58.2 57.2V256h83.6l-14.4 78.2H287v175.9C413.8 494.8 512 386.9 512 256"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.linkedin.com/bigbookofcomputing" target="_blank" rel="noopener" title="www.linkedin.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3M135.4 416H69V202.2h66.5V416zM102.2 96a38.5 38.5 0 1 1 0 77 38.5 38.5 0 1 1 0-77m282.1 320h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.youtube.com/@big-book-of-computing" target="_blank" rel="noopener" title="www.youtube.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M549.7 124.1c-6.2-23.7-24.8-42.3-48.3-48.6C458.9 64 288.1 64 288.1 64S117.3 64 74.7 75.5c-23.5 6.3-42 24.9-48.3 48.6C15 167 15 256.4 15 256.4s0 89.4 11.4 132.3c6.3 23.6 24.8 41.5 48.3 47.8C117.3 448 288.1 448 288.1 448s170.8 0 213.4-11.5c23.5-6.3 42-24.2 48.3-47.8 11.4-42.9 11.4-132.3 11.4-132.3s0-89.4-11.4-132.3zM232.2 337.6V175.2l142.7 81.2z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+      <div class="md-consent" data-md-component="consent" id="__consent" hidden>
+        <div class="md-consent__overlay"></div>
+        <aside class="md-consent__inner">
+          <form class="md-consent__form md-grid md-typeset" name="consent">
+            
+
+
+  
+
+
+<h4>Cookie consent</h4>
+<p>We use cookies to recognize your repeated visits and preferences, as well as to measure the effectiveness of our documentation and whether users find what they're searching for. With your consent, you're helping us to make our documentation better.</p>
+<input class="md-toggle" type="checkbox" id="__settings" >
+<div class="md-consent__settings">
+  <ul class="task-list">
+    
+    
+      
+        
+  
+  
+    
+    
+  
+  <li class="task-list-item">
+    <label class="task-list-control">
+      <input type="checkbox" name="analytics" checked>
+      <span class="task-list-indicator"></span>
+      Google Analytics
+    </label>
+  </li>
+
+      
+    
+    
+      
+        
+  
+  
+    
+    
+  
+  <li class="task-list-item">
+    <label class="task-list-control">
+      <input type="checkbox" name="github" checked>
+      <span class="task-list-indicator"></span>
+      GitHub
+    </label>
+  </li>
+
+      
+    
+    
+  </ul>
+</div>
+<div class="md-consent__controls">
+  
+    
+      <button class="md-button md-button--primary">Accept</button>
+    
+    
+    
+  
+    
+    
+    
+      <label class="md-button" for="__settings">Manage settings</label>
+    
+  
+</div>
+          </form>
+        </aside>
+      </div>
+      <script>var consent=__md_get("__consent");if(consent)for(var input of document.forms.consent.elements)input.name&&(input.checked=consent[input.name]||!1);else"file:"!==location.protocol&&setTimeout((function(){document.querySelector("[data-md-component=consent]").hidden=!1}),250);var form=document.forms.consent;for(var action of["submit","reset"])form.addEventListener(action,(function(e){if(e.preventDefault(),"reset"===e.type)for(var n of document.forms.consent.elements)n.name&&(n.checked=!1);__md_set("__consent",Object.fromEntries(Array.from(new FormData(form).keys()).map((function(e){return[e,!0]})))),location.hash="",location.reload()}))</script>
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["announce.dismiss", "content.action.edit", "content.action.view", "content.code.annotate", "content.code.copy", "content.tooltips", "navigation.footer", "navigation.indexes", "navigation.sections", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../../static/mathjax-config.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.0/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,3768 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="A comprehensive guide to the foundations of stochastic simulation">
+      
+      
+        <meta name="author" content="Big Book of Computing">
+      
+      
+        <link rel="canonical" href="https://bigbookofcomputing.github.io/chapters/chapter-5/Chapter-5-Essay/">
+      
+      
+        <link rel="prev" href="../../chapter-4/Chapter-4-Essay/">
+      
+      
+        <link rel="next" href="../../chapter-6/Chapter-6-Essay/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/logo.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>Chapter-5 Stochastic Systems Biology - Big Book of Computing | Simulation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+      <link rel="stylesheet" href="../../../static/styles.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  
+
+
+  
+  
+
+<script id="__analytics">function __md_analytics(){function e(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],e("js",new Date),e("config","G-ECS7B3X8JM"),document.addEventListener("DOMContentLoaded",(function(){document.forms.search&&document.forms.search.query.addEventListener("blur",(function(){this.value&&e("event","search",{search_term:this.value})}));document$.subscribe((function(){var t=document.forms.feedback;if(void 0!==t)for(var a of t.querySelectorAll("[type=submit]"))a.addEventListener("click",(function(a){a.preventDefault();var n=document.location.pathname,d=this.getAttribute("data-md-value");e("event","feedback",{page:n,data:d}),t.firstElementChild.disabled=!0;var r=t.querySelector(".md-feedback__note [data-md-value='"+d+"']");r&&(r.hidden=!1)})),t.hidden=!1})),location$.subscribe((function(t){e("config","G-ECS7B3X8JM",{page_path:t.pathname})}))}));var t=document.createElement("script");t.async=!0,t.src="https://www.googletagmanager.com/gtag/js?id=G-ECS7B3X8JM",document.getElementById("__analytics").insertAdjacentElement("afterEnd",t)}</script>
+  
+    <script>if("undefined"!=typeof __md_analytics){var consent=__md_get("__consent");consent&&consent.analytics&&__md_analytics()}</script>
+  
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#chapter-5-stochastic-systems-biology" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="Big Book of Computing | Simulation" class="md-header__button md-logo" aria-label="Big Book of Computing | Simulation" data-md-component="logo">
+      
+  <img src="../../../assets/logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Big Book of Computing | Simulation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Chapter-5 Stochastic Systems Biology
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1M8 13h8v-2H8zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4a5 5 0 0 0 5-5 5 5 0 0 0-5-5"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h10a5 5 0 0 0 5-5 5 5 0 0 0-5-5m0 8a3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3 3 3 0 0 1-3 3"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="indigo"  aria-label="Switch to system preference"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to system preference" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h10a5 5 0 0 0 5-5 5 5 0 0 0-5-5M7 15a3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3 3 3 0 0 1-3 3"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/bigbookofcomputing/simulation" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../contents/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Contents
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../introduction/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Introduction
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../chapter-1/Chapter-1-Essay/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Chapters
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../chapter-1/Chapter-1-WorkBook/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  WorkBooks
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../chapter-1/Chapter-1-CodeBook/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  CodeBooks
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Big Book of Computing | Simulation" class="md-nav__button md-logo" aria-label="Big Book of Computing | Simulation" data-md-component="logo">
+      
+  <img src="../../../assets/logo.png" alt="logo">
+
+    </a>
+    Big Book of Computing | Simulation
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/bigbookofcomputing/simulation" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contents/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contents
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introduction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapters
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Chapters
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-1/Chapter-1-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-1 Foundations of Stochastic Simulation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-2/Chapter-2-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-2 The Ising Model
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-3/Chapter-3-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-3 Lattice Gauge Theory
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-4/Chapter-4-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-4 Monte Carlo Option Pricing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-5 Stochastic Systems Biology
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-5 Stochastic Systems Biology
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Introduction
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#chapter-outline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Chapter Outline
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#51-chapter-opener-noise-is-the-whole-story" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1 Chapter Opener: Noise is the Whole Story
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5.1 Chapter Opener: Noise is the Whole Story">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#gene-expression-as-a-stochastic-process" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Gene expression as a stochastic process
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#intrinsic-versus-extrinsic-noise" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Intrinsic versus extrinsic noise
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quantifying-noise-mean-variance-and-fano-factor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quantifying noise: mean, variance and Fano factor
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#transcriptional-bursting-and-phenotypic-heterogeneity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Transcriptional bursting and phenotypic heterogeneity
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#limitations-of-deterministic-models-and-the-need-for-stochastic-simulations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Limitations of deterministic models and the need for stochastic simulations
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#outline-of-the-chapter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Outline of the chapter
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#52-the-gillespie-algorithm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2 The Gillespie Algorithm
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5.2 The Gillespie Algorithm">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#why-a-stochastic-simulation-algorithm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why a stochastic simulation algorithm?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#propensity-functions-and-reaction-hazards" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Propensity functions and reaction hazards
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#derivation-of-the-joint-distribution-of-time-and-reaction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Derivation of the joint distribution of time and reaction
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-gillespie-algorithm-ssa-step-by-step" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Gillespie algorithm (SSA) step-by-step
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#illustrative-example-reversible-dimerization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Illustrative example: reversible dimerization
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#algorithmic-efficiency-and-variants" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Algorithmic efficiency and variants
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#connection-to-the-cme-and-well-mixed-assumption" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Connection to the CME and well-mixed assumption
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#53-simulation-modeling-simple-gene-expression" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.3 Simulation: Modeling Simple Gene Expression
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5.3 Simulation: Modeling Simple Gene Expression">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#a-minimal-gene-expression-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A minimal gene-expression model
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#propensity-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Propensity functions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#implementing-the-ssa-for-gene-expression" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Implementing the SSA for gene expression
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#interpreting-simulation-results" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Interpreting simulation results
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example-parameter-choices" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example parameter choices
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#code-outline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Code outline
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#54-application-observing-transcriptional-bursting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.4 Application: Observing Transcriptional Bursting
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5.4 Application: Observing Transcriptional Bursting">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-is-transcriptional-bursting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What is transcriptional bursting?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#simulating-bursting-with-the-gillespie-algorithm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Simulating bursting with the Gillespie algorithm
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#comparison-with-experimental-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Comparison with experimental data
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bursting-and-gene-regulatory-networks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bursting and gene regulatory networks
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#extensions-and-experimental-considerations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Extensions and experimental considerations
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Summary
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#55-chapter-summary-bridge-to-chapter-6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.5 Chapter Summary &amp; Bridge to Chapter 6
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5.5 Chapter Summary &amp; Bridge to Chapter 6">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-we-learned-about-stochastic-gene-expression" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What we learned about stochastic gene expression
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#methodological-connections-and-broader-context" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Methodological connections and broader context
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#looking-ahead-controlling-noise-and-building-circuits" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Looking ahead: controlling noise and building circuits
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        References
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-6/Chapter-6-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-6 Advanced Monte Carlo Methods
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-7/Chapter-7-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-7 Molecular Dynamics (MD)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-8/Chapter-8-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-8 The Stochastic Calculus (SDEs)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-9/Chapter-9-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-9 Black-Scholes-Merton (BSM)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-10/Chapter-10-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-10 Neuroscience (Hodgkin-Huxley)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-11/Chapter-11-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-11 Agent-Based & Network Models
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-12/Chapter-12-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-12 Collective Behavior & Pattern Formation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-13/Chapter-13-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-13 Collective Behavior & Pattern Formation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-14/Chapter-14-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-14 Computational Neuroscience
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-15/Chapter-15-Essay.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-15 Graph and Network Models
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    WorkBooks
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    WorkBooks
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-1/Chapter-1-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-1 Foundations of Stochastic Simulation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-2/Chapter-2-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-2 The Ising Model
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-3/Chapter-3-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-3 Lattice Gauge Theory
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-4/Chapter-4-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-4 Monte Carlo Option Pricing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Chapter-5-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-5 Stochastic Systems Biology
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-6/Chapter-6-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-6 Advanced Monte Carlo Methods
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-7/Chapter-7-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-7 Molecular Dynamics (MD)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-8/Chapter-8-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-8 The Stochastic Calculus (SDEs)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-9/Chapter-9-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-9 Black-Scholes-Merton (BSM)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-10/Chapter-10-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-10 Neuroscience (Hodgkin-Huxley)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-11/Chapter-11-WorkBook" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-11 Agent-Based & Network Models
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-12/Chapter-12-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-12 Collective Behavior & Pattern Formation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-13/Chapter-13-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-13 Collective Behavior & Pattern Formation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-14/Chapter-14-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-14 Computational Neuroscience
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-15/Chapter-15-WorkBook.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-15 Graph and Network Models
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CodeBooks
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    CodeBooks
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-1/Chapter-1-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-1 Foundations of Stochastic Simulation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-2/Chapter-2-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-2 The Ising Model
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-3/Chapter-3-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-3 Lattice Gauge Theory
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-4/Chapter-4-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-4 Monte Carlo Option Pricing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Chapter-5-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-5 Stochastic Systems Biology
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-6/Chapter-6-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-6 Advanced Monte Carlo Methods
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-7/Chapter-7-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-7 Molecular Dynamics (MD)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-8/Chapter-8-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-8 The Stochastic Calculus (SDEs)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-9/Chapter-9-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-9 Black-Scholes-Merton (BSM)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-10/Chapter-10-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-10 Neuroscience (Hodgkin-Huxley)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-11/Chapter-11-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-11 Agent-Based & Network Models
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-12/Chapter-12-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-12 Collective Behavior & Pattern Formation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-13/Chapter-13-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-13 Collective Behavior & Pattern Formation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-14/Chapter-14-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-14 Computational Neuroscience
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-15/Chapter-15-CodeBook.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-15 Graph and Network Models
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Introduction
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#chapter-outline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Chapter Outline
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#51-chapter-opener-noise-is-the-whole-story" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1 Chapter Opener: Noise is the Whole Story
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5.1 Chapter Opener: Noise is the Whole Story">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#gene-expression-as-a-stochastic-process" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Gene expression as a stochastic process
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#intrinsic-versus-extrinsic-noise" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Intrinsic versus extrinsic noise
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quantifying-noise-mean-variance-and-fano-factor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quantifying noise: mean, variance and Fano factor
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#transcriptional-bursting-and-phenotypic-heterogeneity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Transcriptional bursting and phenotypic heterogeneity
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#limitations-of-deterministic-models-and-the-need-for-stochastic-simulations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Limitations of deterministic models and the need for stochastic simulations
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#outline-of-the-chapter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Outline of the chapter
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#52-the-gillespie-algorithm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2 The Gillespie Algorithm
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5.2 The Gillespie Algorithm">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#why-a-stochastic-simulation-algorithm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why a stochastic simulation algorithm?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#propensity-functions-and-reaction-hazards" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Propensity functions and reaction hazards
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#derivation-of-the-joint-distribution-of-time-and-reaction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Derivation of the joint distribution of time and reaction
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-gillespie-algorithm-ssa-step-by-step" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Gillespie algorithm (SSA) step-by-step
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#illustrative-example-reversible-dimerization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Illustrative example: reversible dimerization
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#algorithmic-efficiency-and-variants" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Algorithmic efficiency and variants
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#connection-to-the-cme-and-well-mixed-assumption" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Connection to the CME and well-mixed assumption
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#53-simulation-modeling-simple-gene-expression" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.3 Simulation: Modeling Simple Gene Expression
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5.3 Simulation: Modeling Simple Gene Expression">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#a-minimal-gene-expression-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A minimal gene-expression model
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#propensity-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Propensity functions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#implementing-the-ssa-for-gene-expression" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Implementing the SSA for gene expression
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#interpreting-simulation-results" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Interpreting simulation results
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example-parameter-choices" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example parameter choices
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#code-outline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Code outline
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#54-application-observing-transcriptional-bursting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.4 Application: Observing Transcriptional Bursting
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5.4 Application: Observing Transcriptional Bursting">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-is-transcriptional-bursting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What is transcriptional bursting?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#simulating-bursting-with-the-gillespie-algorithm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Simulating bursting with the Gillespie algorithm
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#comparison-with-experimental-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Comparison with experimental data
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bursting-and-gene-regulatory-networks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bursting and gene regulatory networks
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#extensions-and-experimental-considerations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Extensions and experimental considerations
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Summary
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#55-chapter-summary-bridge-to-chapter-6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.5 Chapter Summary &amp; Bridge to Chapter 6
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5.5 Chapter Summary &amp; Bridge to Chapter 6">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-we-learned-about-stochastic-gene-expression" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What we learned about stochastic gene expression
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#methodological-connections-and-broader-context" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Methodological connections and broader context
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#looking-ahead-controlling-noise-and-building-circuits" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Looking ahead: controlling noise and building circuits
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        References
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+    <a href="https://github.com/bigbookofcomputing/simulation/edit/master/docs/chapters/chapter-5/Chapter-5-Essay.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+    
+      
+    
+    <a href="https://github.com/bigbookofcomputing/simulation/raw/master/docs/chapters/chapter-5/Chapter-5-Essay.md" title="View source of this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.2 8.2 0 0 1-1.23-2"/></svg>
+    </a>
+  
+
+
+<h1 id="chapter-5-stochastic-systems-biology"><strong>Chapter 5: Stochastic Systems Biology</strong></h1>
+<hr />
+<h2 id="introduction"><strong>Introduction</strong></h2>
+<p>Biological systems operate in a regime where the previous chapters' continuous approximations break down. Inside a living cell, gene expression is not a smooth, deterministic process but a fundamentally <strong>stochastic phenomenon</strong>. A bacterial gene might produce only tens of mRNA molecules; a mammalian transcription factor could exist in single-digit copy numbers. At these molecular scales, <strong>noise is not a nuisance to be averaged away—it is the whole story</strong>. Random fluctuations in biochemical reactions drive cell-to-cell variability, influence cellular decision-making, enable bet-hedging strategies, and underlie phenomena from antibiotic resistance to stem cell differentiation.</p>
+<p>This chapter introduces <strong>stochastic systems biology</strong>, where we abandon deterministic differential equations in favor of exact Monte Carlo simulation of discrete molecular events. The governing framework is the <strong>Chemical Master Equation (CME)</strong>, which describes the time evolution of probability distributions over molecule counts. While the CME is rarely solvable analytically, the <strong>Gillespie Stochastic Simulation Algorithm (SSA)</strong> provides a mathematically exact method for generating sample trajectories consistent with the CME. This algorithm tracks individual reaction events—mRNA synthesis, protein translation, molecular degradation—by sampling waiting times from exponential distributions and selecting reactions proportional to their propensity functions.</p>
+<p>We apply the Gillespie algorithm to model <strong>gene expression in the low-copy-number regime</strong>, revealing how transcriptional bursting generates super-Poissonian noise and heavy-tailed protein distributions. By the end of this chapter, you will understand how to implement the SSA for biochemical reaction networks, how to extract noise statistics like the Fano factor from simulated trajectories, and how stochastic fluctuations produce measurable phenotypic heterogeneity. These techniques bridge computational physics and quantitative biology, demonstrating how Monte Carlo methods illuminate the molecular origins of cellular behavior.</p>
+<hr />
+<h2 id="chapter-outline"><strong>Chapter Outline</strong></h2>
+<table>
+<thead>
+<tr>
+<th><strong>Sec.</strong></th>
+<th><strong>Title</strong></th>
+<th><strong>Core Ideas &amp; Examples</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>5.1</strong></td>
+<td><strong>Chapter Opener: Noise is the Whole Story</strong></td>
+<td>Gene expression as stochastic process; intrinsic vs. extrinsic noise; Fano factor <span class="arithmatex">\(\eta = \mathrm{Var}(X)/\langle X \rangle\)</span>; transcriptional bursting; telegraph model (ON/OFF states); limitations of deterministic ODEs.</td>
+</tr>
+<tr>
+<td><strong>5.2</strong></td>
+<td><strong>The Gillespie Algorithm</strong></td>
+<td>Chemical Master Equation; propensity functions <span class="arithmatex">\(a_j(\mathbf{x})\)</span>; joint distribution <span class="arithmatex">\(p(\tau,j) = a_j(\mathbf{x})e^{-\tau a_0(\mathbf{x})}\)</span>; SSA algorithm: draw <span class="arithmatex">\(\tau = \ln(1/r_1)/a_0\)</span>, select reaction <span class="arithmatex">\(j\)</span> by weighted sampling.</td>
+</tr>
+<tr>
+<td><strong>5.3</strong></td>
+<td><strong>Simulation: Modeling Simple Gene Expression</strong></td>
+<td>Two-state gene model: transcription <span class="arithmatex">\(\emptyset \to M\)</span> at rate <span class="arithmatex">\(k_m\)</span>, translation <span class="arithmatex">\(M \to M+P\)</span> at rate <span class="arithmatex">\(k_p\)</span>, degradation; implementing SSA with propensity vector updates; generating single-cell trajectories; ensemble statistics.</td>
+</tr>
+<tr>
+<td><strong>5.4</strong></td>
+<td><strong>Application: Observing Transcriptional Bursting</strong></td>
+<td>Telegraph model with gene switching (ON/OFF); burst frequency vs. burst size; super-Poissonian protein distributions (<span class="arithmatex">\(\eta &gt; 1\)</span>); comparing simulations to experimental histograms; cell-to-cell variability as phenotypic heterogeneity.</td>
+</tr>
+<tr>
+<td><strong>5.5</strong></td>
+<td><strong>Chapter Summary &amp; Bridge to Chapter 6</strong></td>
+<td>Recap of Gillespie SSA; stochastic vs. deterministic regimes; noise as biological function; preview of synthetic gene circuits (toggle switch, oscillators); from single genes to regulatory networks; feedback and bistability.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="51-chapter-opener-noise-is-the-whole-story"><strong>5.1 Chapter Opener: Noise is the Whole Story</strong></h2>
+<hr />
+<h3 id="gene-expression-as-a-stochastic-process"><strong>Gene expression as a stochastic process</strong></h3>
+<p>At the molecular scale, cells are noisy. The transcription of DNA into mRNA and the translation of mRNA into protein involve discrete, random events: RNA polymerase and ribosomes bind and unbind, molecules diffuse and collide, and reactions occur sporadically. Each cell in a genetically identical population experiences a unique sequence of such events, leading to cell‑to‑cell variability in the copy numbers of mRNAs and proteins. This variability persists even in homogeneous environments and is fundamental to processes like cell fate decisions, bet‑hedging, and antibiotic tolerance.</p>
+<p>In deterministic models, one writes differential equations for the concentrations of mRNAs and proteins, implicitly assuming that these species exist in large numbers and that fluctuations average out. But many genes are expressed at low copy numbers: a mammalian gene might produce only a few mRNA molecules per cell, and a bacterial transcription factor could exist in tens of copies. In such regimes, random fluctuations (noise) cannot be neglected; they dominate the dynamics and often drive phenotypic outcomes.</p>
+<hr />
+<h3 id="intrinsic-versus-extrinsic-noise"><strong>Intrinsic versus extrinsic noise</strong></h3>
+<p>It is useful to classify sources of noise into two categories:</p>
+<ul>
+<li>
+<p><strong>Intrinsic noise</strong> arises from the random nature of biochemical reactions within a single cell. Even if two identical genes are present in the same cell and are subject to the same environment, the timing of transcription and translation events for each gene will differ. This leads to uncorrelated fluctuations in their expression levels. Intrinsic noise originates from low copy numbers of reactants, stochastic binding/unbinding of regulators, and finite reaction rates. Dual‑reporter experiments (expressing two identical fluorescent proteins in one cell) reveal intrinsic noise by measuring the difference between the reporters.</p>
+</li>
+<li>
+<p><strong>Extrinsic noise</strong> reflects cell‑to‑cell variability in global factors such as the abundance of transcription machinery, ribosomes, metabolites, and signaling molecules. These factors affect all genes in a cell similarly, inducing correlated fluctuations across different genes. Examples include differences in cell size, cell cycle stage, metabolic state, and microenvironment. Extrinsic noise can be probed by comparing identical reporter genes across different cells; correlated fluctuations indicate extrinsic contributions.</p>
+</li>
+</ul>
+<p>In practice, both types of noise coexist and contribute to the total variance of gene expression. Quantitative analyses often decompose the variance into intrinsic and extrinsic components by measuring the covariance between dual reporters.</p>
+<hr />
+<h3 id="quantifying-noise-mean-variance-and-fano-factor"><strong>Quantifying noise: mean, variance and Fano factor</strong></h3>
+<p>Given a random variable <span class="arithmatex">\(X\)</span> representing the copy number of mRNA or protein, the <strong>mean</strong> <span class="arithmatex">\(\langle X\rangle\)</span> measures the average expression level, while the <strong>variance</strong> <span class="arithmatex">\(\mathrm{Var}(X) = \langle (X - \langle X\rangle)^2\rangle\)</span> quantifies the spread. A useful dimensionless measure of noise is the <strong>Fano factor</strong> or <strong>noise strength</strong>:</p>
+<div class="arithmatex">\[
+\eta = \frac{\mathrm{Var}(X)}{\langle X\rangle},
+\]</div>
+<p>which compares the variance to the mean. For a Poisson process (e.g., constant‑rate birth and death), <span class="arithmatex">\(\eta = 1\)</span>; super‑Poissonian noise (<span class="arithmatex">\(\eta &gt; 1\)</span>) indicates bursty production or long‑tailed distributions, while sub‑Poissonian noise (<span class="arithmatex">\(\eta &lt; 1\)</span>) suggests feedback or cooperativity that suppresses fluctuations.</p>
+<div class="admonition tip">
+<p class="admonition-title">Interpreting the Fano Factor</p>
+<p>The Fano factor <span class="arithmatex">\(\eta = \mathrm{Var}(X)/\langle X \rangle\)</span> provides a quick diagnostic for noise:</p>
+<ul>
+<li><span class="arithmatex">\(\eta = 1\)</span>: Poisson-like noise (constitutive expression at constant rate)</li>
+<li><span class="arithmatex">\(\eta &gt; 1\)</span>: Super-Poissonian (bursting, heavy tails, cell-to-cell variability)</li>
+<li><span class="arithmatex">\(\eta &lt; 1\)</span>: Sub-Poissonian (feedback regulation, noise suppression)</li>
+</ul>
+<p>For example, if mRNA has <span class="arithmatex">\(\langle m \rangle = 20\)</span> and <span class="arithmatex">\(\mathrm{Var}(m) = 60\)</span>, then <span class="arithmatex">\(\eta = 3\)</span>, indicating strong bursting. The Fano factor is dimensionless and robust to measurement units, making it ideal for comparing experiments across systems.</p>
+</div>
+<p>In gene expression, bursting often leads to Fano factors greater than one, reflecting large excursions in mRNA or protein numbers.</p>
+<hr />
+<h3 id="transcriptional-bursting-and-phenotypic-heterogeneity"><strong>Transcriptional bursting and phenotypic heterogeneity</strong></h3>
+<p>Experiments reveal that transcription does not occur at a steady rate but in <strong>bursts</strong>: periods of intense activity interspersed with inactivity. Studies have shown that transcriptional bursting is ubiquitous across bacteria, yeast, and mammals. During a burst, multiple mRNA molecules are produced in rapid succession; between bursts, the gene is silent. This bursty dynamics creates a heavy‑tailed distribution of mRNA copy numbers and propagates to protein levels, contributing to cell‑to‑cell heterogeneity.</p>
+<p>Transcriptional bursting is typically modeled by a <strong>telegraph process</strong>: the gene toggles between an “ON” state (transcription at rate <span class="arithmatex">\(k_{\text{on}}\)</span>) and an “OFF” state (no transcription), with switching rates <span class="arithmatex">\(k_{\text{activate}}\)</span> and <span class="arithmatex">\(k_{\text{inactivate}}\)</span>. The burst frequency is determined by the switching rates, and the burst size by the transcription and degradation rates. The heterogeneity generated by bursting drives phenotypic diversity and can influence processes such as differentiation, stress responses, and pathogenicity.</p>
+<hr />
+<h3 id="limitations-of-deterministic-models-and-the-need-for-stochastic-simulations"><strong>Limitations of deterministic models and the need for stochastic simulations</strong></h3>
+<p>Traditional deterministic models, based on ordinary differential equations (ODEs), describe the time evolution of concentrations averaged over a large population. They predict smooth trajectories and fixed‑point equilibria. However, these models cannot capture:</p>
+<ul>
+<li><strong>Random timing of events.</strong> When a gene switches ON or OFF or when the first mRNA is produced matters for cellular decisions (e.g., timing of a developmental switch).</li>
+<li><strong>Probability distributions.</strong> ODEs yield only mean trajectories; they do not provide information about the distribution of expression levels across cells.</li>
+<li><strong>Large fluctuations at low copy numbers.</strong> When molecule numbers are small, the discrete nature of reactions leads to variance comparable to or larger than the mean, invalidating continuous approximations.</li>
+</ul>
+<details class="question">
+<summary>Why Can't We Just Add Noise to Deterministic ODEs?</summary>
+<p>One might try to model noise by adding Gaussian white noise to deterministic ODEs (Langevin equations). However, this approach has limitations:</p>
+<ol>
+<li><strong>Continuous vs. discrete</strong>: ODEs treat molecule counts as continuous, but mRNA/protein counts are integers. Gaussian noise can produce negative counts.</li>
+<li><strong>Incorrect noise structure</strong>: The Chemical Master Equation dictates that noise should be Poisson-like (variance proportional to mean), not Gaussian with constant variance.</li>
+<li><strong>Missing correlations</strong>: Discrete reaction events create specific correlations between species that Langevin approximations may not capture correctly.</li>
+</ol>
+<p>The Gillespie SSA respects the discrete, stochastic nature of reactions and is mathematically exact. Langevin approximations are useful for large copy numbers but break down in the low-copy regime where bursting matters most.</p>
+</details>
+<p>To accurately model gene expression in regimes where noise is consequential, we need <strong>stochastic simulation algorithms</strong>. These algorithms track individual reaction events and generate trajectories consistent with the underlying probability distribution. The <strong>Gillespie Stochastic Simulation Algorithm (SSA)</strong>, introduced in the next section, is a mathematically exact method for simulating coupled chemical reactions in well‑mixed systems with low copy numbers. It samples the waiting time to the next reaction and the reaction identity according to the system’s propensity functions. By generating many such trajectories, we can compute distributions, autocorrelation functions, and noise statistics that match experimental observations.</p>
+<hr />
+<h3 id="outline-of-the-chapter"><strong>Outline of the chapter</strong></h3>
+<p>This chapter will show how to apply the Gillespie algorithm to a minimal gene expression model.</p>
+<ul>
+<li><strong>Section 5.2</strong> derives the SSA and explains how to draw reaction times and select reactions based on propensities.</li>
+<li><strong>Section 5.3</strong> implements the algorithm for a two‑state gene with mRNA and protein synthesis and degradation.</li>
+<li><strong>Section 5.4</strong> examines transcriptional bursting, showing how the telegraph model generates bursty transcription and how simulation results compare with experiments.</li>
+<li><strong>Section 5.5</strong> summarises the insights gained and connects to the next chapter on synthetic gene circuits.</li>
+</ul>
+<hr />
+<h2 id="52-the-gillespie-algorithm"><strong>5.2 The Gillespie Algorithm</strong></h2>
+<hr />
+<h3 id="why-a-stochastic-simulation-algorithm"><strong>Why a stochastic simulation algorithm?</strong></h3>
+<p>Chemical reactions inside a cell occur randomly when reactant molecules collide and react. For systems with large numbers of molecules, the law of mass action and differential equations provide accurate mean-field descriptions. But when copy numbers are small—as for low-abundance mRNAs, transcription factors or signaling molecules—discrete fluctuations dominate. The <strong>Chemical Master Equation (CME)</strong> governs the time evolution of the probability distribution over the vector of molecule counts. For a system with states <span class="arithmatex">\(\mathbf{X}(t)\)</span>, the CME reads</p>
+<div class="arithmatex">\[
+\frac{\mathrm{d}P(\mathbf{x},t)}{\mathrm{d}t} = \sum_{j=1}^{M} \left[ a_j(\mathbf{x}-\boldsymbol{\nu}_j) P(\mathbf{x}-\boldsymbol{\nu}_j,t) - a_j(\mathbf{x}) P(\mathbf{x},t) \right],
+\]</div>
+<p>where <span class="arithmatex">\(M\)</span> is the number of reaction channels, <span class="arithmatex">\(a_j(\mathbf{x})\)</span> is the <strong>propensity function</strong> of reaction <span class="arithmatex">\(j\)</span> in state <span class="arithmatex">\(\mathbf{x}\)</span>, and <span class="arithmatex">\(\boldsymbol{\nu}_j\)</span> is the state-change vector indicating how molecule counts change when reaction <span class="arithmatex">\(j\)</span> occurs. Solving the CME analytically is rarely possible for non-trivial systems. Instead, we simulate trajectories consistent with the CME. The <strong>Gillespie Stochastic Simulation Algorithm (SSA)</strong> provides an exact procedure for doing so.</p>
+<hr />
+<h3 id="propensity-functions-and-reaction-hazards"><strong>Propensity functions and reaction hazards</strong></h3>
+<p>Consider a reaction network with <span class="arithmatex">\(M\)</span> reaction channels. In state <span class="arithmatex">\(\mathbf{x}\)</span> (a vector of molecule counts), the <strong>propensity function</strong> <span class="arithmatex">\(a_j(\mathbf{x})\)</span> is defined such that:</p>
+<ul>
+<li><span class="arithmatex">\(a_j(\mathbf{x})\,\mathrm{d}t\)</span> is the probability that reaction <span class="arithmatex">\(j\)</span> will occur in the infinitesimal interval <span class="arithmatex">\([t,t+\mathrm{d}t)\)</span>, given that the system is in state <span class="arithmatex">\(\mathbf{x}\)</span> at time <span class="arithmatex">\(t\)</span>.</li>
+<li><span class="arithmatex">\(a_j(\mathbf{x})\)</span> has dimensions of inverse time; it depends on the number of available reactants and the rate constant <span class="arithmatex">\(c_j\)</span>.</li>
+</ul>
+<p>For example, for a unimolecular decay <span class="arithmatex">\(S \to \emptyset\)</span> with rate constant <span class="arithmatex">\(k\)</span>, <span class="arithmatex">\(a(\mathbf{x}) = k x_S\)</span>. For a bimolecular reaction <span class="arithmatex">\(S_1 + S_2 \to P\)</span> with rate constant <span class="arithmatex">\(k\)</span>, <span class="arithmatex">\(a(\mathbf{x}) = k x_{S_1} x_{S_2}\)</span>, assuming well-mixed conditions.</p>
+<p>Let <span class="arithmatex">\(a_0(\mathbf{x}) = \sum_{j=1}^M a_j(\mathbf{x})\)</span> denote the <strong>total propensity</strong>—the overall rate at which any reaction fires.</p>
+<hr />
+<h3 id="derivation-of-the-joint-distribution-of-time-and-reaction"><strong>Derivation of the joint distribution of time and reaction</strong></h3>
+<p>Suppose the system is in state <span class="arithmatex">\(\mathbf{x}\)</span> at time <span class="arithmatex">\(t\)</span>. We wish to derive the joint probability density <span class="arithmatex">\(p(\tau,j|\mathbf{x},t)\)</span> that the next reaction will occur after a waiting time <span class="arithmatex">\(\tau\)</span> and that it will be reaction <span class="arithmatex">\(j\)</span>. Gillespie showed that this distribution factorizes into an exponential distribution over <span class="arithmatex">\(\tau\)</span> and a discrete distribution over <span class="arithmatex">\(j\)</span>:</p>
+<div class="arithmatex">\[
+p(\tau, j \mid \mathbf{x}, t)
+= a_j(\mathbf{x}) \exp\left(-\tau a_0(\mathbf{x})\right)
+\quad\text{for } \tau\ge 0,\ j=1,\dots,M.
+\]</div>
+<p>This result follows because (i) reaction events form a <strong>Poisson process</strong> with rate <span class="arithmatex">\(a_0(\mathbf{x})\)</span>, so the waiting time <span class="arithmatex">\(\tau\)</span> to the next event is exponentially distributed with mean <span class="arithmatex">\(1/a_0(\mathbf{x})\)</span>, and (ii) conditional on an event occurring, the probability it is reaction <span class="arithmatex">\(j\)</span> is proportional to its propensity: <span class="arithmatex">\(\mathbb{P}(j|\mathbf{x}) = a_j(\mathbf{x}) / a_0(\mathbf{x})\)</span>. Therefore:</p>
+<ol>
+<li>Draw <span class="arithmatex">\(\tau\)</span> from an exponential distribution with parameter <span class="arithmatex">\(a_0(\mathbf{x})\)</span>. Equivalently, if <span class="arithmatex">\(r_1\)</span> is a uniform random number in <span class="arithmatex">\((0,1]\)</span>, set <span class="arithmatex">\(\tau = \frac{1}{a_0(\mathbf{x})} \ln\left(\frac{1}{r_1}\right)\)</span>.</li>
+<li>Select reaction <span class="arithmatex">\(j\)</span> by drawing a second uniform random number <span class="arithmatex">\(r_2 \in (0,1]\)</span> and choosing the smallest <span class="arithmatex">\(j\)</span> satisfying <span class="arithmatex">\(\sum_{k=1}^j a_k(\mathbf{x}) \ge r_2 a_0(\mathbf{x})\)</span>.</li>
+</ol>
+<p>This factorization is central: it implies that the time to the next reaction is memoryless and that choosing which reaction occurs is a simple weighted sampling problem.</p>
+<hr />
+<h3 id="the-gillespie-algorithm-ssa-step-by-step"><strong>The Gillespie algorithm (SSA) step-by-step</strong></h3>
+<p>Given the initial state <span class="arithmatex">\(\mathbf{x}\)</span> at time <span class="arithmatex">\(t\)</span>, the SSA proceeds as follows:</p>
+<ol>
+<li><strong>Compute propensities.</strong> For each reaction channel <span class="arithmatex">\(j=1,\dots,M\)</span>, compute <span class="arithmatex">\(a_j(\mathbf{x})\)</span> and the total <span class="arithmatex">\(a_0(\mathbf{x})\)</span>.</li>
+<li><strong>Draw waiting time.</strong> Generate a uniform random number <span class="arithmatex">\(r_1 \in (0,1)\)</span>. Set
+   $$
+   \tau = \frac{1}{a_0(\mathbf{x})} \ln\left(\frac{1}{r_1}\right).
+   $$
+   This is the time until the next reaction.</li>
+<li><strong>Select reaction channel.</strong> Generate another uniform random number <span class="arithmatex">\(r_2 \in (0,1)\)</span>. Identify the reaction index <span class="arithmatex">\(j\)</span> satisfying
+   $$
+   \sum_{k=1}^{j-1} a_k(\mathbf{x}) &lt; r_2 a_0(\mathbf{x}) \le \sum_{k=1}^j a_k(\mathbf{x}).
+   $$
+   This ensures that <span class="arithmatex">\(\mathbb{P}(j) = a_j(\mathbf{x})/a_0(\mathbf{x})\)</span>.</li>
+<li><strong>Update state and time.</strong> Advance time: <span class="arithmatex">\(t \leftarrow t + \tau\)</span>. Update the state: <span class="arithmatex">\(\mathbf{x} \leftarrow \mathbf{x} + \boldsymbol{\nu}_j\)</span>, where <span class="arithmatex">\(\boldsymbol{\nu}_j\)</span> is the stoichiometry vector for reaction <span class="arithmatex">\(j\)</span>.</li>
+<li><strong>Iterate.</strong> Return to step 1 unless the desired final time has been reached or another stopping criterion (e.g., fixed number of reactions) is met.</li>
+</ol>
+<p>Because the SSA exactly samples from the CME, multiple runs yield statistically correct trajectories. Averaging over many runs provides estimates of moments, distributions and autocorrelation functions.</p>
+<hr />
+<h3 id="illustrative-example-reversible-dimerization"><strong>Illustrative example: reversible dimerization</strong></h3>
+<p>Consider a simple reaction system: dimerization of two species <span class="arithmatex">\(A\)</span> and <span class="arithmatex">\(B\)</span> to form a complex <span class="arithmatex">\(C\)</span>, with forward rate <span class="arithmatex">\(k_f\)</span> and backward rate <span class="arithmatex">\(k_b\)</span>:</p>
+<div class="arithmatex">\[
+A + B \xrightleftharpoons[k_b]{k_f} C.
+\]</div>
+<p>The state is <span class="arithmatex">\(\mathbf{x} = (x_A, x_B, x_C)\)</span>. There are two reaction channels: forward reaction (binding) and backward reaction (dissociation). The propensity functions are:</p>
+<ul>
+<li><span class="arithmatex">\(a_1(\mathbf{x}) = k_f x_A x_B\)</span> for <span class="arithmatex">\(A + B \to C\)</span>.</li>
+<li><span class="arithmatex">\(a_2(\mathbf{x}) = k_b x_C\)</span> for <span class="arithmatex">\(C \to A + B\)</span>.</li>
+</ul>
+<p>The total propensity is <span class="arithmatex">\(a_0 = k_f x_A x_B + k_b x_C\)</span>. According to the SSA, the time <span class="arithmatex">\(\tau\)</span> to the next reaction is exponential with mean <span class="arithmatex">\(1/a_0\)</span>, and the probability that the next reaction is the forward reaction is <span class="arithmatex">\(a_1/a_0\)</span> (binding) while the probability of the backward reaction is <span class="arithmatex">\(a_2/a_0\)</span> (dissociation). For example, if <span class="arithmatex">\(x_A = x_B = 10\)</span>, <span class="arithmatex">\(x_C = 0\)</span>, and <span class="arithmatex">\(k_f = k_b = 1\)</span>, <span class="arithmatex">\(a_0 = 100\)</span>, so the expected waiting time is <span class="arithmatex">\(0.01\)</span> time units. Simulations will show fluctuations in <span class="arithmatex">\(C\)</span> as complexes form and dissociate.</p>
+<p>This example illustrates how propensities depend on reactant counts and how the SSA naturally captures reaction stochasticity. It also resembles gene expression reactions (e.g., binding/unbinding of transcription factors), which we will model in the next section.</p>
+<div class="admonition example">
+<p class="admonition-title">Gillespie SSA for Simple Dimerization</p>
+<p>Consider <span class="arithmatex">\(A + B \rightleftharpoons C\)</span> with <span class="arithmatex">\(k_f = k_b = 1\)</span>, starting with <span class="arithmatex">\(x_A = x_B = 10\)</span>, <span class="arithmatex">\(x_C = 0\)</span>.</p>
+<p><strong>Step 1</strong>: Propensities <span class="arithmatex">\(a_1 = 1 \times 10 \times 10 = 100\)</span>, <span class="arithmatex">\(a_2 = 1 \times 0 = 0\)</span>, <span class="arithmatex">\(a_0 = 100\)</span>.</p>
+<p><strong>Step 2</strong>: Draw <span class="arithmatex">\(r_1 = 0.5\)</span>, compute <span class="arithmatex">\(\tau = \ln(1/0.5)/100 = 0.00693\)</span> time units.</p>
+<p><strong>Step 3</strong>: Draw <span class="arithmatex">\(r_2 = 0.3\)</span>; since <span class="arithmatex">\(r_2 a_0 = 30 &lt; a_1 = 100\)</span>, reaction 1 fires (binding).</p>
+<p><strong>Step 4</strong>: Update state to <span class="arithmatex">\(x_A = 9\)</span>, <span class="arithmatex">\(x_B = 9\)</span>, <span class="arithmatex">\(x_C = 1\)</span>; advance <span class="arithmatex">\(t \leftarrow t + 0.00693\)</span>.</p>
+<p>Repeat until desired time. After many steps, the system reaches equilibrium with fluctuating <span class="arithmatex">\(C\)</span> levels.</p>
+</div>
+<hr />
+<h3 id="algorithmic-efficiency-and-variants"><strong>Algorithmic efficiency and variants</strong></h3>
+<p>While the direct SSA described above is exact, its cost scales with the number of reaction channels <span class="arithmatex">\(M\)</span> because at each step one must compute the cumulative sum of propensities and perform a linear search to select <span class="arithmatex">\(j\)</span>. For large networks or when some reactions fire orders of magnitude faster than others, more efficient variants exist:</p>
+<ul>
+<li><strong>Next Reaction Method (NRM)</strong> and <strong>Gibson–Bruck algorithm</strong>: maintain a priority queue of tentative reaction times and update propensities locally after each event, reducing computational complexity from <span class="arithmatex">\(\mathcal{O}(M)\)</span> to <span class="arithmatex">\(\mathcal{O}(\log M)\)</span>.</li>
+<li><strong><span class="arithmatex">\(\tau\)</span>-leaping</strong>: approximate the exact SSA by allowing multiple reactions to occur in a leap of fixed time <span class="arithmatex">\(\tau\)</span>, updating species counts by drawing Poisson variates. This sacrifices exactness for speed when propensities are large.</li>
+<li><strong>Hybrid methods</strong>: treat some species deterministically (ODE) and others stochastically, suitable for systems with both high- and low-copy-number species.</li>
+</ul>
+<p>However, for the relatively small gene-expression models discussed in this chapter, the standard SSA suffices and retains conceptual clarity.</p>
+<hr />
+<h3 id="connection-to-the-cme-and-well-mixed-assumption"><strong>Connection to the CME and well-mixed assumption</strong></h3>
+<p>The Gillespie algorithm assumes:</p>
+<ul>
+<li><strong>Well-mixedness:</strong> Molecules are homogeneously distributed in a reaction volume; spatial heterogeneity and diffusion limitations are neglected. This is a reasonable approximation for reactions in small volumes like bacterial cells or eukaryotic nuclei when diffusion is fast compared to reaction times.</li>
+<li><strong>Markovian reactions:</strong> Reaction propensities depend only on the current state, not on the history.</li>
+<li><strong>Elementary reactions:</strong> Each reaction occurs with a propensity proportional to the number of reactant molecules (for unimolecular or bimolecular reactions) and the rate constant.</li>
+</ul>
+<p>Given these assumptions, the SSA generates trajectories consistent with the CME. If spatial effects or delayed reactions are important (e.g., gene regulation with transcriptional delays), extensions such as spatial SSA or delay stochastic simulation algorithms can be used.</p>
+<p>With this rigorous foundation, we are ready to model the stochastic dynamics of gene expression. In the next section we will apply the Gillespie algorithm to a simple gene expression model.</p>
+<hr />
+<h2 id="53-simulation-modeling-simple-gene-expression"><strong>5.3 Simulation: Modeling Simple Gene Expression</strong></h2>
+<hr />
+<h3 id="a-minimal-gene-expression-model"><strong>A minimal gene-expression model</strong></h3>
+<p>To illustrate stochastic gene expression, we consider a simplified <strong>telegraph model</strong> comprising four reaction channels:</p>
+<ol>
+<li>
+<p><strong>Gene activation and inactivation.</strong> The gene toggles between an inactive “OFF” state and an active “ON” state:
+   $$
+   \text{OFF} \xrightarrow{k_\text{on}} \text{ON},\qquad
+   \text{ON} \xrightarrow{k_\text{off}} \text{OFF}.
+   $$
+   When the gene is ON, transcription occurs; when OFF, no mRNA is produced. Switching rates <span class="arithmatex">\(k_\text{on}\)</span> and <span class="arithmatex">\(k_\text{off}\)</span> control burst frequency and duration.</p>
+</li>
+<li>
+<p><strong>Transcription.</strong> While the gene is in the ON state, it synthesizes mRNA at rate <span class="arithmatex">\(k_m\)</span>:
+   $$
+   \text{ON} \xrightarrow{k_m} \text{ON} + m.
+   $$
+   Each reaction creates one mRNA molecule.</p>
+</li>
+<li>
+<p><strong>mRNA degradation.</strong> mRNA molecules degrade at rate <span class="arithmatex">\(\gamma_m\)</span>:
+   $$
+   m \xrightarrow{\gamma_m} \emptyset.
+   $$</p>
+</li>
+<li>
+<p><strong>Translation and protein degradation.</strong> For completeness, we can include translation and protein decay:
+   $$
+   m \xrightarrow{k_p} m + p,\qquad p \xrightarrow{\gamma_p} \emptyset,
+   $$
+   where <span class="arithmatex">\(p\)</span> denotes protein. Translation and protein dynamics amplify mRNA noise but follow the same SSA principles.</p>
+</li>
+</ol>
+<p>We represent the state as <span class="arithmatex">\(\mathbf{x} = (g, m, p)\)</span>, where <span class="arithmatex">\(g \in \{0,1\}\)</span> indicates the gene’s ON (1) or OFF (0) state, <span class="arithmatex">\(m\)</span> the number of mRNA molecules and <span class="arithmatex">\(p\)</span> the number of protein molecules. The stoichiometry vectors for the reactions are:</p>
+<ul>
+<li>Gene activation: <span class="arithmatex">\(\boldsymbol{\nu}_1 = (+1, 0, 0)\)</span>.</li>
+<li>Gene inactivation: <span class="arithmatex">\(\boldsymbol{\nu}_2 = (-1, 0, 0)\)</span>.</li>
+<li>Transcription: <span class="arithmatex">\(\boldsymbol{\nu}_3 = (0, +1, 0)\)</span>.</li>
+<li>mRNA decay: <span class="arithmatex">\(\boldsymbol{\nu}_4 = (0, -1, 0)\)</span>.</li>
+<li>Translation: <span class="arithmatex">\(\boldsymbol{\nu}_5 = (0, 0, +1)\)</span>.</li>
+<li>Protein decay: <span class="arithmatex">\(\boldsymbol{\nu}_6 = (0, 0, -1)\)</span>.</li>
+</ul>
+<p>Depending on the level of detail desired, one may omit translation (focusing on mRNA) or include it to study protein noise.</p>
+<hr />
+<h3 id="propensity-functions"><strong>Propensity functions</strong></h3>
+<p>The propensity functions <span class="arithmatex">\(a_j(\mathbf{x})\)</span> reflect the stochastic rate of each reaction given the current state:</p>
+<ol>
+<li>
+<p><strong>Gene activation:</strong> <span class="arithmatex">\(a_1(\mathbf{x}) = k_\text{on}(1 - g)\)</span>. Activation can occur only when the gene is OFF (<span class="arithmatex">\(g=0\)</span>), so the propensity is zero if the gene is already ON.</p>
+</li>
+<li>
+<p><strong>Gene inactivation:</strong> <span class="arithmatex">\(a_2(\mathbf{x}) = k_\text{off}g\)</span>. Inactivation occurs only when the gene is ON (<span class="arithmatex">\(g=1\)</span>).</p>
+</li>
+<li>
+<p><strong>Transcription:</strong> <span class="arithmatex">\(a_3(\mathbf{x}) = k_m g\)</span>. mRNA synthesis happens only in the ON state.</p>
+</li>
+<li>
+<p><strong>mRNA decay:</strong> <span class="arithmatex">\(a_4(\mathbf{x}) = \gamma_m m\)</span>. Each existing mRNA degrades independently.</p>
+</li>
+<li>
+<p><strong>Translation:</strong> <span class="arithmatex">\(a_5(\mathbf{x}) = k_p m\)</span>. Each mRNA produces proteins at rate <span class="arithmatex">\(k_p\)</span>.</p>
+</li>
+<li>
+<p><strong>Protein decay:</strong> <span class="arithmatex">\(a_6(\mathbf{x}) = \gamma_p p\)</span>. Each protein decays independently.</p>
+</li>
+</ol>
+<p>The total propensity is <span class="arithmatex">\(a_0(\mathbf{x}) = \sum_{j=1}^6 a_j(\mathbf{x})\)</span>. At each step of the SSA we compute <span class="arithmatex">\(a_j\)</span> and use them to draw a waiting time and choose which reaction occurs.</p>
+<hr />
+<h3 id="implementing-the-ssa-for-gene-expression"><strong>Implementing the SSA for gene expression</strong></h3>
+<p>The simulation algorithm follows the general SSA described in §5.2:</p>
+<ol>
+<li>
+<p><strong>Initialization.</strong> Set time <span class="arithmatex">\(t = 0\)</span>. Choose initial state: the gene may start OFF or ON; mRNA and protein counts may start at zero. Specify parameter values <span class="arithmatex">\((k_\text{on}, k_\text{off}, k_m, \gamma_m, k_p, \gamma_p)\)</span>.</p>
+</li>
+<li>
+<p><strong>Compute propensities.</strong> At time <span class="arithmatex">\(t\)</span>, with state <span class="arithmatex">\(\mathbf{x} = (g, m, p)\)</span>, compute <span class="arithmatex">\(a_j(\mathbf{x})\)</span> for each reaction and the total <span class="arithmatex">\(a_0\)</span>.</p>
+</li>
+<li>
+<p><strong>Draw waiting time and select reaction.</strong> Generate two uniform random numbers <span class="arithmatex">\((r_1, r_2)\)</span>. Set <span class="arithmatex">\(\tau = \frac{1}{a_0} \ln(1/r_1)\)</span>. Determine the reaction index <span class="arithmatex">\(j\)</span> such that <span class="arithmatex">\(\sum_{k=1}^{j-1} a_k &lt; r_2 a_0 \le \sum_{k=1}^j a_k\)</span> (see §5.2).</p>
+</li>
+<li>
+<p><strong>Update state and record.</strong> Advance time: <span class="arithmatex">\(t \leftarrow t + \tau\)</span>. Update <span class="arithmatex">\(\mathbf{x} \leftarrow \mathbf{x} + \boldsymbol{\nu}_j\)</span>. Record the state at time <span class="arithmatex">\(t\)</span> if needed for output.</p>
+</li>
+<li>
+<p><strong>Repeat.</strong> Loop until <span class="arithmatex">\(t\)</span> exceeds a final time <span class="arithmatex">\(T\)</span> or until a desired number of reaction events has occurred. To generate a statistically meaningful distribution, run many independent realizations.</p>
+</li>
+</ol>
+<hr />
+<h3 id="interpreting-simulation-results"><strong>Interpreting simulation results</strong></h3>
+<p>By running the SSA many times, we can compute the time-dependent mean <span class="arithmatex">\(\langle m(t) \rangle\)</span> and variance <span class="arithmatex">\(\mathrm{Var}(m(t))\)</span> of mRNA and similarly for proteins. We can also estimate:</p>
+<ul>
+<li>
+<p><strong>Steady-state distributions.</strong> After a sufficiently long transient, the system approaches a stationary distribution <span class="arithmatex">\(P_\text{ss}(m)\)</span> for mRNA copy numbers and <span class="arithmatex">\(P_\text{ss}(p)\)</span> for proteins. Plotting histograms reveals whether the distribution is Poisson-like, geometric or bimodal, depending on bursting parameters.</p>
+</li>
+<li>
+<p><strong>Autocorrelation function.</strong> The autocorrelation <span class="arithmatex">\(C(\Delta t) = \langle X(t) X(t+\Delta t) \rangle - \langle X \rangle^2\)</span> measures memory in the fluctuations; its decay time relates to mRNA lifetime and gene switching dynamics.</p>
+</li>
+<li>
+<p><strong>Burst statistics.</strong> From trajectories one can identify bursts (consecutive transcription events during ON periods) and compute their size (number of mRNAs per burst) and frequency (number of bursts per unit time). In the telegraph model, burst size has mean <span class="arithmatex">\(k_m / \gamma_m\)</span> (average number of mRNAs produced before the gene turns OFF) and burst frequency is <span class="arithmatex">\(k_\text{on} k_\text{off} / (k_\text{on} + k_\text{off})\)</span>. The overall mean mRNA number is <span class="arithmatex">\(\langle m \rangle = \frac{k_\text{on}}{k_\text{off} + k_\text{on}} \cdot \frac{k_m}{\gamma_m}\)</span>, while the Fano factor exceeds one due to bursts.</p>
+</li>
+<li>
+<p><strong>Extrinsic modulations.</strong> If parameters like <span class="arithmatex">\(k_m\)</span> or <span class="arithmatex">\(\gamma_m\)</span> vary between cells (extrinsic noise), we can model this by drawing parameters from distributions and running simulations for each cell. The resulting mixture distribution exhibits broader variability.</p>
+</li>
+</ul>
+<hr />
+<h3 id="example-parameter-choices"><strong>Example parameter choices</strong></h3>
+<p>To illustrate the algorithm, consider typical values:</p>
+<ul>
+<li>Gene activation rate <span class="arithmatex">\(k_\text{on} = 0.01\ \text{s}^{-1}\)</span></li>
+<li>Gene inactivation rate <span class="arithmatex">\(k_\text{off} = 0.1\ \text{s}^{-1}\)</span></li>
+<li>Transcription rate <span class="arithmatex">\(k_m = 1\ \text{s}^{-1}\)</span></li>
+<li>mRNA degradation rate <span class="arithmatex">\(\gamma_m = 0.05\ \text{s}^{-1}\)</span></li>
+<li>Translation rate <span class="arithmatex">\(k_p = 0.5\ \text{s}^{-1}\)</span></li>
+<li>Protein degradation rate <span class="arithmatex">\(\gamma_p = 0.005\ \text{s}^{-1}\)</span></li>
+</ul>
+<p>These rates correspond to a gene that is OFF most of the time (90%), bursts ON occasionally (average ON duration of 10 s), produces roughly <span class="arithmatex">\(k_m / \gamma_m = 20\)</span> mRNAs per burst and each mRNA translates ~100 proteins on average (<span class="arithmatex">\(k_p / \gamma_p\)</span>). Running the SSA with these parameters yields bursty trajectories of mRNA and protein copy numbers. Histograms of <span class="arithmatex">\(m\)</span> and <span class="arithmatex">\(p\)</span> show broad distributions with tails extending to high copy numbers. Adjusting <span class="arithmatex">\(k_\text{on}\)</span> and <span class="arithmatex">\(k_\text{off}\)</span> changes the burst frequency; adjusting <span class="arithmatex">\(k_m\)</span> and <span class="arithmatex">\(\gamma_m\)</span> scales the burst size.</p>
+<hr />
+<h3 id="code-outline"><strong>Code outline</strong></h3>
+<p>Below is a pseudocode illustrating the SSA for the telegraph model (mRNA only). A full implementation in Python or C would follow this structure:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>Input: T_final, parameters k_on, k_off, k_m, gamma_m
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>Initialize: t = 0; g = 0; m = 0
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>Initialize arrays to record time and mRNA counts
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>while t &lt; T_final:
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>    # compute propensities
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>    a1 = k_on * (1 - g)       # activation
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>    a2 = k_off * g            # inactivation
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>    a3 = k_m * g              # transcription
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>    a4 = gamma_m * m          # mRNA decay
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>    a0 = a1 + a2 + a3 + a4
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>    if a0 == 0:
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>        break  # no reactions possible
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>
+</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>    # draw waiting time and reaction
+</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>    r1, r2 = random_uniform(), random_uniform()
+</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>    tau = (1 / a0) * log(1 / r1)
+</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>    # determine which reaction fires
+</span><span id="__span-0-19"><a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>    if r2 * a0 &lt; a1:
+</span><span id="__span-0-20"><a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>        g = 1  # gene turns ON
+</span><span id="__span-0-21"><a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>    elif r2 * a0 &lt; a1 + a2:
+</span><span id="__span-0-22"><a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>        g = 0  # gene turns OFF
+</span><span id="__span-0-23"><a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a>    elif r2 * a0 &lt; a1 + a2 + a3:
+</span><span id="__span-0-24"><a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a>        m = m + 1  # transcribe mRNA
+</span><span id="__span-0-25"><a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a>    else:
+</span><span id="__span-0-26"><a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a>        m = m - 1  # degrade mRNA
+</span><span id="__span-0-27"><a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a>    t = t + tau
+</span><span id="__span-0-28"><a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a>    record (t, m)
+</span><span id="__span-0-29"><a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a>
+</span><span id="__span-0-30"><a id="__codelineno-0-30" name="__codelineno-0-30" href="#__codelineno-0-30"></a>Return time series of m
+</span><span id="__span-0-31"><a id="__codelineno-0-31" name="__codelineno-0-31" href="#__codelineno-0-31"></a>````
+</span><span id="__span-0-32"><a id="__codelineno-0-32" name="__codelineno-0-32" href="#__codelineno-0-32"></a>
+</span><span id="__span-0-33"><a id="__codelineno-0-33" name="__codelineno-0-33" href="#__codelineno-0-33"></a>For translation and protein degradation, additional propensities and updates would be included. After running many trajectories, one can compute sample means, variances and histograms.
+</span><span id="__span-0-34"><a id="__codelineno-0-34" name="__codelineno-0-34" href="#__codelineno-0-34"></a>
+</span><span id="__span-0-35"><a id="__codelineno-0-35" name="__codelineno-0-35" href="#__codelineno-0-35"></a>-----
+</span><span id="__span-0-36"><a id="__codelineno-0-36" name="__codelineno-0-36" href="#__codelineno-0-36"></a>
+</span><span id="__span-0-37"><a id="__codelineno-0-37" name="__codelineno-0-37" href="#__codelineno-0-37"></a>### **Beyond the basic model**
+</span><span id="__span-0-38"><a id="__codelineno-0-38" name="__codelineno-0-38" href="#__codelineno-0-38"></a>
+</span><span id="__span-0-39"><a id="__codelineno-0-39" name="__codelineno-0-39" href="#__codelineno-0-39"></a>While the telegraph model captures key features of bursting, real gene networks exhibit additional complexity:
+</span><span id="__span-0-40"><a id="__codelineno-0-40" name="__codelineno-0-40" href="#__codelineno-0-40"></a>
+</span><span id="__span-0-41"><a id="__codelineno-0-41" name="__codelineno-0-41" href="#__codelineno-0-41"></a>* **Regulation:** Transcription factor binding/unbinding adds more states and reactions; propensities become functions of transcription-factor concentrations.
+</span><span id="__span-0-42"><a id="__codelineno-0-42" name="__codelineno-0-42" href="#__codelineno-0-42"></a>* **Feedback:** Proteins may regulate their own gene’s transcription (negative or positive feedback), altering burst statistics and stabilizing or amplifying noise.
+</span><span id="__span-0-43"><a id="__codelineno-0-43" name="__codelineno-0-43" href="#__codelineno-0-43"></a>* **Multiple promoter states:** Genes can have multiple active states corresponding to different chromatin configurations; this leads to multi-modal distributions.
+</span><span id="__span-0-44"><a id="__codelineno-0-44" name="__codelineno-0-44" href="#__codelineno-0-44"></a>* **Transcriptional delays:** RNA polymerase initiation and elongation times introduce delays between promoter activation and mRNA production; delay SSA methods can incorporate these.
+</span><span id="__span-0-45"><a id="__codelineno-0-45" name="__codelineno-0-45" href="#__codelineno-0-45"></a>
+</span><span id="__span-0-46"><a id="__codelineno-0-46" name="__codelineno-0-46" href="#__codelineno-0-46"></a>Nonetheless, the core principles remain: define reaction channels, compute propensities, sample reaction times and identities, update the state and iterate. In the next section we will use this framework to study **transcriptional bursting**, analyze burst size and frequency, and compare simulation results with experimental observations.
+</span><span id="__span-0-47"><a id="__codelineno-0-47" name="__codelineno-0-47" href="#__codelineno-0-47"></a>
+</span><span id="__span-0-48"><a id="__codelineno-0-48" name="__codelineno-0-48" href="#__codelineno-0-48"></a>**Flowchart: Gillespie SSA for Gene Expression**
+</span><span id="__span-0-49"><a id="__codelineno-0-49" name="__codelineno-0-49" href="#__codelineno-0-49"></a>
+</span><span id="__span-0-50"><a id="__codelineno-0-50" name="__codelineno-0-50" href="#__codelineno-0-50"></a>```mermaid
+</span><span id="__span-0-51"><a id="__codelineno-0-51" name="__codelineno-0-51" href="#__codelineno-0-51"></a>graph TD
+</span><span id="__span-0-52"><a id="__codelineno-0-52" name="__codelineno-0-52" href="#__codelineno-0-52"></a>    A[Start: Initialize State g, m, p, t=0] --&gt; B[Compute Propensities]
+</span><span id="__span-0-53"><a id="__codelineno-0-53" name="__codelineno-0-53" href="#__codelineno-0-53"></a>    B --&gt; C[a1: Gene activation k_on × 1-g]
+</span><span id="__span-0-54"><a id="__codelineno-0-54" name="__codelineno-0-54" href="#__codelineno-0-54"></a>    B --&gt; D[a2: Gene inactivation k_off × g]
+</span><span id="__span-0-55"><a id="__codelineno-0-55" name="__codelineno-0-55" href="#__codelineno-0-55"></a>    B --&gt; E[a3: Transcription k_m × g]
+</span><span id="__span-0-56"><a id="__codelineno-0-56" name="__codelineno-0-56" href="#__codelineno-0-56"></a>    B --&gt; F[a4: mRNA decay γ_m × m]
+</span><span id="__span-0-57"><a id="__codelineno-0-57" name="__codelineno-0-57" href="#__codelineno-0-57"></a>    B --&gt; G[a5: Translation k_p × m]
+</span><span id="__span-0-58"><a id="__codelineno-0-58" name="__codelineno-0-58" href="#__codelineno-0-58"></a>    B --&gt; H[a6: Protein decay γ_p × p]
+</span><span id="__span-0-59"><a id="__codelineno-0-59" name="__codelineno-0-59" href="#__codelineno-0-59"></a>
+</span><span id="__span-0-60"><a id="__codelineno-0-60" name="__codelineno-0-60" href="#__codelineno-0-60"></a>    C --&gt; I[Total: a0 = Σ a_j]
+</span><span id="__span-0-61"><a id="__codelineno-0-61" name="__codelineno-0-61" href="#__codelineno-0-61"></a>    D --&gt; I
+</span><span id="__span-0-62"><a id="__codelineno-0-62" name="__codelineno-0-62" href="#__codelineno-0-62"></a>    E --&gt; I
+</span><span id="__span-0-63"><a id="__codelineno-0-63" name="__codelineno-0-63" href="#__codelineno-0-63"></a>    F --&gt; I
+</span><span id="__span-0-64"><a id="__codelineno-0-64" name="__codelineno-0-64" href="#__codelineno-0-64"></a>    G --&gt; I
+</span><span id="__span-0-65"><a id="__codelineno-0-65" name="__codelineno-0-65" href="#__codelineno-0-65"></a>    H --&gt; I
+</span><span id="__span-0-66"><a id="__codelineno-0-66" name="__codelineno-0-66" href="#__codelineno-0-66"></a>
+</span><span id="__span-0-67"><a id="__codelineno-0-67" name="__codelineno-0-67" href="#__codelineno-0-67"></a>    I --&gt; J{a0 = 0?}
+</span><span id="__span-0-68"><a id="__codelineno-0-68" name="__codelineno-0-68" href="#__codelineno-0-68"></a>    J --&gt;|Yes| K[No reactions: Stop]
+</span><span id="__span-0-69"><a id="__codelineno-0-69" name="__codelineno-0-69" href="#__codelineno-0-69"></a>    J --&gt;|No| L[Draw τ = ln 1/r1 / a0]
+</span><span id="__span-0-70"><a id="__codelineno-0-70" name="__codelineno-0-70" href="#__codelineno-0-70"></a>
+</span><span id="__span-0-71"><a id="__codelineno-0-71" name="__codelineno-0-71" href="#__codelineno-0-71"></a>    L --&gt; M[Draw r2 ~ U 0,1]
+</span><span id="__span-0-72"><a id="__codelineno-0-72" name="__codelineno-0-72" href="#__codelineno-0-72"></a>    M --&gt; N[Select Reaction j]
+</span><span id="__span-0-73"><a id="__codelineno-0-73" name="__codelineno-0-73" href="#__codelineno-0-73"></a>    N --&gt; O{Which j?}
+</span><span id="__span-0-74"><a id="__codelineno-0-74" name="__codelineno-0-74" href="#__codelineno-0-74"></a>
+</span><span id="__span-0-75"><a id="__codelineno-0-75" name="__codelineno-0-75" href="#__codelineno-0-75"></a>    O --&gt;|r2×a0 &lt; a1| P[Gene ON: g=1]
+</span><span id="__span-0-76"><a id="__codelineno-0-76" name="__codelineno-0-76" href="#__codelineno-0-76"></a>    O --&gt;|&lt; a1+a2| Q[Gene OFF: g=0]
+</span><span id="__span-0-77"><a id="__codelineno-0-77" name="__codelineno-0-77" href="#__codelineno-0-77"></a>    O --&gt;|&lt; a1+a2+a3| R[Transcribe: m=m+1]
+</span><span id="__span-0-78"><a id="__codelineno-0-78" name="__codelineno-0-78" href="#__codelineno-0-78"></a>    O --&gt;|&lt; a1+a2+a3+a4| S[Degrade mRNA: m=m-1]
+</span><span id="__span-0-79"><a id="__codelineno-0-79" name="__codelineno-0-79" href="#__codelineno-0-79"></a>    O --&gt;|&lt; a1+...+a5| T[Translate: p=p+1]
+</span><span id="__span-0-80"><a id="__codelineno-0-80" name="__codelineno-0-80" href="#__codelineno-0-80"></a>    O --&gt;|else| U[Degrade Protein: p=p-1]
+</span><span id="__span-0-81"><a id="__codelineno-0-81" name="__codelineno-0-81" href="#__codelineno-0-81"></a>
+</span><span id="__span-0-82"><a id="__codelineno-0-82" name="__codelineno-0-82" href="#__codelineno-0-82"></a>    P --&gt; V[Update: t = t + τ]
+</span><span id="__span-0-83"><a id="__codelineno-0-83" name="__codelineno-0-83" href="#__codelineno-0-83"></a>    Q --&gt; V
+</span><span id="__span-0-84"><a id="__codelineno-0-84" name="__codelineno-0-84" href="#__codelineno-0-84"></a>    R --&gt; V
+</span><span id="__span-0-85"><a id="__codelineno-0-85" name="__codelineno-0-85" href="#__codelineno-0-85"></a>    S --&gt; V
+</span><span id="__span-0-86"><a id="__codelineno-0-86" name="__codelineno-0-86" href="#__codelineno-0-86"></a>    T --&gt; V
+</span><span id="__span-0-87"><a id="__codelineno-0-87" name="__codelineno-0-87" href="#__codelineno-0-87"></a>    U --&gt; V
+</span><span id="__span-0-88"><a id="__codelineno-0-88" name="__codelineno-0-88" href="#__codelineno-0-88"></a>
+</span><span id="__span-0-89"><a id="__codelineno-0-89" name="__codelineno-0-89" href="#__codelineno-0-89"></a>    V --&gt; W[Record state g, m, p, t]
+</span><span id="__span-0-90"><a id="__codelineno-0-90" name="__codelineno-0-90" href="#__codelineno-0-90"></a>    W --&gt; X{t &lt; T_final?}
+</span><span id="__span-0-91"><a id="__codelineno-0-91" name="__codelineno-0-91" href="#__codelineno-0-91"></a>    X --&gt;|Yes| B
+</span><span id="__span-0-92"><a id="__codelineno-0-92" name="__codelineno-0-92" href="#__codelineno-0-92"></a>    X --&gt;|No| Y[Return Trajectory]
+</span><span id="__span-0-93"><a id="__codelineno-0-93" name="__codelineno-0-93" href="#__codelineno-0-93"></a>
+</span><span id="__span-0-94"><a id="__codelineno-0-94" name="__codelineno-0-94" href="#__codelineno-0-94"></a>    style V fill:#ffff99
+</span><span id="__span-0-95"><a id="__codelineno-0-95" name="__codelineno-0-95" href="#__codelineno-0-95"></a>    style Y fill:#99ff99
+</span></code></pre></div>
+<hr />
+<h2 id="54-application-observing-transcriptional-bursting"><strong>5.4 Application: Observing Transcriptional Bursting</strong></h2>
+<hr />
+<h3 id="what-is-transcriptional-bursting"><strong>What is transcriptional bursting?</strong></h3>
+<p>Single‑cell studies using techniques such as single‑molecule RNA fluorescence in situ hybridization (smFISH), live‑cell RNA imaging and MS2/PP7 tagging have revealed that transcription does not proceed at a constant rate. Instead, many genes exhibit <strong>bursting</strong>: periods of rapid RNA production interspersed with long silent intervals. During a burst the gene’s promoter is in an active state, and multiple RNA molecules are synthesized in quick succession; between bursts the promoter is inactive and no transcription occurs. This phenomenon has been observed across bacteria, yeast, plants and mammals. Bursting creates wide, heavy‑tailed distributions of mRNA and protein copy numbers, leading to cell‑to‑cell heterogeneity and enabling phenotypic diversity within genetically identical populations.</p>
+<p>In the telegraph model of gene expression (see §5.3), bursting arises naturally because the gene stochastically switches between an ON state and an OFF state. The <strong>burst frequency</strong> is determined by the activation and inactivation rates (<span class="arithmatex">\(k_{\text{on}}\)</span> and <span class="arithmatex">\(k_{\text{off}}\)</span>), and the <strong>burst size</strong> is set by the transcription and mRNA degradation rates (<span class="arithmatex">\(k_m\)</span> and <span class="arithmatex">\(\gamma_m\)</span>). Specifically, in the ON state mRNAs are produced at rate <span class="arithmatex">\(k_m\)</span> and degrade at rate <span class="arithmatex">\(\gamma_m\)</span>; thus, the expected number of mRNAs produced in one burst is <span class="arithmatex">\(k_m / \gamma_m\)</span>. The average time between bursts is <span class="arithmatex">\(1 / k_\text{on}\)</span> when OFF durations dominate.</p>
+<hr />
+<h3 id="simulating-bursting-with-the-gillespie-algorithm"><strong>Simulating bursting with the Gillespie algorithm</strong></h3>
+<p>Using the Gillespie SSA, we simulate the telegraph model for many independent cells (see §5.3). Each simulation yields a trajectory of mRNA copy number over time. An example output resembles a “spike train”: long stretches where <span class="arithmatex">\(m = 0\)</span> punctuated by sudden increases as bursts occur, followed by exponential decay as mRNAs degrade. By analysing these trajectories we can extract burst statistics:</p>
+<ul>
+<li><strong>Burst frequency:</strong> Count the number of times the gene turns ON per unit time. The estimated burst frequency converges to <span class="arithmatex">\(k_\text{on} k_\text{off} / (k_\text{on} + k_\text{off})\)</span> for the telegraph model.</li>
+<li><strong>Burst size:</strong> For each ON period, count the number of mRNA molecules produced (or the total area under the mRNA curve). The mean burst size matches <span class="arithmatex">\(k_m / \gamma_m\)</span>.</li>
+<li><strong>Burst duration:</strong> Measure the length of each ON period; its mean is <span class="arithmatex">\(1 / k_\text{off}\)</span>.</li>
+</ul>
+<p>Histograms of burst sizes and waiting times between bursts often follow geometric and exponential distributions, respectively. The Fano factor (variance/mean) of mRNA copy number exceeds one, confirming super‑Poissonian noise due to bursting.</p>
+<hr />
+<h3 id="comparison-with-experimental-data"><strong>Comparison with experimental data</strong></h3>
+<p>Experiments show that burst sizes and frequencies vary widely across genes and organisms. Some genes burst rarely but produce many transcripts per burst (large size, low frequency), while others burst frequently but produce few transcripts per burst (small size, high frequency). The telegraph model reproduces both regimes by adjusting <span class="arithmatex">\(k_\text{on}\)</span>, <span class="arithmatex">\(k_\text{off}\)</span> and <span class="arithmatex">\(k_m\)</span>. For example, increasing <span class="arithmatex">\(k_\text{on}\)</span> while keeping <span class="arithmatex">\(k_\text{off}\)</span> fixed increases burst frequency but not burst size; increasing <span class="arithmatex">\(k_m\)</span> increases burst size.</p>
+<p>Transcriptional bursting can create phenotypic heterogeneity even when genes are subject to the same environment. Intrinsic noise generated by random transcription and translation events leads to uncorrelated fluctuations between identical genes within the same cell. Extrinsic factors—such as variability in polymerase concentration or chromatin state—can modulate bursting parameters across cells, inducing correlated noise between genes. Including extrinsic variability in simulations (e.g., by sampling <span class="arithmatex">\(k_\text{on}\)</span> or <span class="arithmatex">\(k_m\)</span> from a distribution across cells) widens the distribution of burst statistics and more closely matches experimental observations.</p>
+<p>Live‑cell imaging experiments often report the mean and variance of mRNA and protein copy numbers. When fitted to the telegraph model, these moments yield estimates of burst frequency and size. For instance, in mammalian fibroblasts the β‑globin gene exhibits bursts with size ≈ 20 transcripts and frequency ≈ once per hour. The SSA model reproduces such data when <span class="arithmatex">\(k_m / \gamma_m \approx 20\)</span> and <span class="arithmatex">\(k_\text{on} \approx 0.02\ \text{min}^{-1}\)</span>.</p>
+<hr />
+<h3 id="bursting-and-gene-regulatory-networks"><strong>Bursting and gene regulatory networks</strong></h3>
+<p>Bursting influences how information is transmitted through gene regulatory networks. In feed‑forward loops or negative feedback loops, bursty input signals (e.g., transcription factor levels) produce bursty outputs. Feedback can modulate burst frequency and size: negative feedback (protein represses its own promoter) reduces burst size and suppresses noise, while positive feedback can stabilize the ON state and produce bimodal distributions. In networks with multiple genes, extrinsic factors (e.g., cell cycle stage) can align bursts across genes, resulting in correlated expression.</p>
+<p>Simulation studies show that:</p>
+<ul>
+<li>Increasing burst size (via higher <span class="arithmatex">\(k_m / \gamma_m\)</span>) elevates noise but may accelerate responses by producing many proteins quickly.</li>
+<li>Increasing burst frequency (via higher <span class="arithmatex">\(k_\text{on} / k_\text{off}\)</span>) smooths out fluctuations and reduces noise, approaching deterministic behaviour.</li>
+</ul>
+<p>Thus, cells can tune burst parameters to balance noise, speed and energy cost. Evolution may exploit such tuning to optimize gene function in fluctuating environments.</p>
+<hr />
+<h3 id="extensions-and-experimental-considerations"><strong>Extensions and experimental considerations</strong></h3>
+<p>While the simple telegraph model captures the essence of bursting, real promoters can have multiple intermediate states (e.g., nucleosome‑bound, polymerase‑bound, paused). Multi‑state models produce more complex burst statistics and multimodal expression distributions. Transcriptional bursting can also be modulated by chromatin modifications, enhancer–promoter interactions and external signals.</p>
+<p>Experimentally, measuring bursting requires single‑molecule sensitivity; bulk measurements average out bursts. smFISH can count transcripts in fixed cells; MS2/PP7 systems allow real‑time observation of nascent RNA. These methods reveal burst kinetics and validate models. However, detection efficiency, photobleaching and probe accessibility must be considered. Data analysis techniques such as hidden Markov models are used to infer burst parameters from noisy traces.</p>
+<hr />
+<h3 id="summary"><strong>Summary</strong></h3>
+<p>Transcriptional bursting is a universal feature of gene expression across life. It arises from stochastic promoter switching and manifests as episodic production of mRNAs. Using the Gillespie SSA to simulate the telegraph model, we can quantitatively reproduce burst statistics and noise levels. Simulations highlight how intrinsic and extrinsic noise, burst frequency and size, and feedback control shape gene‑expression variability. These insights lay the groundwork for understanding how cells exploit noise for phenotypic diversity, robustness and decision‑making.</p>
+<p>In the final section, we will synthesize the lessons from this chapter and connect them to the next topic—perhaps synthetic gene circuits or stochastic resonance—where noise becomes not merely a nuisance but a functional component of biological computation.</p>
+<hr />
+<h2 id="55-chapter-summary-bridge-to-chapter-6"><strong>5.5 Chapter Summary &amp; Bridge to Chapter 6</strong></h2>
+<hr />
+<h3 id="what-we-learned-about-stochastic-gene-expression"><strong>What we learned about stochastic gene expression</strong></h3>
+<p>In Chapter 5 we moved from the deterministic world of financial markets to the probabilistic world of <strong>intracellular biochemistry</strong>, where randomness at the molecular scale profoundly influences cellular behaviour. Our journey revealed several core principles:</p>
+<ol>
+<li>
+<p><strong>Noise is intrinsic to life.</strong> Gene expression is inherently stochastic because transcription and translation occur through discrete, random events. Even genetically identical cells in identical environments exhibit variability in mRNA and protein levels. We distinguished <strong>intrinsic noise</strong>—variability arising within a single cell due to the random timing of reactions—from <strong>extrinsic noise</strong>—variability between cells due to fluctuating global factors. Understanding these noise sources is essential for interpreting single‑cell data.</p>
+</li>
+<li>
+<p><strong>Deterministic models can mislead when copy numbers are low.</strong> Ordinary differential equations predict smooth trajectories and average concentrations. But at low molecule counts, fluctuations are large relative to the mean. The <strong>Gillespie Stochastic Simulation Algorithm</strong> provided an exact method to simulate discrete reaction events and generate trajectories consistent with the chemical master equation. By sampling reaction times and types based on propensity functions, we captured the full distribution of outcomes, not just the mean.</p>
+</li>
+<li>
+<p><strong>Transcriptional bursting is ubiquitous.</strong> Experiments across bacteria, yeast, plants and mammals show that genes often transcribe in bursts: periods of rapid mRNA production punctuated by inactivity. We modelled bursting using a telegraph process in which the gene toggles between ON and OFF states. Burst size (mRNAs per burst) and burst frequency (bursts per unit time) are controlled by transcription and promoter switching rates. Burst statistics explain why noise in gene expression can be super‑Poissonian (Fano factor &gt; 1) and why phenotypic diversity arises even in uniform environments.</p>
+</li>
+<li>
+<p><strong>Simulation reveals distributions and correlations.</strong> Using the SSA to simulate many trajectories of the telegraph model, we computed steady‑state distributions, Fano factors and autocorrelation functions for mRNA and proteins. We showed how tuning burst frequency and size influences noise levels, and how negative or positive feedback could dampen or amplify fluctuations. These simulations bridge theoretical models with single‑cell experiments and provide quantitative predictions.</p>
+</li>
+<li>
+<p><strong>Stochasticity is functional, not just noise.</strong> Far from being a nuisance, stochasticity can confer advantages: bet‑hedging strategies, phenotypic differentiation, and oscillations or bistability in gene regulatory networks. Cells can modulate noise through feedback, chromatin state and network architecture, suggesting that evolution harnesses randomness for adaptive purposes.</p>
+</li>
+</ol>
+<hr />
+<h3 id="methodological-connections-and-broader-context"><strong>Methodological connections and broader context</strong></h3>
+<p>The techniques developed in this chapter echo those used in earlier chapters and in other fields:</p>
+<ul>
+<li>
+<p><strong>Monte‑Carlo sampling</strong> was the unifying computational tool. In Chapter 3 we sampled gauge field configurations to measure confinement; in Chapter 4 we sampled asset price paths to price options; here we sampled reaction events to model gene expression. In each case, complex distributions were tackled by generating representative realizations rather than summing over all possibilities.</p>
+</li>
+<li>
+<p><strong>Importance of variance reduction and statistics.</strong> As in financial Monte‑Carlo, we emphasized the need for many simulations to estimate means and variances and to use statistical measures like the Fano factor to quantify noise. The interplay between burst parameters and noise mirrors the relationship between drift/volatility and option pricing uncertainty.</p>
+</li>
+<li>
+<p><strong>Cross‑disciplinary resonance.</strong> The Gillespie SSA is conceptually akin to discrete event simulations in queueing theory, network packet modelling, and epidemic spread. The notion of bursty activity appears in fields as diverse as telecommunications (bursty traffic), neuroscience (burst firing) and astrophysics (pulsar emissions). Recognizing these parallels fosters a deeper appreciation of stochastic processes across science and engineering.</p>
+</li>
+</ul>
+<hr />
+<h3 id="looking-ahead-controlling-noise-and-building-circuits"><strong>Looking ahead: controlling noise and building circuits</strong></h3>
+<p>While Chapter 5 focused on understanding how noise arises in simple gene circuits, the next logical step is to <strong>manipulate and exploit noise</strong>. Chapter 6 will likely delve into <strong>synthetic biology and systems design</strong>, exploring how cells use regulatory architectures—feedback loops, feedforward motifs and multi‑state promoters—to control the magnitude and temporal structure of fluctuations. We will learn how synthetic gene circuits can be engineered to perform computations, act as biological memory, or generate oscillations, and how stochasticity influences their performance.</p>
+<p>Possible topics include:</p>
+<ul>
+<li><strong>Noise suppression and amplification:</strong> How negative feedback can reduce noise and positive feedback can create bistability or toggle switches.</li>
+<li><strong>Stochastic resonance and information transmission:</strong> How noise can enhance signal detection in gene networks.</li>
+<li><strong>Genetic oscillators:</strong> How delayed feedback can produce rhythmic behaviour, and how noise affects the precision of biological clocks.</li>
+<li><strong>Noise in development:</strong> How stochastic gene expression contributes to pattern formation and differentiation.</li>
+</ul>
+<p>By integrating the stochastic simulation techniques of this chapter with the design principles of regulatory networks, we will develop a deeper understanding of how living systems process information, make decisions and adapt to changing environments.</p>
+<hr />
+<h2 id="references"><strong>References</strong></h2>
+<p>[1] D. T. Gillespie, "Exact stochastic simulation of coupled chemical reactions," <em>Journal of Physical Chemistry</em> <strong>81</strong>, 2340–2361 (1977).<br />
+The foundational paper introducing the Stochastic Simulation Algorithm (SSA) for exact simulation of chemical reaction systems.</p>
+<p>[2] M. B. Elowitz, A. J. Levine, E. D. Siggia, and P. S. Swain, "Stochastic gene expression in a single cell," <em>Science</em> <strong>297</strong>, 1183–1186 (2002).<br />
+Experimental demonstration of intrinsic and extrinsic noise in gene expression using dual-reporter systems.</p>
+<p>[3] J. Paulsson, "Summing up the noise in gene networks," <em>Nature</em> <strong>427</strong>, 415–418 (2004).<br />
+Theoretical framework for decomposing noise into intrinsic and extrinsic components and their propagation through networks.</p>
+<p>[4] A. Raj and A. van Oudenaarden, "Nature, nurture, or chance: stochastic gene expression and its consequences," <em>Cell</em> <strong>135</strong>, 216–226 (2008).<br />
+Comprehensive review of stochastic gene expression, bursting, and phenotypic consequences.</p>
+<p>[5] N. Friedman, L. Cai, and X. S. Xie, "Linking stochastic dynamics to population distribution: an analytical framework of gene expression," <em>Physical Review Letters</em> <strong>97</strong>, 168302 (2006).<br />
+Analytical solutions for the telegraph model and comparison with experimental mRNA distributions.</p>
+<p>[6] D. R. Larson, "What do expression dynamics tell us about the mechanism of transcription?" <em>Current Opinion in Genetics &amp; Development</em> <strong>21</strong>, 591–599 (2011).<br />
+Review of live-cell imaging of transcriptional bursting and its implications for gene regulation.</p>
+<p>[7] I. Golding, J. Paulsson, S. M. Zawilski, and E. C. Cox, "Real-time kinetics of gene activity in individual bacteria," <em>Cell</em> <strong>123</strong>, 1025–1036 (2005).<br />
+Single-molecule fluorescence measurements of transcriptional bursting in E. coli.</p>
+<p>[8] T. B. Kepler and T. C. Elston, "Stochasticity in transcriptional regulation: origins, consequences, and mathematical representations," <em>Biophysical Journal</em> <strong>81</strong>, 3116–3136 (2001).<br />
+Mathematical analysis of noise sources in transcription and the Chemical Master Equation.</p>
+<p>[9] J. M. Raser and E. K. O'Shea, "Noise in gene expression: origins, consequences, and control," <em>Science</em> <strong>309</strong>, 2010–2013 (2005).<br />
+Overview of how cells generate, propagate, and control noise in gene expression.</p>
+<p>[10] V. Shahrezaei and P. S. Swain, "Analytical distributions for stochastic gene expression," <em>Proceedings of the National Academy of Sciences</em> <strong>105</strong>, 17256–17261 (2008).<br />
+Exact analytical distributions for protein copy numbers in the telegraph model with translation and degradation.</p>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../../chapter-4/Chapter-4-Essay/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Chapter-4 Monte Carlo Option Pricing">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Chapter-4 Monte Carlo Option Pricing
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../../chapter-6/Chapter-6-Essay/" class="md-footer__link md-footer__link--next" aria-label="Next: Chapter-6 Advanced Monte Carlo Methods">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Chapter-6 Advanced Monte Carlo Methods
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://bigbookofcomputing.github.io" target="_blank" rel="noopener" title="bigbookofcomputing.github.io" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://x.com/bigbookofcomputing" target="_blank" rel="noopener" title="x.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M459.4 151.7c.3 4.5.3 9.1.3 13.6 0 138.7-105.6 298.6-298.6 298.6-59.5 0-114.7-17.2-161.1-47.1 8.4 1 16.6 1.3 25.3 1.3 49.1 0 94.2-16.6 130.3-44.8-46.1-1-84.8-31.2-98.1-72.8 6.5 1 13 1.6 19.8 1.6 9.4 0 18.8-1.3 27.6-3.6-48.1-9.7-84.1-52-84.1-103v-1.3c14 7.8 30.2 12.7 47.4 13.3-28.3-18.8-46.8-51-46.8-87.4 0-19.5 5.2-37.4 14.3-53C87.4 130.8 165 172.4 252.1 176.9c-1.6-7.8-2.6-15.9-2.6-24C249.5 95.1 296.3 48 354.4 48c30.2 0 57.5 12.7 76.7 33.1 23.7-4.5 46.5-13.3 66.6-25.3-7.8 24.4-24.4 44.8-46.1 57.8 21.1-2.3 41.6-8.1 60.4-16.2-14.3 20.8-32.2 39.3-52.6 54.3"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.facebook.com/bigbookofcomputing" target="_blank" rel="noopener" title="www.facebook.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M512 256C512 114.6 397.4 0 256 0S0 114.6 0 256c0 120 82.7 220.8 194.2 248.5V334.2h-52.8V256h52.8v-33.7c0-87.1 39.4-127.5 125-127.5 16.2 0 44.2 3.2 55.7 6.4V172c-6-.6-16.5-1-29.6-1-42 0-58.2 15.9-58.2 57.2V256h83.6l-14.4 78.2H287v175.9C413.8 494.8 512 386.9 512 256"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.linkedin.com/bigbookofcomputing" target="_blank" rel="noopener" title="www.linkedin.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3M135.4 416H69V202.2h66.5V416zM102.2 96a38.5 38.5 0 1 1 0 77 38.5 38.5 0 1 1 0-77m282.1 320h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.youtube.com/@big-book-of-computing" target="_blank" rel="noopener" title="www.youtube.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M549.7 124.1c-6.2-23.7-24.8-42.3-48.3-48.6C458.9 64 288.1 64 288.1 64S117.3 64 74.7 75.5c-23.5 6.3-42 24.9-48.3 48.6C15 167 15 256.4 15 256.4s0 89.4 11.4 132.3c6.3 23.6 24.8 41.5 48.3 47.8C117.3 448 288.1 448 288.1 448s170.8 0 213.4-11.5c23.5-6.3 42-24.2 48.3-47.8 11.4-42.9 11.4-132.3 11.4-132.3s0-89.4-11.4-132.3zM232.2 337.6V175.2l142.7 81.2z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+      <div class="md-consent" data-md-component="consent" id="__consent" hidden>
+        <div class="md-consent__overlay"></div>
+        <aside class="md-consent__inner">
+          <form class="md-consent__form md-grid md-typeset" name="consent">
+            
+
+
+  
+
+
+<h4>Cookie consent</h4>
+<p>We use cookies to recognize your repeated visits and preferences, as well as to measure the effectiveness of our documentation and whether users find what they're searching for. With your consent, you're helping us to make our documentation better.</p>
+<input class="md-toggle" type="checkbox" id="__settings" >
+<div class="md-consent__settings">
+  <ul class="task-list">
+    
+    
+      
+        
+  
+  
+    
+    
+  
+  <li class="task-list-item">
+    <label class="task-list-control">
+      <input type="checkbox" name="analytics" checked>
+      <span class="task-list-indicator"></span>
+      Google Analytics
+    </label>
+  </li>
+
+      
+    
+    
+      
+        
+  
+  
+    
+    
+  
+  <li class="task-list-item">
+    <label class="task-list-control">
+      <input type="checkbox" name="github" checked>
+      <span class="task-list-indicator"></span>
+      GitHub
+    </label>
+  </li>
+
+      
+    
+    
+  </ul>
+</div>
+<div class="md-consent__controls">
+  
+    
+      <button class="md-button md-button--primary">Accept</button>
+    
+    
+    
+  
+    
+    
+    
+      <label class="md-button" for="__settings">Manage settings</label>
+    
+  
+</div>
+          </form>
+        </aside>
+      </div>
+      <script>var consent=__md_get("__consent");if(consent)for(var input of document.forms.consent.elements)input.name&&(input.checked=consent[input.name]||!1);else"file:"!==location.protocol&&setTimeout((function(){document.querySelector("[data-md-component=consent]").hidden=!1}),250);var form=document.forms.consent;for(var action of["submit","reset"])form.addEventListener(action,(function(e){if(e.preventDefault(),"reset"===e.type)for(var n of document.forms.consent.elements)n.name&&(n.checked=!1);__md_set("__consent",Object.fromEntries(Array.from(new FormData(form).keys()).map((function(e){return[e,!0]})))),location.hash="",location.reload()}))</script>
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["announce.dismiss", "content.action.edit", "content.action.view", "content.code.annotate", "content.code.copy", "content.tooltips", "navigation.footer", "navigation.indexes", "navigation.sections", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../../static/mathjax-config.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.0/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

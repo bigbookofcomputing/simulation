@@ -1,0 +1,3337 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="A comprehensive guide to the foundations of stochastic simulation">
+      
+      
+        <meta name="author" content="Big Book of Computing">
+      
+      
+        <link rel="canonical" href="https://bigbookofcomputing.github.io/chapters/chapter-13/Chapter-13-Essay/">
+      
+      
+        <link rel="prev" href="../../chapter-12/Chapter-12-Essay/">
+      
+      
+        <link rel="next" href="../../chapter-14/Chapter-14-Essay/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/logo.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>Chapter-13 Collective Behavior & Pattern Formation - Big Book of Computing | Simulation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+      <link rel="stylesheet" href="../../../static/styles.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  
+
+
+  
+  
+
+<script id="__analytics">function __md_analytics(){function e(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],e("js",new Date),e("config","G-ECS7B3X8JM"),document.addEventListener("DOMContentLoaded",(function(){document.forms.search&&document.forms.search.query.addEventListener("blur",(function(){this.value&&e("event","search",{search_term:this.value})}));document$.subscribe((function(){var t=document.forms.feedback;if(void 0!==t)for(var a of t.querySelectorAll("[type=submit]"))a.addEventListener("click",(function(a){a.preventDefault();var n=document.location.pathname,d=this.getAttribute("data-md-value");e("event","feedback",{page:n,data:d}),t.firstElementChild.disabled=!0;var r=t.querySelector(".md-feedback__note [data-md-value='"+d+"']");r&&(r.hidden=!1)})),t.hidden=!1})),location$.subscribe((function(t){e("config","G-ECS7B3X8JM",{page_path:t.pathname})}))}));var t=document.createElement("script");t.async=!0,t.src="https://www.googletagmanager.com/gtag/js?id=G-ECS7B3X8JM",document.getElementById("__analytics").insertAdjacentElement("afterEnd",t)}</script>
+  
+    <script>if("undefined"!=typeof __md_analytics){var consent=__md_get("__consent");consent&&consent.analytics&&__md_analytics()}</script>
+  
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#chapter-13-collective-behavior-pattern-formation" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="Big Book of Computing | Simulation" class="md-header__button md-logo" aria-label="Big Book of Computing | Simulation" data-md-component="logo">
+      
+  <img src="../../../assets/logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Big Book of Computing | Simulation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Chapter-13 Collective Behavior & Pattern Formation
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1M8 13h8v-2H8zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4a5 5 0 0 0 5-5 5 5 0 0 0-5-5"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h10a5 5 0 0 0 5-5 5 5 0 0 0-5-5m0 8a3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3 3 3 0 0 1-3 3"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="indigo"  aria-label="Switch to system preference"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to system preference" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h10a5 5 0 0 0 5-5 5 5 0 0 0-5-5M7 15a3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3 3 3 0 0 1-3 3"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/bigbookofcomputing/simulation" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../contents/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Contents
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../introduction/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Introduction
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../chapter-1/Chapter-1-Essay/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Chapters
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../chapter-1/Chapter-1-WorkBook/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  WorkBooks
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../chapter-1/Chapter-1-CodeBook/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  CodeBooks
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Big Book of Computing | Simulation" class="md-nav__button md-logo" aria-label="Big Book of Computing | Simulation" data-md-component="logo">
+      
+  <img src="../../../assets/logo.png" alt="logo">
+
+    </a>
+    Big Book of Computing | Simulation
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/bigbookofcomputing/simulation" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contents/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contents
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introduction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapters
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Chapters
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-1/Chapter-1-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-1 Foundations of Stochastic Simulation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-2/Chapter-2-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-2 The Ising Model
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-3/Chapter-3-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-3 Lattice Gauge Theory
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-4/Chapter-4-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-4 Monte Carlo Option Pricing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-5/Chapter-5-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-5 Stochastic Systems Biology
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-6/Chapter-6-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-6 Advanced Monte Carlo Methods
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-7/Chapter-7-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-7 Molecular Dynamics (MD)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-8/Chapter-8-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-8 The Stochastic Calculus (SDEs)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-9/Chapter-9-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-9 Black-Scholes-Merton (BSM)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-10/Chapter-10-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-10 Neuroscience (Hodgkin-Huxley)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-11/Chapter-11-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-11 Agent-Based & Network Models
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-12/Chapter-12-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-12 Collective Behavior & Pattern Formation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-13 Collective Behavior & Pattern Formation
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-13 Collective Behavior & Pattern Formation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Introduction
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#chapter-outline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Chapter Outline
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#131-how-cells-compute-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13.1 How Cells "Compute" Structure
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="13.1 How Cells &#34;Compute&#34; Structure">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-mystery-of-morphogenesis" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Mystery of Morphogenesis
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-challenge-from-genes-to-geometry" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Challenge: From Genes to Geometry
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#computational-frameworks-for-development" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Computational Frameworks for Development
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#emergence-and-symmetry-breaking" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Emergence and Symmetry Breaking
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-role-of-computational-modeling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Role of Computational Modeling
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#132-reactiondiffusion-models-turing-patterns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13.2 Reaction–Diffusion Models (Turing Patterns)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="13.2 Reaction–Diffusion Models (Turing Patterns)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-mathematical-framework" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Mathematical Framework
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mechanism-local-activation-long-range-inhibition" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mechanism: Local Activation, Long-Range Inhibition
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#diffusion-driven-instability" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Diffusion-Driven Instability
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#emergent-morphologies" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Emergent Morphologies
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#133-gene-regulatory-networks-grns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13.3 Gene Regulatory Networks (GRNs)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="13.3 Gene Regulatory Networks (GRNs)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-gene-regulatory-network-grn-framework" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Gene Regulatory Network (GRN) Framework
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#network-architecture-and-structural-motifs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Network Architecture and Structural Motifs
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#boolean-networks-and-attractors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Boolean Networks and Attractors
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#continuous-models-and-bistability" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Continuous Models and Bistability
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#134-chapter-summary-and-bridge-to-chapter-14" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13.4 Chapter Summary and Bridge to Chapter 14
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="13.4 Chapter Summary and Bridge to Chapter 14">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#synthesis-of-pattern-formation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Synthesis of Pattern Formation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#philosophical-and-computational-implications" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Philosophical and Computational Implications
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bridge-to-chapter-14-from-morphogenesis-to-memory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bridge to Chapter 14: From Morphogenesis to Memory
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        References
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-14/Chapter-14-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-14 Computational Neuroscience
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-15/Chapter-15-Essay.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-15 Graph and Network Models
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    WorkBooks
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    WorkBooks
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-1/Chapter-1-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-1 Foundations of Stochastic Simulation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-2/Chapter-2-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-2 The Ising Model
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-3/Chapter-3-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-3 Lattice Gauge Theory
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-4/Chapter-4-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-4 Monte Carlo Option Pricing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-5/Chapter-5-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-5 Stochastic Systems Biology
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-6/Chapter-6-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-6 Advanced Monte Carlo Methods
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-7/Chapter-7-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-7 Molecular Dynamics (MD)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-8/Chapter-8-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-8 The Stochastic Calculus (SDEs)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-9/Chapter-9-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-9 Black-Scholes-Merton (BSM)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-10/Chapter-10-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-10 Neuroscience (Hodgkin-Huxley)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-11/Chapter-11-WorkBook" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-11 Agent-Based & Network Models
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-12/Chapter-12-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-12 Collective Behavior & Pattern Formation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Chapter-13-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-13 Collective Behavior & Pattern Formation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-14/Chapter-14-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-14 Computational Neuroscience
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-15/Chapter-15-WorkBook.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-15 Graph and Network Models
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CodeBooks
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    CodeBooks
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-1/Chapter-1-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-1 Foundations of Stochastic Simulation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-2/Chapter-2-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-2 The Ising Model
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-3/Chapter-3-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-3 Lattice Gauge Theory
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-4/Chapter-4-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-4 Monte Carlo Option Pricing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-5/Chapter-5-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-5 Stochastic Systems Biology
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-6/Chapter-6-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-6 Advanced Monte Carlo Methods
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-7/Chapter-7-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-7 Molecular Dynamics (MD)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-8/Chapter-8-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-8 The Stochastic Calculus (SDEs)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-9/Chapter-9-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-9 Black-Scholes-Merton (BSM)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-10/Chapter-10-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-10 Neuroscience (Hodgkin-Huxley)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-11/Chapter-11-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-11 Agent-Based & Network Models
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-12/Chapter-12-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-12 Collective Behavior & Pattern Formation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Chapter-13-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-13 Collective Behavior & Pattern Formation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-14/Chapter-14-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-14 Computational Neuroscience
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-15/Chapter-15-CodeBook.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-15 Graph and Network Models
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Introduction
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#chapter-outline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Chapter Outline
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#131-how-cells-compute-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13.1 How Cells "Compute" Structure
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="13.1 How Cells &#34;Compute&#34; Structure">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-mystery-of-morphogenesis" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Mystery of Morphogenesis
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-challenge-from-genes-to-geometry" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Challenge: From Genes to Geometry
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#computational-frameworks-for-development" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Computational Frameworks for Development
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#emergence-and-symmetry-breaking" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Emergence and Symmetry Breaking
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-role-of-computational-modeling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Role of Computational Modeling
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#132-reactiondiffusion-models-turing-patterns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13.2 Reaction–Diffusion Models (Turing Patterns)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="13.2 Reaction–Diffusion Models (Turing Patterns)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-mathematical-framework" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Mathematical Framework
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mechanism-local-activation-long-range-inhibition" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mechanism: Local Activation, Long-Range Inhibition
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#diffusion-driven-instability" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Diffusion-Driven Instability
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#emergent-morphologies" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Emergent Morphologies
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#133-gene-regulatory-networks-grns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13.3 Gene Regulatory Networks (GRNs)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="13.3 Gene Regulatory Networks (GRNs)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-gene-regulatory-network-grn-framework" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Gene Regulatory Network (GRN) Framework
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#network-architecture-and-structural-motifs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Network Architecture and Structural Motifs
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#boolean-networks-and-attractors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Boolean Networks and Attractors
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#continuous-models-and-bistability" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Continuous Models and Bistability
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#134-chapter-summary-and-bridge-to-chapter-14" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13.4 Chapter Summary and Bridge to Chapter 14
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="13.4 Chapter Summary and Bridge to Chapter 14">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#synthesis-of-pattern-formation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Synthesis of Pattern Formation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#philosophical-and-computational-implications" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Philosophical and Computational Implications
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bridge-to-chapter-14-from-morphogenesis-to-memory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bridge to Chapter 14: From Morphogenesis to Memory
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        References
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+    <a href="https://github.com/bigbookofcomputing/simulation/edit/master/docs/chapters/chapter-13/Chapter-13-Essay.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+    
+      
+    
+    <a href="https://github.com/bigbookofcomputing/simulation/raw/master/docs/chapters/chapter-13/Chapter-13-Essay.md" title="View source of this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.2 8.2 0 0 1-1.23-2"/></svg>
+    </a>
+  
+
+
+<h1 id="chapter-13-collective-behavior-pattern-formation"><strong>Chapter 13: Collective Behavior &amp; Pattern Formation</strong></h1>
+<hr />
+<h2 id="introduction"><strong>Introduction</strong></h2>
+<p>The emergence of biological form—<strong>morphogenesis</strong>—presents a profound computational puzzle: how do genetically identical cells, starting from a uniform embryonic state, spontaneously coordinate to generate complex ordered structures like zebra stripes, leopard spots, or limb geometry without relying on a centralized blueprint? Traditional molecular biology identifies genetic and protein components but struggles to explain how these components <strong>collectively compute geometry and identity</strong> through decentralized local interactions. In his seminal 1952 paper, Alan Turing proposed that biological patterns arise not from genetic prespecification but from <strong>symmetry breaking</strong> driven by simple physical-chemical feedback: random fluctuations in chemical concentrations (morphogens) are amplified through coupled reaction and diffusion processes, converting uniform states into stable spatial differentiation. This requires two complementary computational frameworks: (1) <strong>reaction-diffusion PDEs</strong> modeling continuous chemical fields that diffuse across tissue, and (2) <strong>agent-based models</strong> representing discrete cells following local rules for division, adhesion, migration, and signaling. The mutual feedback between continuous chemical dynamics and discrete cellular agents drives the emergent computation that constructs biological architecture.</p>
+<p>This chapter develops the mathematical and computational foundations of pattern formation, beginning with <strong>Turing's reaction-diffusion systems</strong> where two interacting morphogens with concentrations <span class="arithmatex">\(u, v\)</span> evolve according to <span class="arithmatex">\(\frac{\partial u}{\partial t} = f(u,v) + D_u \nabla^2 u\)</span> and <span class="arithmatex">\(\frac{\partial v}{\partial t} = g(u,v) + D_v \nabla^2 v\)</span>. The critical insight is <strong>local activation, long-range inhibition</strong>: an activator <span class="arithmatex">\(u\)</span> promotes its own production (autocatalysis, positive feedback) and creates inhibitor <span class="arithmatex">\(v\)</span>, but because the inhibitor diffuses much faster (<span class="arithmatex">\(D_v \gg D_u\)</span>), it suppresses activator growth in surrounding regions, creating stable periodic spacing. This <strong>diffusion-driven instability</strong> paradoxically uses diffusion—normally a stabilizing, homogenizing process—to amplify noise into structured patterns (spots, stripes, labyrinths) whose characteristic wavelength is determined by the diffusion coefficient ratio. We then shift from spatial geometry to logical architecture through <strong>gene regulatory networks (GRNs)</strong>, modeled as directed graphs <span class="arithmatex">\(G = (V, E)\)</span> where nodes represent genes/proteins and signed edges encode activation/inhibition interactions. Structural motifs (positive feedback loops for memory, negative feedback for oscillation, mutual inhibition for binary switches) act as cellular logical gates, and <strong>Boolean network dynamics</strong> reveal that stable gene expression patterns—<strong>attractors</strong>—correspond to distinct cell types, making differentiation a computational transition between attractor basins.</p>
+<p>By the end of this chapter, you will master the complete pattern formation framework: implementing reaction-diffusion simulations (Gray-Scott model) to generate Turing patterns by adjusting feed/kill rate parameters, understanding how diffusion coefficient imbalance creates structure from uniform chemical fields, analyzing GRN topology using graph theory metrics (degree, centrality, motifs), and simulating Boolean network dynamics to identify attractors as stable cell fates. You will see how the same feedback principles operate across scales—positive feedback stabilizes states (autocatalysis in RD, cell memory in GRNs), negative feedback controls spacing and rhythm (long-range inhibition, oscillatory genes)—and recognize that biological form is an <strong>emergent computational output</strong> of physical laws, not genetic prescription. This bridges statistical physics (Ising alignment → magnetization), financial markets (trader herding → volatility clustering), and developmental biology (chemical feedback → spatial patterns), demonstrating the universality of emergence. Chapter 14 extends these principles from morphogenesis to cognition, showing how Hopfield networks use attractor dynamics for associative memory—the neural analogue of GRN cell fate determination.</p>
+<hr />
+<h2 id="chapter-outline"><strong>Chapter Outline</strong></h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;"><strong>Sec.</strong></th>
+<th style="text-align: left;"><strong>Title</strong></th>
+<th style="text-align: left;"><strong>Core Ideas &amp; Examples</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>13.1</strong></td>
+<td style="text-align: left;">How Cells "Compute" Structure</td>
+<td style="text-align: left;"><strong>Morphogenesis challenge</strong>: Genetically identical cells generate ordered form (stripes, spots, limbs) without central blueprint. <strong>Emergent computation</strong>: Local chemical signaling + cell behavior rules → global geometry. <strong>Symmetry breaking</strong>: Uniform state → structured state via noise amplification through feedback. <strong>Dual framework</strong>: Continuous PDEs (chemical diffusion) + discrete ABMs (cell agents) with mutual feedback. Turing's 1952 insight: form from physics, not genetic prespecification.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>13.2</strong></td>
+<td style="text-align: left;">Reaction-Diffusion (Turing Patterns)</td>
+<td style="text-align: left;"><strong>RD equations</strong>: <span class="arithmatex">\(\frac{\partial u}{\partial t} = f(u,v) + D_u \nabla^2 u\)</span>, <span class="arithmatex">\(\frac{\partial v}{\partial t} = g(u,v) + D_v \nabla^2 v\)</span> with reaction terms <span class="arithmatex">\(f,g\)</span> and diffusion <span class="arithmatex">\(D_u, D_v\)</span>. <strong>Local activation, long-range inhibition</strong>: Activator <span class="arithmatex">\(u\)</span> (slow diffusion, autocatalysis) vs. inhibitor <span class="arithmatex">\(v\)</span> (fast diffusion <span class="arithmatex">\(D_v \gg D_u\)</span>, suppresses <span class="arithmatex">\(u\)</span>). <strong>Diffusion-driven instability</strong>: Diffusion amplifies fluctuations into periodic patterns. <strong>Emergent morphologies</strong>: Spots (leopard), stripes (zebra), labyrinths—wavelength set by <span class="arithmatex">\(D_v/D_u\)</span> ratio. Gray-Scott model implementation.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>13.3</strong></td>
+<td style="text-align: left;">Gene Regulatory Networks (GRNs)</td>
+<td style="text-align: left;"><strong>Graph framework</strong>: Directed graph <span class="arithmatex">\(G = (V, E)\)</span> with genes/proteins as nodes, signed edges (activation <span class="arithmatex">\(+1\)</span>, inhibition <span class="arithmatex">\(-1\)</span>). <strong>Structural motifs</strong>: Positive feedback loop (memory/stability), negative feedback (oscillation/homeostasis), mutual inhibition (toggle switch, binary decisions). <strong>Boolean network dynamics</strong>: ON/OFF states, logic rules (AND/OR/NOT), attractors as stable cell types. <strong>Bistability</strong>: Continuous ODE models with two stable states (genetic toggle switch), differentiation as attractor transition. Graph metrics: degree, centrality, hubs.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>13.4</strong></td>
+<td style="text-align: left;">Chapter Summary &amp; Bridge</td>
+<td style="text-align: left;"><strong>Dual frameworks synthesis</strong>: RD (spatial patterns from diffusion imbalance) + GRNs (logical patterns from feedback loops). <strong>Feedback drives form</strong>: Positive feedback → stability/structure, negative feedback → spacing/rhythm. <strong>Genome as program</strong>: Dynamic system with multiple attractors (cell types), not static blueprint. Bridge to Chapter 14: From morphogenesis (chemical computation in cells) to cognition (electrical computation in neural networks)—Hopfield attractor networks for memory storage, neural field dynamics as activity diffusion, mutual inhibition for decision boundaries. Intelligence as emergent property of organized matter.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="131-how-cells-compute-structure"><strong>13.1 How Cells "Compute" Structure</strong></h2>
+<hr />
+<h3 id="the-mystery-of-morphogenesis"><strong>The Mystery of Morphogenesis</strong></h3>
+<p>One of the most profound questions in biology is how organisms develop their complex, ordered forms—a process known as <strong>morphogenesis</strong>. Every multicellular organism starts from a single cell, dividing into millions of descendants that are initially genetically identical. Yet, these cells must coordinate their actions to spontaneously produce specific shapes, tissues, and patterns, such as the stripes on a fish or the structure of a limb, without relying on a central blueprint.</p>
+<p>Alan Turing, the pioneer of computer science, formalized this question in 1952, proposing that <strong>biological form</strong> could arise spontaneously from simple physical and chemical rules. His core insight was that <strong>cells compute geometry</strong> through local chemical signaling.</p>
+<hr />
+<h3 id="the-challenge-from-genes-to-geometry"><strong>The Challenge: From Genes to Geometry</strong></h3>
+<p>Traditional molecular biology excels at identifying the components (genes and proteins). However, understanding morphogenesis requires explaining <strong>how these components collectively generate structure and pattern</strong>.</p>
+<p>The primary challenge lies in coordination:
+* <strong>The "Processors":</strong> The individual <strong>cells</strong> act as decentralized processors.
+* <strong>The "Rules":</strong> The cells follow simple, local behavioral and <strong>molecular kinetics</strong> (e.g., sense chemical concentrations, divide, secrete).
+* <strong>The "Output":</strong> The resulting <strong>complex geometry and functional structure</strong> (the stripes, spots, or organ shape) is the emergent output.</p>
+<p>This suggests that development is a process of <strong>emergent computation</strong>.</p>
+<div class="admonition tip">
+<p class="admonition-title">Why Decentralized Computation?</p>
+<p>Centralized blueprints would require each cell to know its global position ("I am cell 47,293 at coordinates (x, y, z)") and execute a pre-programmed instruction set. This is computationally intractable for billions of cells and fragile to damage. Instead, evolution discovered <strong>distributed algorithms</strong>: each cell runs the same local rules (sense chemicals, respond), and global patterns emerge automatically. This is identical to how ant colonies build complex nests without architects—local pheromone following creates emergent architecture.</p>
+</div>
+<hr />
+<h3 id="computational-frameworks-for-development"><strong>Computational Frameworks for Development</strong></h3>
+<p>To model and understand this distributed computation, two complementary computational frameworks are employed:</p>
+<ol>
+<li><strong>Partial Differential Equations (PDEs):</strong> Used to model <strong>continuous fields</strong> such as chemical concentrations (morphogens) that diffuse across tissue in space and time.</li>
+<li><strong>Agent-Based Models (ABMs):</strong> Used to model the behavior of <strong>individual cells</strong> (the discrete agents) following local rules for division, adhesion, migration, and signaling.</li>
+</ol>
+<p>This hybrid approach recognizes that morphogenesis is driven by a constant <strong>mutual feedback</strong> between <strong>discrete agents</strong> (cells) and <strong>continuous dynamics</strong> (chemical fields).</p>
+<hr />
+<h3 id="emergence-and-symmetry-breaking"><strong>Emergence and Symmetry Breaking</strong></h3>
+<p>Morphogenesis requires the system to transition from a uniform, homogeneous state (early embryo) to a structured, ordered state. This is the biological equivalent of <strong>symmetry breaking</strong> in physics.</p>
+<p>The emergence of order is triggered when:
+* <strong>Noise:</strong> Random fluctuations in local chemical concentrations occur.
+* <strong>Interaction:</strong> These fluctuations are coupled to specific chemical feedback loops (activation and inhibition).
+* <strong>Structure:</strong> The noise is amplified and converted into a stable, non-uniform <strong>spatial differentiation</strong>.</p>
+<p>The process demonstrates that <strong>structure emerges from simple rules and interaction</strong>, not centralized control.</p>
+<hr />
+<h3 id="the-role-of-computational-modeling"><strong>The Role of Computational Modeling</strong></h3>
+<p>Computational models are essential for studying morphogenesis because they allow us to:
+* <strong>Test the Rules:</strong> Directly implement hypotheses about local molecular rules (e.g., the speed of chemical diffusion, the rate of reaction).
+* <strong>Visualize Emergence:</strong> Simulate the process over time and observe how complex macroscopic patterns arise from microscopic causes.
+* <strong>Bridge Disciplines:</strong> Unify concepts from <strong>biology</strong> (gene expression), <strong>physics</strong> (diffusion equations), and <strong>computation</strong> (simulation algorithms).</p>
+<p>The ultimate goal is to understand how <strong>information processing in space and time</strong> constructs the architecture of life.</p>
+<hr />
+<h2 id="132-reactiondiffusion-models-turing-patterns"><strong>13.2 Reaction–Diffusion Models (Turing Patterns)</strong></h2>
+<p>The <strong>Reaction–Diffusion (RD) system</strong>, introduced by Alan Turing in 1952, provides the mathematical and computational foundation for understanding how complex <strong>biological patterns</strong> can arise spontaneously from simple chemical interactions. This framework explains the self-organization of structure (<strong>morphogenesis</strong>) through the physics of transport and feedback, rather than requiring detailed genetic pre-coding.</p>
+<hr />
+<h3 id="the-mathematical-framework"><strong>The Mathematical Framework</strong></h3>
+<p>The core RD system models the continuous concentration fields of two or more interacting chemical species (morphogens) diffusing across tissue in space and time. The equations combine two distinct physical processes: local chemical kinetics and spatial transport:</p>
+<div class="arithmatex">\[\frac{\partial u}{\partial t} = f(u, v) + D_u \nabla^2 u$$
+$$\frac{\partial v}{\partial t} = g(u, v) + D_v \nabla^2 v\]</div>
+<p>Here:
+* <span class="arithmatex">\(\mathbf{u}\)</span> and <span class="arithmatex">\(\mathbf{v}\)</span> are the concentrations of the two morphogens.
+* <span class="arithmatex">\(\mathbf{f(u, v)}\)</span> and <span class="arithmatex">\(\mathbf{g(u, v)}\)</span> are the <strong>reaction terms</strong>, which define the local chemical kinetics (production, decay, and interaction).
+* <span class="arithmatex">\(\mathbf{D_u}\)</span> and <span class="arithmatex">\(\mathbf{D_v}\)</span> are the constant <strong>diffusion coefficients</strong> (transport rates).
+* <span class="arithmatex">\(\mathbf{\nabla^2}\)</span> is the <strong>Laplacian operator</strong>, which mathematically models diffusion across the spatial domain.</p>
+<hr />
+<h3 id="mechanism-local-activation-long-range-inhibition"><strong>Mechanism: Local Activation, Long-Range Inhibition</strong></h3>
+<p>Turing's great insight was that stable, stationary spatial patterns—now called <strong>Turing patterns</strong>—emerge when there is a specific and crucial <strong>imbalance</strong> between the two species:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Chemical Role</th>
+<th style="text-align: left;">Symbol</th>
+<th style="text-align: left;">Behavior</th>
+<th style="text-align: left;">Requirement for Pattern</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Activator</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(u\)</span></td>
+<td style="text-align: left;">Promotes its own production (autocatalysis) and that of the inhibitor.</td>
+<td style="text-align: left;">Must diffuse <strong>slowly</strong> (<span class="arithmatex">\(D_u\)</span>).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Inhibitor</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(v\)</span></td>
+<td style="text-align: left;">Suppresses the activator.</td>
+<td style="text-align: left;">Must diffuse significantly <strong>faster</strong> (<span class="arithmatex">\(D_v \gg D_u\)</span>).</td>
+</tr>
+</tbody>
+</table>
+<p>This setup generates the "<strong>local activation, long-range inhibition</strong>" principle:
+1.  A random, local fluctuation of <span class="arithmatex">\(u\)</span> at a specific point amplifies itself (positive feedback).
+2.  The activator also generates the inhibitor, <span class="arithmatex">\(v\)</span>.
+3.  Because <span class="arithmatex">\(v\)</span> spreads faster, it suppresses <span class="arithmatex">\(u\)</span>'s growth in the surrounding, long-range neighborhood.
+4.  This creates stable, periodic spacing where small "active" spots are surrounded by inhibitory "off" rings.</p>
+<div class="admonition example">
+<p class="admonition-title">The Gray-Scott Model: A Computational Turing System</p>
+<p>The Gray-Scott model is a widely studied RD system with reactions:
+$<span class="arithmatex">\(u + 2v \to 3v \quad (\text{autocatalytic})\)</span>$
+$<span class="arithmatex">\(v \to P \quad (\text{decay})\)</span>$
+The PDEs are:
+$<span class="arithmatex">\(\frac{\partial u}{\partial t} = D_u \nabla^2 u - uv^2 + F(1-u)\)</span>$
+$<span class="arithmatex">\(\frac{\partial v}{\partial t} = D_v \nabla^2 v + uv^2 - (F+k)v\)</span>$
+where <span class="arithmatex">\(F\)</span> is the feed rate (replenishment of <span class="arithmatex">\(u\)</span>) and <span class="arithmatex">\(k\)</span> is the kill rate (removal of <span class="arithmatex">\(v\)</span>). By varying <span class="arithmatex">\((F, k)\)</span> with <span class="arithmatex">\(D_v/D_u \approx 2\)</span>, you can generate spots, stripes, or chaotic patterns—all from identical initial random noise.</p>
+</div>
+<hr />
+<h3 id="diffusion-driven-instability"><strong>Diffusion-Driven Instability</strong></h3>
+<p>Normally, diffusion acts to stabilize and homogenize a system by smoothing out concentrations. Turing showed that when coupled with specific nonlinear kinetics, diffusion can paradoxically <strong>drive instability</strong> and create structure from a uniform, stable chemical field.</p>
+<p>The <strong>most unstable mode</strong> (a specific wavelength) dictates the characteristic spacing of the final pattern, meaning that the width of a stripe or the distance between two spots is determined by the ratio of the diffusion coefficients (<span class="arithmatex">\(D_v / D_u\)</span>). This explains why biological features like a zebra's stripes have a predictable, uniform width.</p>
+<hr />
+<h3 id="emergent-morphologies"><strong>Emergent Morphologies</strong></h3>
+<p>By adjusting the kinetic parameters (such as feed and kill rates, or concentrations) within a Reaction–Diffusion system (e.g., the Gray–Scott model), the system spontaneously generates a variety of fixed, stable patterns:</p>
+<ul>
+<li><strong>Spots:</strong> Isolated clusters of high activator concentration (e.g., leopard spots).</li>
+<li><strong>Stripes:</strong> Alternating bands of high and low concentration (e.g., zebra stripes).</li>
+<li><strong>Labyrinths:</strong> Complex maze-like networks.</li>
+</ul>
+<p>This mechanism connects <strong>biochemistry</strong> (reactions) and <strong>geometry</strong> (patterns), showing that biological form is an <strong>emergent computational output</strong> of physical laws.</p>
+<p>Here is the basic Gray-Scott RD simulation structure:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">gray_scott_simulation</span><span class="p">(</span><span class="n">nx</span><span class="p">,</span> <span class="n">ny</span><span class="p">,</span> <span class="n">steps</span><span class="p">,</span> <span class="n">Du</span><span class="p">,</span> <span class="n">Dv</span><span class="p">,</span> <span class="n">F</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">dt</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">dx</span><span class="o">=</span><span class="mf">1.0</span><span class="p">):</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="sd">    Gray-Scott reaction-diffusion simulation for Turing patterns.</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="sd">    Parameters:</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="sd">    - nx, ny: Grid dimensions</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="sd">    - steps: Number of time steps</span>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="sd">    - Du, Dv: Diffusion coefficients (Dv &gt; Du for patterns)</span>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="sd">    - F: Feed rate (replenishment of u)</span>
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="sd">    - k: Kill rate (removal of v)</span>
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="sd">    - dt, dx: Time and space discretization</span>
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>    <span class="c1"># Initialize concentrations with small random perturbations</span>
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>    <span class="n">u</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="n">nx</span><span class="p">,</span> <span class="n">ny</span><span class="p">))</span>  <span class="c1"># Activator (start at 1)</span>
+</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>    <span class="n">v</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">nx</span><span class="p">,</span> <span class="n">ny</span><span class="p">))</span>  <span class="c1"># Inhibitor (start at 0)</span>
+</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>
+</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>    <span class="c1"># Add small random seed in center to break symmetry</span>
+</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>    <span class="n">u</span><span class="p">[</span><span class="n">nx</span><span class="o">//</span><span class="mi">2</span><span class="o">-</span><span class="mi">5</span><span class="p">:</span><span class="n">nx</span><span class="o">//</span><span class="mi">2</span><span class="o">+</span><span class="mi">5</span><span class="p">,</span> <span class="n">ny</span><span class="o">//</span><span class="mi">2</span><span class="o">-</span><span class="mi">5</span><span class="p">:</span><span class="n">ny</span><span class="o">//</span><span class="mi">2</span><span class="o">+</span><span class="mi">5</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.5</span>
+</span><span id="__span-0-19"><a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>    <span class="n">v</span><span class="p">[</span><span class="n">nx</span><span class="o">//</span><span class="mi">2</span><span class="o">-</span><span class="mi">5</span><span class="p">:</span><span class="n">nx</span><span class="o">//</span><span class="mi">2</span><span class="o">+</span><span class="mi">5</span><span class="p">,</span> <span class="n">ny</span><span class="o">//</span><span class="mi">2</span><span class="o">-</span><span class="mi">5</span><span class="p">:</span><span class="n">ny</span><span class="o">//</span><span class="mi">2</span><span class="o">+</span><span class="mi">5</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.25</span>
+</span><span id="__span-0-20"><a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>
+</span><span id="__span-0-21"><a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>    <span class="c1"># Discrete Laplacian kernel for diffusion</span>
+</span><span id="__span-0-22"><a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>    <span class="n">laplacian_kernel</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+</span><span id="__span-0-23"><a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a>                                  <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+</span><span id="__span-0-24"><a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a>                                  <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]])</span> <span class="o">/</span> <span class="p">(</span><span class="n">dx</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+</span><span id="__span-0-25"><a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a>
+</span><span id="__span-0-26"><a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a>    <span class="k">for</span> <span class="n">step</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">steps</span><span class="p">):</span>
+</span><span id="__span-0-27"><a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a>        <span class="c1"># Compute Laplacian (diffusion term) using convolution</span>
+</span><span id="__span-0-28"><a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a>        <span class="kn">from</span><span class="w"> </span><span class="nn">scipy.ndimage</span><span class="w"> </span><span class="kn">import</span> <span class="n">convolve</span>
+</span><span id="__span-0-29"><a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a>        <span class="n">laplacian_u</span> <span class="o">=</span> <span class="n">convolve</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">laplacian_kernel</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;wrap&#39;</span><span class="p">)</span>
+</span><span id="__span-0-30"><a id="__codelineno-0-30" name="__codelineno-0-30" href="#__codelineno-0-30"></a>        <span class="n">laplacian_v</span> <span class="o">=</span> <span class="n">convolve</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">laplacian_kernel</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;wrap&#39;</span><span class="p">)</span>
+</span><span id="__span-0-31"><a id="__codelineno-0-31" name="__codelineno-0-31" href="#__codelineno-0-31"></a>
+</span><span id="__span-0-32"><a id="__codelineno-0-32" name="__codelineno-0-32" href="#__codelineno-0-32"></a>        <span class="c1"># Reaction terms (Gray-Scott kinetics)</span>
+</span><span id="__span-0-33"><a id="__codelineno-0-33" name="__codelineno-0-33" href="#__codelineno-0-33"></a>        <span class="n">reaction_u</span> <span class="o">=</span> <span class="o">-</span><span class="n">u</span> <span class="o">*</span> <span class="n">v</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">F</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">u</span><span class="p">)</span>
+</span><span id="__span-0-34"><a id="__codelineno-0-34" name="__codelineno-0-34" href="#__codelineno-0-34"></a>        <span class="n">reaction_v</span> <span class="o">=</span> <span class="n">u</span> <span class="o">*</span> <span class="n">v</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="p">(</span><span class="n">F</span> <span class="o">+</span> <span class="n">k</span><span class="p">)</span> <span class="o">*</span> <span class="n">v</span>
+</span><span id="__span-0-35"><a id="__codelineno-0-35" name="__codelineno-0-35" href="#__codelineno-0-35"></a>
+</span><span id="__span-0-36"><a id="__codelineno-0-36" name="__codelineno-0-36" href="#__codelineno-0-36"></a>        <span class="c1"># Update concentrations (Forward Euler)</span>
+</span><span id="__span-0-37"><a id="__codelineno-0-37" name="__codelineno-0-37" href="#__codelineno-0-37"></a>        <span class="n">u</span> <span class="o">+=</span> <span class="n">dt</span> <span class="o">*</span> <span class="p">(</span><span class="n">Du</span> <span class="o">*</span> <span class="n">laplacian_u</span> <span class="o">+</span> <span class="n">reaction_u</span><span class="p">)</span>
+</span><span id="__span-0-38"><a id="__codelineno-0-38" name="__codelineno-0-38" href="#__codelineno-0-38"></a>        <span class="n">v</span> <span class="o">+=</span> <span class="n">dt</span> <span class="o">*</span> <span class="p">(</span><span class="n">Dv</span> <span class="o">*</span> <span class="n">laplacian_v</span> <span class="o">+</span> <span class="n">reaction_v</span><span class="p">)</span>
+</span><span id="__span-0-39"><a id="__codelineno-0-39" name="__codelineno-0-39" href="#__codelineno-0-39"></a>
+</span><span id="__span-0-40"><a id="__codelineno-0-40" name="__codelineno-0-40" href="#__codelineno-0-40"></a>        <span class="c1"># Optional: visualize every N steps</span>
+</span><span id="__span-0-41"><a id="__codelineno-0-41" name="__codelineno-0-41" href="#__codelineno-0-41"></a>        <span class="k">if</span> <span class="n">step</span> <span class="o">%</span> <span class="mi">100</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+</span><span id="__span-0-42"><a id="__codelineno-0-42" name="__codelineno-0-42" href="#__codelineno-0-42"></a>            <span class="c1"># plot(v)  # v typically shows clearer patterns</span>
+</span><span id="__span-0-43"><a id="__codelineno-0-43" name="__codelineno-0-43" href="#__codelineno-0-43"></a>            <span class="k">pass</span>
+</span><span id="__span-0-44"><a id="__codelineno-0-44" name="__codelineno-0-44" href="#__codelineno-0-44"></a>
+</span><span id="__span-0-45"><a id="__codelineno-0-45" name="__codelineno-0-45" href="#__codelineno-0-45"></a>    <span class="k">return</span> <span class="n">u</span><span class="p">,</span> <span class="n">v</span>
+</span><span id="__span-0-46"><a id="__codelineno-0-46" name="__codelineno-0-46" href="#__codelineno-0-46"></a>
+</span><span id="__span-0-47"><a id="__codelineno-0-47" name="__codelineno-0-47" href="#__codelineno-0-47"></a><span class="c1"># Example: Generate spots pattern</span>
+</span><span id="__span-0-48"><a id="__codelineno-0-48" name="__codelineno-0-48" href="#__codelineno-0-48"></a><span class="c1"># u, v = gray_scott_simulation(256, 256, 10000, Du=0.16, Dv=0.08, F=0.035, k=0.065)</span>
+</span></code></pre></div>
+<hr />
+<h2 id="133-gene-regulatory-networks-grns"><strong>13.3 Gene Regulatory Networks (GRNs)</strong></h2>
+<p>While Reaction–Diffusion models (Section 13.2) explain how biological form emerges through <strong>physical transport</strong> in space, the emergence of <strong>distinct cell identities</strong> (e.g., muscle cell vs. neuron) arises from <strong>informational networks</strong> inside the cell. The appropriate computational tool for understanding these internal logical patterns is <strong>Graph Theory</strong>, applied to <strong>Gene Regulatory Networks (GRNs)</strong>.</p>
+<h3 id="the-gene-regulatory-network-grn-framework">The Gene Regulatory Network (GRN) Framework</h3>
+<p>A GRN is a map of the control system that dictates how genes and proteins regulate one another's expression within a cell. It shifts the focus from spatial geometry to <strong>logical architecture</strong>.</p>
+<ul>
+<li><strong>Nodes and Edges:</strong> The network is modeled as a <strong>directed graph</strong> <span class="arithmatex">\(G = (V, E)\)</span>. <strong>Nodes (<span class="arithmatex">\(V\)</span>)</strong> represent genes or proteins, and <strong>edges (<span class="arithmatex">\(E\)</span>)</strong> represent regulatory interactions.</li>
+<li><strong>Edge Sign:</strong> Edges are signed to indicate the nature of the control: <strong>positive (+)</strong> for activation (promotion of expression) and <strong>negative (–)</strong> for inhibition (suppression of expression).</li>
+<li><strong>State:</strong> The state of a node is its expression level, which can be modeled either continuously (concentration) or discretely (ON/OFF).</li>
+</ul>
+<p>The <strong>adjacency matrix</strong> <span class="arithmatex">\(A\)</span> provides a computational representation of the GRN, encoding these interactions with <span class="arithmatex">\(+1\)</span>, <span class="arithmatex">\(-1\)</span>, or <span class="arithmatex">\(0\)</span>.</p>
+<hr />
+<h3 id="network-architecture-and-structural-motifs"><strong>Network Architecture and Structural Motifs</strong></h3>
+<p>Analyzing the <strong>topology</strong> of GRNs using graph theory reveals recurring sub-structures, known as <strong>structural motifs</strong>, which act as the fundamental <strong>logical gates</strong> of the cell:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Motif</th>
+<th style="text-align: left;">Description</th>
+<th style="text-align: left;">Computational/Biological Function</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Positive Feedback Loop</strong></td>
+<td style="text-align: left;">A gene activates itself (directly or via an intermediary gene).</td>
+<td style="text-align: left;"><strong>Memory and Stability:</strong> Stabilizes an ON state, making the decision robust against noise.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Negative Feedback Loop</strong></td>
+<td style="text-align: left;">A gene inhibits its own production.</td>
+<td style="text-align: left;"><strong>Oscillation and Homeostasis:</strong> Drives rhythmic activity (e.g., circadian clock genes) or maintains a stable target level.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Mutual Inhibition</strong></td>
+<td style="text-align: left;">Gene A inhibits B, and B inhibits A (a toggle switch).</td>
+<td style="text-align: left;"><strong>Binary Decision-Making:</strong> Forces the system into one of two stable states (cell fate choices).</td>
+</tr>
+</tbody>
+</table>
+<p>Metrics like <strong>degree</strong> (total connections), <strong>in-degree</strong> (inputs), <strong>out-degree</strong> (outputs), and <strong>centrality</strong> are used to computationally identify the functional roles of genes, such as master regulators (hubs) or sensor genes.</p>
+<hr />
+<h3 id="boolean-networks-and-attractors"><strong>Boolean Networks and Attractors</strong></h3>
+<p>To simulate the dynamics of decision-making within the GRN, genes are often simplified to a <strong>Boolean Network</strong>, where the expression level is binary: ON (1) or OFF (0).</p>
+<ul>
+<li><strong>Logic Rules:</strong> Each gene's next state is determined by a logical function (AND, OR, NOT) applied to the current states of its regulators.</li>
+<li><strong>Attractors as Cell Types:</strong> When a Boolean network is simulated iteratively, the system eventually settles into a stable, self-perpetuating pattern. This pattern is known as an <strong>attractor</strong>. An attractor can be a <strong>fixed point</strong> (a single stable state) or a <strong>limit cycle</strong> (a repeating sequence of states). Biologically, these attractors are interpreted as <strong>distinct, stable cell types</strong> (e.g., the expression profile of a neuron is one attractor, and that of a muscle cell is another).</li>
+</ul>
+<p>The <strong>genome</strong> is thus viewed not as a static blueprint, but as a <strong>dynamical system with multiple stable equilibria</strong>. <strong>Cell differentiation</strong> is the computational process of transitioning from one attractor basin to another.</p>
+<details class="question">
+<summary>How Many Possible Cell Types Can a GRN Support?</summary>
+<p>For a Boolean network with <span class="arithmatex">\(N\)</span> genes, there are <span class="arithmatex">\(2^N\)</span> possible states. However, only a tiny fraction become attractors—typically <span class="arithmatex">\(O(\sqrt{N})\)</span> for random networks (Kauffman's finding). In humans, ~20,000 genes could theoretically support <span class="arithmatex">\(2^{20000}\)</span> states, but only ~200-300 stable cell types exist. This massive reduction reflects highly structured, non-random GRN topology: most gene combinations are unstable and collapse into a few robust attractors, ensuring reproducible development.</p>
+</details>
+<hr />
+<h3 id="continuous-models-and-bistability"><strong>Continuous Models and Bistability</strong></h3>
+<p>While Boolean networks capture the logic, <strong>continuous GRNs</strong> use coupled Ordinary Differential Equations (ODEs) to model the smooth, non-linear kinetics of protein concentrations. These continuous models are essential for demonstrating phenomena like <strong>bistability</strong>, where the system has two competing stable states.</p>
+<p>A well-known example is the <strong>genetic toggle switch</strong> (two mutually inhibitory genes), which settles into one of two stable states depending on its initial condition. Bistability is a fundamental mechanism for binary decision-making in biological systems (e.g., choosing a cell fate).</p>
+<hr />
+<h2 id="134-chapter-summary-and-bridge-to-chapter-14"><strong>13.4 Chapter Summary and Bridge to Chapter 14</strong></h2>
+<p>This chapter concluded our study of biological pattern formation, synthesizing how both <strong>physical transport</strong> and <strong>informational networks</strong> create structure in living systems. We demonstrated that biological order, or <strong>morphogenesis</strong>, is a process of <strong>emergent computation</strong>.</p>
+<hr />
+<h3 id="synthesis-of-pattern-formation"><strong>Synthesis of Pattern Formation</strong></h3>
+<p>We explored two complementary computational frameworks that explain how complexity arises from simple local rules:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Framework</th>
+<th style="text-align: left;">Mechanism</th>
+<th style="text-align: left;">Mathematical Form</th>
+<th style="text-align: left;">Emergent Outcome</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Reaction–Diffusion</strong> (Turing)</td>
+<td style="text-align: left;"><strong>Local activation, long-range inhibition</strong> driven by diffusion imbalance (<span class="arithmatex">\(D_v \gg D_u\)</span>).</td>
+<td style="text-align: left;">Coupled PDEs.</td>
+<td style="text-align: left;"><strong>Spatial patterns</strong> (spots, stripes) through diffusion-driven instability.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Gene Regulatory Networks</strong> (GRN)</td>
+<td style="text-align: left;"><strong>Feedback loops</strong> (positive and negative) among genes.</td>
+<td style="text-align: left;">Graph Theory / Boolean or Continuous ODEs.</td>
+<td style="text-align: left;"><strong>Logical patterns</strong> (attractors) corresponding to stable cell types.</td>
+</tr>
+</tbody>
+</table>
+<p>The unifying principle across both frameworks is that <strong>feedback drives form</strong>:
+* <strong>Positive feedback</strong> creates stability and structure (e.g., cell memory in GRNs).
+* <strong>Negative feedback</strong> controls rhythm and spacing (e.g., long-range inhibition in RD).</p>
+<p>The <strong>Turing pattern</strong> explains <em>where</em> pigment goes (geometry), and the <strong>GRN attractor</strong> explains <em>what</em> kind of cell or tissue is formed (identity).</p>
+<hr />
+<h3 id="philosophical-and-computational-implications"><strong>Philosophical and Computational Implications</strong></h3>
+<p>This study reinforces the idea of the <strong>computational universe</strong>: biological processes are algorithmic, and structure is discovered through dynamics.</p>
+<ul>
+<li><strong>Multistability and Attractors:</strong> Both continuous GRNs and Boolean networks demonstrate <strong>multistability</strong>, meaning the system can settle into several stable states (attractors). These attractors are computationally interpreted as the distinct, stable <strong>cell types</strong> (e.g., neuron, muscle) that arise from the same genome.</li>
+<li><strong>The Genome as a Program:</strong> The genome is not viewed as a static map but as a <strong>dynamic program</strong> (a recurrent network) that computes its behavior and structure through feedback and iteration.</li>
+<li><strong>Universality of Logic:</strong> The logical architecture found in these biological systems (feedback loops, switches, oscillators) is the same architecture used in engineered circuits and computational models.</li>
+</ul>
+<hr />
+<h3 id="bridge-to-chapter-14-from-morphogenesis-to-memory"><strong>Bridge to Chapter 14: From Morphogenesis to Memory</strong></h3>
+<p>The mathematical principles of <strong>stability, pattern formation, and feedback</strong> are not exclusive to tissue development; they are also the foundation of <strong>cognition</strong>.</p>
+<p>We now transition from <strong>chemical computation in cells</strong> to <strong>electrical computation in neural networks</strong>.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Concept in Morphogenesis</th>
+<th style="text-align: left;">Analog in Neuroscience</th>
+<th style="text-align: left;">Function</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Gene Network Attractor</strong></td>
+<td style="text-align: left;"><strong>Memory Attractor</strong> (Hopfield Network)</td>
+<td style="text-align: left;">Stabilizes information against noise (maintaining cell identity or maintaining a memory).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Reaction–Diffusion</strong></td>
+<td style="text-align: left;"><strong>Neural Field Dynamics</strong> (Waves of activation)</td>
+<td style="text-align: left;">Spreads signals and creates structured patterns of activity.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Mutual Inhibition</strong></td>
+<td style="text-align: left;"><strong>Inhibitory Balance</strong> between neural groups</td>
+<td style="text-align: left;">Enforces stable decision boundaries and binary choice.</td>
+</tr>
+</tbody>
+</table>
+<p>In <strong>Chapter 14</strong>, we will study the <strong>Hopfield Network</strong>, which functions as the neural analogue of a regulatory network, showing how the same feedback principles that create a tissue pattern spontaneously create a <strong>memory pattern</strong> in the brain. The biological computation chain leads directly from <strong>morphology (form)</strong> to <strong>cognition (thought)</strong>.</p>
+<p>We have shown that complexity in nature requires <strong>computation through interaction</strong>, leading us to the final conclusion of our modeling journey: <strong>intelligence is an emergent property of organized matter</strong>.</p>
+<p>Here is the unified framework connecting pattern formation mechanisms:</p>
+<pre class="mermaid"><code>graph TD
+    A["Uniform Initial State&lt;br/&gt;Genetically Identical Cells&lt;br/&gt;Homogeneous Chemical Field"] --&gt; B{"Symmetry Breaking Mechanism"}
+    B --&gt;|"Spatial Patterns"| C["Reaction-Diffusion (RD)&lt;br/&gt;Turing Mechanism"]
+    B --&gt;|"Cell Identity"| D["Gene Regulatory Network (GRN)&lt;br/&gt;Attractor Dynamics"]
+
+    C --&gt; E["Local Activation&lt;br/&gt;Activator u (slow diffusion D_u)"]
+    C --&gt; F["Long-Range Inhibition&lt;br/&gt;Inhibitor v (fast diffusion D_v &gt;&gt; D_u)"]
+    E --&gt; G["Diffusion-Driven Instability&lt;br/&gt;Wavelength λ ∝ √(D_v/D_u)"]
+    F --&gt; G
+    G --&gt; H["Emergent Spatial Patterns&lt;br/&gt;✓ Spots (leopard)&lt;br/&gt;✓ Stripes (zebra)&lt;br/&gt;✓ Labyrinths"]
+
+    D --&gt; I["Positive Feedback Loop&lt;br/&gt;(Autocatalysis, Memory)"]
+    D --&gt; J["Negative Feedback Loop&lt;br/&gt;(Inhibition, Oscillation)"]
+    D --&gt; K["Mutual Inhibition&lt;br/&gt;(Toggle Switch)"]
+    I --&gt; L["Boolean/Continuous Dynamics&lt;br/&gt;State Evolution"]
+    J --&gt; L
+    K --&gt; L
+    L --&gt; M["Convergence to Attractors&lt;br/&gt;(Fixed Points or Limit Cycles)"]
+    M --&gt; N["Stable Cell Types&lt;br/&gt;✓ Neuron (Attractor 1)&lt;br/&gt;✓ Muscle (Attractor 2)&lt;br/&gt;✓ Epithelial (Attractor 3)"]
+
+    H --&gt; O["Morphogenesis Complete&lt;br/&gt;Spatial Geometry Defined"]
+    N --&gt; O
+    O --&gt; P["Bridge to Chapter 14:&lt;br/&gt;Neural Networks&lt;br/&gt;Memory = Attractor&lt;br/&gt;Cognition = Pattern Dynamics"]
+
+    style A fill:#e1f5ff
+    style B fill:#fff3cd
+    style H fill:#d4edda
+    style N fill:#d4edda
+    style O fill:#f8d7da
+    style P fill:#d1ecf1</code></pre>
+<hr />
+<h2 id="references"><strong>References</strong></h2>
+<ol>
+<li>
+<p><strong>Turing, A. M.</strong> (1952). <em>The Chemical Basis of Morphogenesis</em>. Philosophical Transactions of the Royal Society of London B, 237(641), 37-72. [Seminal paper introducing reaction-diffusion theory for biological pattern formation]</p>
+</li>
+<li>
+<p><strong>Murray, J. D.</strong> (2003). <em>Mathematical Biology II: Spatial Models and Biomedical Applications</em> (3<sup>rd</sup> ed.). Springer. [Comprehensive treatment of reaction-diffusion systems, Turing patterns, and biological applications]</p>
+</li>
+<li>
+<p><strong>Pearson, J. E.</strong> (1993). <em>Complex Patterns in a Simple System</em>. Science, 261(5118), 189-192. [Gray-Scott model exploration showing diverse pattern formation from simple parameter changes]</p>
+</li>
+<li>
+<p><strong>Kondo, S., &amp; Miura, T.</strong> (2010). <em>Reaction-Diffusion Model as a Framework for Understanding Biological Pattern Formation</em>. Science, 329(5999), 1616-1620. [Modern experimental validation of Turing patterns in zebrafish stripes and other organisms]</p>
+</li>
+<li>
+<p><strong>Kauffman, S. A.</strong> (1993). <em>The Origins of Order: Self-Organization and Selection in Evolution</em>. Oxford University Press. [Boolean network models of gene regulatory networks, NK networks, and attractor landscapes]</p>
+</li>
+<li>
+<p><strong>Alon, U.</strong> (2007). <em>An Introduction to Systems Biology: Design Principles of Biological Circuits</em>. Chapman and Hall/CRC. [Network motifs in gene regulatory networks: feedforward loops, feedback loops, toggle switches]</p>
+</li>
+<li>
+<p><strong>Davidson, E. H.</strong> (2006). <em>The Regulatory Genome: Gene Regulatory Networks in Development and Evolution</em>. Academic Press. [Gene regulatory network architecture and developmental computation]</p>
+</li>
+<li>
+<p><strong>Gardner, T. S., Cantor, C. R., &amp; Collins, J. J.</strong> (2000). <em>Construction of a Genetic Toggle Switch in Escherichia coli</em>. Nature, 403(6767), 339-342. [Experimental implementation of bistable genetic circuit demonstrating attractor dynamics]</p>
+</li>
+<li>
+<p><strong>Sick, S., Reinker, S., Timmer, J., &amp; Schlake, T.</strong> (2006). <em>WNT and DKK Determine Hair Follicle Spacing Through a Reaction-Diffusion Mechanism</em>. Science, 314(5804), 1447-1450. [Experimental evidence for Turing mechanism in mammalian hair follicle patterning]</p>
+</li>
+<li>
+<p><strong>Meinhardt, H., &amp; Gierer, A.</strong> (2000). <em>Pattern Formation by Local Self-Activation and Lateral Inhibition</em>. BioEssays, 22(8), 753-760. [Classic activator-inhibitor models and applications to developmental biology]</p>
+</li>
+</ol>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../../chapter-12/Chapter-12-Essay/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Chapter-12 Collective Behavior &amp; Pattern Formation">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Chapter-12 Collective Behavior & Pattern Formation
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../../chapter-14/Chapter-14-Essay/" class="md-footer__link md-footer__link--next" aria-label="Next: Chapter-14 Computational Neuroscience">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Chapter-14 Computational Neuroscience
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://bigbookofcomputing.github.io" target="_blank" rel="noopener" title="bigbookofcomputing.github.io" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://x.com/bigbookofcomputing" target="_blank" rel="noopener" title="x.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M459.4 151.7c.3 4.5.3 9.1.3 13.6 0 138.7-105.6 298.6-298.6 298.6-59.5 0-114.7-17.2-161.1-47.1 8.4 1 16.6 1.3 25.3 1.3 49.1 0 94.2-16.6 130.3-44.8-46.1-1-84.8-31.2-98.1-72.8 6.5 1 13 1.6 19.8 1.6 9.4 0 18.8-1.3 27.6-3.6-48.1-9.7-84.1-52-84.1-103v-1.3c14 7.8 30.2 12.7 47.4 13.3-28.3-18.8-46.8-51-46.8-87.4 0-19.5 5.2-37.4 14.3-53C87.4 130.8 165 172.4 252.1 176.9c-1.6-7.8-2.6-15.9-2.6-24C249.5 95.1 296.3 48 354.4 48c30.2 0 57.5 12.7 76.7 33.1 23.7-4.5 46.5-13.3 66.6-25.3-7.8 24.4-24.4 44.8-46.1 57.8 21.1-2.3 41.6-8.1 60.4-16.2-14.3 20.8-32.2 39.3-52.6 54.3"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.facebook.com/bigbookofcomputing" target="_blank" rel="noopener" title="www.facebook.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M512 256C512 114.6 397.4 0 256 0S0 114.6 0 256c0 120 82.7 220.8 194.2 248.5V334.2h-52.8V256h52.8v-33.7c0-87.1 39.4-127.5 125-127.5 16.2 0 44.2 3.2 55.7 6.4V172c-6-.6-16.5-1-29.6-1-42 0-58.2 15.9-58.2 57.2V256h83.6l-14.4 78.2H287v175.9C413.8 494.8 512 386.9 512 256"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.linkedin.com/bigbookofcomputing" target="_blank" rel="noopener" title="www.linkedin.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3M135.4 416H69V202.2h66.5V416zM102.2 96a38.5 38.5 0 1 1 0 77 38.5 38.5 0 1 1 0-77m282.1 320h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.youtube.com/@big-book-of-computing" target="_blank" rel="noopener" title="www.youtube.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M549.7 124.1c-6.2-23.7-24.8-42.3-48.3-48.6C458.9 64 288.1 64 288.1 64S117.3 64 74.7 75.5c-23.5 6.3-42 24.9-48.3 48.6C15 167 15 256.4 15 256.4s0 89.4 11.4 132.3c6.3 23.6 24.8 41.5 48.3 47.8C117.3 448 288.1 448 288.1 448s170.8 0 213.4-11.5c23.5-6.3 42-24.2 48.3-47.8 11.4-42.9 11.4-132.3 11.4-132.3s0-89.4-11.4-132.3zM232.2 337.6V175.2l142.7 81.2z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+      <div class="md-consent" data-md-component="consent" id="__consent" hidden>
+        <div class="md-consent__overlay"></div>
+        <aside class="md-consent__inner">
+          <form class="md-consent__form md-grid md-typeset" name="consent">
+            
+
+
+  
+
+
+<h4>Cookie consent</h4>
+<p>We use cookies to recognize your repeated visits and preferences, as well as to measure the effectiveness of our documentation and whether users find what they're searching for. With your consent, you're helping us to make our documentation better.</p>
+<input class="md-toggle" type="checkbox" id="__settings" >
+<div class="md-consent__settings">
+  <ul class="task-list">
+    
+    
+      
+        
+  
+  
+    
+    
+  
+  <li class="task-list-item">
+    <label class="task-list-control">
+      <input type="checkbox" name="analytics" checked>
+      <span class="task-list-indicator"></span>
+      Google Analytics
+    </label>
+  </li>
+
+      
+    
+    
+      
+        
+  
+  
+    
+    
+  
+  <li class="task-list-item">
+    <label class="task-list-control">
+      <input type="checkbox" name="github" checked>
+      <span class="task-list-indicator"></span>
+      GitHub
+    </label>
+  </li>
+
+      
+    
+    
+  </ul>
+</div>
+<div class="md-consent__controls">
+  
+    
+      <button class="md-button md-button--primary">Accept</button>
+    
+    
+    
+  
+    
+    
+    
+      <label class="md-button" for="__settings">Manage settings</label>
+    
+  
+</div>
+          </form>
+        </aside>
+      </div>
+      <script>var consent=__md_get("__consent");if(consent)for(var input of document.forms.consent.elements)input.name&&(input.checked=consent[input.name]||!1);else"file:"!==location.protocol&&setTimeout((function(){document.querySelector("[data-md-component=consent]").hidden=!1}),250);var form=document.forms.consent;for(var action of["submit","reset"])form.addEventListener(action,(function(e){if(e.preventDefault(),"reset"===e.type)for(var n of document.forms.consent.elements)n.name&&(n.checked=!1);__md_set("__consent",Object.fromEntries(Array.from(new FormData(form).keys()).map((function(e){return[e,!0]})))),location.hash="",location.reload()}))</script>
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["announce.dismiss", "content.action.edit", "content.action.view", "content.code.annotate", "content.code.copy", "content.tooltips", "navigation.footer", "navigation.indexes", "navigation.sections", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../../static/mathjax-config.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.0/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

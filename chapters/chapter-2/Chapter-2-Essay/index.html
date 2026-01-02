@@ -1,0 +1,4169 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="A comprehensive guide to the foundations of stochastic simulation">
+      
+      
+        <meta name="author" content="Big Book of Computing">
+      
+      
+        <link rel="canonical" href="https://bigbookofcomputing.github.io/chapters/chapter-2/Chapter-2-Essay/">
+      
+      
+        <link rel="prev" href="../../chapter-1/Chapter-1-Essay/">
+      
+      
+        <link rel="next" href="../../chapter-3/Chapter-3-Essay/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/logo.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>Chapter-2 The Ising Model - Big Book of Computing | Simulation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+      <link rel="stylesheet" href="../../../static/styles.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  
+
+
+  
+  
+
+<script id="__analytics">function __md_analytics(){function e(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],e("js",new Date),e("config","G-ECS7B3X8JM"),document.addEventListener("DOMContentLoaded",(function(){document.forms.search&&document.forms.search.query.addEventListener("blur",(function(){this.value&&e("event","search",{search_term:this.value})}));document$.subscribe((function(){var t=document.forms.feedback;if(void 0!==t)for(var a of t.querySelectorAll("[type=submit]"))a.addEventListener("click",(function(a){a.preventDefault();var n=document.location.pathname,d=this.getAttribute("data-md-value");e("event","feedback",{page:n,data:d}),t.firstElementChild.disabled=!0;var r=t.querySelector(".md-feedback__note [data-md-value='"+d+"']");r&&(r.hidden=!1)})),t.hidden=!1})),location$.subscribe((function(t){e("config","G-ECS7B3X8JM",{page_path:t.pathname})}))}));var t=document.createElement("script");t.async=!0,t.src="https://www.googletagmanager.com/gtag/js?id=G-ECS7B3X8JM",document.getElementById("__analytics").insertAdjacentElement("afterEnd",t)}</script>
+  
+    <script>if("undefined"!=typeof __md_analytics){var consent=__md_get("__consent");consent&&consent.analytics&&__md_analytics()}</script>
+  
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#chapter-2-the-ising-model" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="Big Book of Computing | Simulation" class="md-header__button md-logo" aria-label="Big Book of Computing | Simulation" data-md-component="logo">
+      
+  <img src="../../../assets/logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Big Book of Computing | Simulation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Chapter-2 The Ising Model
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1M8 13h8v-2H8zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4a5 5 0 0 0 5-5 5 5 0 0 0-5-5"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h10a5 5 0 0 0 5-5 5 5 0 0 0-5-5m0 8a3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3 3 3 0 0 1-3 3"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="indigo"  aria-label="Switch to system preference"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to system preference" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h10a5 5 0 0 0 5-5 5 5 0 0 0-5-5M7 15a3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3 3 3 0 0 1-3 3"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/bigbookofcomputing/simulation" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../contents/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Contents
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../introduction/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Introduction
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../chapter-1/Chapter-1-Essay/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Chapters
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../chapter-1/Chapter-1-WorkBook/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  WorkBooks
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../chapter-1/Chapter-1-CodeBook/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  CodeBooks
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Big Book of Computing | Simulation" class="md-nav__button md-logo" aria-label="Big Book of Computing | Simulation" data-md-component="logo">
+      
+  <img src="../../../assets/logo.png" alt="logo">
+
+    </a>
+    Big Book of Computing | Simulation
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/bigbookofcomputing/simulation" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contents/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contents
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introduction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapters
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Chapters
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-1/Chapter-1-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-1 Foundations of Stochastic Simulation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-2 The Ising Model
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-2 The Ising Model
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Introduction
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#chapter-outline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Chapter Outline
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#21-chapter-opener-emergence-and-the-grand-simulation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 Chapter Opener: Emergence and the Grand Simulation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.1 Chapter Opener: Emergence and the Grand Simulation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#historical-context-and-motivation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Historical Context and Motivation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#microscopic-simplicity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Microscopic Simplicity
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#emergence-from-local-rules" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Emergence from Local Rules
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-grand-simulation-perspective" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Grand Simulation Perspective
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#22-the-hamiltonian-and-the-local-rule" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 The Hamiltonian and the Local Rule
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.2 The Hamiltonian and the Local Rule">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#defining-the-energy-landscape" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Defining the Energy Landscape
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nearest-neighbour-coupling-ferromagnetic-vs-antiferromagnetic" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Nearest-Neighbour Coupling: Ferromagnetic vs Antiferromagnetic
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#external-field-aligning-vs-competing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        External Field: Aligning vs Competing
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#local-energy-contributions-and-spin-flips" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Local Energy Contributions and Spin Flips
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#generalizations-and-variants" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Generalizations and Variants
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#23-the-computational-framework-periodic-boundary-conditions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3 The Computational Framework: Periodic Boundary Conditions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.3 The Computational Framework: Periodic Boundary Conditions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#why-boundary-conditions-matter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why Boundary Conditions Matter
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#periodic-boundary-conditions-pbcs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Periodic Boundary Conditions (PBCs)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#alternative-boundary-conditions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Alternative Boundary Conditions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#scaling-and-finite-size-effects-under-pbcs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Scaling and Finite-Size Effects Under PBCs
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#practical-implementation-tips" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Practical Implementation Tips
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#24-implementing-the-metropolis-algorithm-on-the-lattice" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.4 Implementing the Metropolis Algorithm on the Lattice
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.4 Implementing the Metropolis Algorithm on the Lattice">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#single-spin-flip-dynamics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Single-Spin Flip Dynamics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#defining-a-monte-carlo-sweep" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Defining a Monte Carlo Sweep
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#random-numbers-and-efficiency" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Random Numbers and Efficiency
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#variants-and-improvements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Variants and Improvements
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#analysis-i-macroscopic-observables-expanded" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Analysis I: Macroscopic Observables (Expanded)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Analysis I: Macroscopic Observables (Expanded)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#magnetization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Magnetization
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#energy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Energy
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#correlation-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Correlation Functions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#estimating-observables-in-simulations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Estimating Observables in Simulations
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#26-analysis-ii-equilibration-and-autocorrelation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.6 Analysis II: Equilibration and Autocorrelation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.6 Analysis II: Equilibration and Autocorrelation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#thermalization-equilibration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Thermalization (Equilibration)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#autocorrelation-and-effective-sample-size" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Autocorrelation and Effective Sample Size
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data-binning-and-subsampling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Data Binning and Subsampling
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#practical-guidelines" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Practical Guidelines
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#27-core-application-locating-the-phase-transition" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.7 Core Application: Locating the Phase Transition
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.7 Core Application: Locating the Phase Transition">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#physical-picture-of-the-transition" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Physical Picture of the Transition
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#simulation-strategy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Simulation Strategy
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#binder-cumulant-and-finite-size-scaling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Binder Cumulant and Finite-Size Scaling
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#practical-considerations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Practical Considerations
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#summary-of-findings" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Summary of Findings
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#28-chapter-summary-bridge-to-chapter-3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.8 Chapter Summary &amp; Bridge to Chapter 3
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.8 Chapter Summary &amp; Bridge to Chapter 3">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-we-accomplished-in-chapter-2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What We Accomplished in Chapter 2
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#towards-chapter-3-from-spins-to-gauge-fields" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Towards Chapter 3: From Spins to Gauge Fields
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        References
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-3/Chapter-3-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-3 Lattice Gauge Theory
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-4/Chapter-4-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-4 Monte Carlo Option Pricing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-5/Chapter-5-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-5 Stochastic Systems Biology
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-6/Chapter-6-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-6 Advanced Monte Carlo Methods
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-7/Chapter-7-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-7 Molecular Dynamics (MD)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-8/Chapter-8-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-8 The Stochastic Calculus (SDEs)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-9/Chapter-9-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-9 Black-Scholes-Merton (BSM)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-10/Chapter-10-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-10 Neuroscience (Hodgkin-Huxley)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-11/Chapter-11-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-11 Agent-Based & Network Models
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-12/Chapter-12-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-12 Collective Behavior & Pattern Formation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-13/Chapter-13-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-13 Collective Behavior & Pattern Formation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-14/Chapter-14-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-14 Computational Neuroscience
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-15/Chapter-15-Essay.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-15 Graph and Network Models
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    WorkBooks
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    WorkBooks
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-1/Chapter-1-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-1 Foundations of Stochastic Simulation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Chapter-2-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-2 The Ising Model
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-3/Chapter-3-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-3 Lattice Gauge Theory
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-4/Chapter-4-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-4 Monte Carlo Option Pricing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-5/Chapter-5-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-5 Stochastic Systems Biology
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-6/Chapter-6-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-6 Advanced Monte Carlo Methods
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-7/Chapter-7-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-7 Molecular Dynamics (MD)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-8/Chapter-8-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-8 The Stochastic Calculus (SDEs)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-9/Chapter-9-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-9 Black-Scholes-Merton (BSM)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-10/Chapter-10-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-10 Neuroscience (Hodgkin-Huxley)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-11/Chapter-11-WorkBook" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-11 Agent-Based & Network Models
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-12/Chapter-12-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-12 Collective Behavior & Pattern Formation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-13/Chapter-13-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-13 Collective Behavior & Pattern Formation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-14/Chapter-14-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-14 Computational Neuroscience
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-15/Chapter-15-WorkBook.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-15 Graph and Network Models
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CodeBooks
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    CodeBooks
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-1/Chapter-1-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-1 Foundations of Stochastic Simulation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Chapter-2-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-2 The Ising Model
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-3/Chapter-3-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-3 Lattice Gauge Theory
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-4/Chapter-4-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-4 Monte Carlo Option Pricing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-5/Chapter-5-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-5 Stochastic Systems Biology
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-6/Chapter-6-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-6 Advanced Monte Carlo Methods
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-7/Chapter-7-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-7 Molecular Dynamics (MD)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-8/Chapter-8-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-8 The Stochastic Calculus (SDEs)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-9/Chapter-9-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-9 Black-Scholes-Merton (BSM)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-10/Chapter-10-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-10 Neuroscience (Hodgkin-Huxley)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-11/Chapter-11-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-11 Agent-Based & Network Models
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-12/Chapter-12-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-12 Collective Behavior & Pattern Formation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-13/Chapter-13-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-13 Collective Behavior & Pattern Formation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-14/Chapter-14-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-14 Computational Neuroscience
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-15/Chapter-15-CodeBook.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-15 Graph and Network Models
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Introduction
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#chapter-outline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Chapter Outline
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#21-chapter-opener-emergence-and-the-grand-simulation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 Chapter Opener: Emergence and the Grand Simulation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.1 Chapter Opener: Emergence and the Grand Simulation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#historical-context-and-motivation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Historical Context and Motivation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#microscopic-simplicity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Microscopic Simplicity
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#emergence-from-local-rules" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Emergence from Local Rules
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-grand-simulation-perspective" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Grand Simulation Perspective
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#22-the-hamiltonian-and-the-local-rule" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 The Hamiltonian and the Local Rule
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.2 The Hamiltonian and the Local Rule">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#defining-the-energy-landscape" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Defining the Energy Landscape
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nearest-neighbour-coupling-ferromagnetic-vs-antiferromagnetic" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Nearest-Neighbour Coupling: Ferromagnetic vs Antiferromagnetic
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#external-field-aligning-vs-competing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        External Field: Aligning vs Competing
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#local-energy-contributions-and-spin-flips" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Local Energy Contributions and Spin Flips
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#generalizations-and-variants" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Generalizations and Variants
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#23-the-computational-framework-periodic-boundary-conditions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3 The Computational Framework: Periodic Boundary Conditions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.3 The Computational Framework: Periodic Boundary Conditions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#why-boundary-conditions-matter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why Boundary Conditions Matter
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#periodic-boundary-conditions-pbcs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Periodic Boundary Conditions (PBCs)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#alternative-boundary-conditions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Alternative Boundary Conditions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#scaling-and-finite-size-effects-under-pbcs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Scaling and Finite-Size Effects Under PBCs
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#practical-implementation-tips" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Practical Implementation Tips
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#24-implementing-the-metropolis-algorithm-on-the-lattice" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.4 Implementing the Metropolis Algorithm on the Lattice
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.4 Implementing the Metropolis Algorithm on the Lattice">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#single-spin-flip-dynamics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Single-Spin Flip Dynamics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#defining-a-monte-carlo-sweep" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Defining a Monte Carlo Sweep
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#random-numbers-and-efficiency" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Random Numbers and Efficiency
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#variants-and-improvements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Variants and Improvements
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#analysis-i-macroscopic-observables-expanded" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Analysis I: Macroscopic Observables (Expanded)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Analysis I: Macroscopic Observables (Expanded)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#magnetization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Magnetization
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#energy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Energy
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#correlation-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Correlation Functions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#estimating-observables-in-simulations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Estimating Observables in Simulations
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#26-analysis-ii-equilibration-and-autocorrelation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.6 Analysis II: Equilibration and Autocorrelation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.6 Analysis II: Equilibration and Autocorrelation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#thermalization-equilibration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Thermalization (Equilibration)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#autocorrelation-and-effective-sample-size" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Autocorrelation and Effective Sample Size
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data-binning-and-subsampling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Data Binning and Subsampling
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#practical-guidelines" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Practical Guidelines
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#27-core-application-locating-the-phase-transition" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.7 Core Application: Locating the Phase Transition
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.7 Core Application: Locating the Phase Transition">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#physical-picture-of-the-transition" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Physical Picture of the Transition
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#simulation-strategy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Simulation Strategy
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#binder-cumulant-and-finite-size-scaling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Binder Cumulant and Finite-Size Scaling
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#practical-considerations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Practical Considerations
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#summary-of-findings" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Summary of Findings
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#28-chapter-summary-bridge-to-chapter-3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.8 Chapter Summary &amp; Bridge to Chapter 3
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.8 Chapter Summary &amp; Bridge to Chapter 3">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-we-accomplished-in-chapter-2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What We Accomplished in Chapter 2
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#towards-chapter-3-from-spins-to-gauge-fields" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Towards Chapter 3: From Spins to Gauge Fields
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        References
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+    <a href="https://github.com/bigbookofcomputing/simulation/edit/master/docs/chapters/chapter-2/Chapter-2-Essay.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+    
+      
+    
+    <a href="https://github.com/bigbookofcomputing/simulation/raw/master/docs/chapters/chapter-2/Chapter-2-Essay.md" title="View source of this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.2 8.2 0 0 1-1.23-2"/></svg>
+    </a>
+  
+
+
+<h1 id="chapter-2-the-ising-model"><strong>Chapter 2: The Ising Model</strong></h1>
+<hr />
+<h2 id="introduction"><strong>Introduction</strong></h2>
+<p>The Ising model stands as one of the most elegant demonstrations of emergence in statistical physics—a system where simple binary spins on a lattice, interacting only with nearest neighbors, spontaneously generate macroscopic order, disorder, and critical phenomena. Introduced in the 1920s to model ferromagnetism, the model was initially dismissed when Ising proved that the one-dimensional case exhibits no phase transition. The surprise came in 1944 when Lars Onsager's exact solution of the two-dimensional square lattice revealed a continuous phase transition at a critical temperature, establishing the first mathematically rigorous example of emergent collective behavior from local interactions.</p>
+<p>Beyond its physical origins, the Ising model has become a universal framework for understanding binary decision systems across disciplines—from neural networks and social opinion dynamics to computational biology. Its importance stems not from physical realism but from illustrating how collective order emerges from simple local rules in systems with exponentially large state spaces. With <span class="arithmatex">\(2^{N^2}\)</span> possible configurations even for modest lattice sizes, direct enumeration of the partition function becomes impossible, making the model an ideal testbed for Monte Carlo methods.</p>
+<p>This chapter implements the grand simulation paradigm introduced in Chapter 1, applying the Metropolis-Hastings algorithm to the 2D Ising model. Students will learn to simulate phase transitions, measure order parameters like magnetization and specific heat, validate computational results against exact analytical solutions, and understand how local spin-flip dynamics can efficiently sample exponentially large configuration spaces. The Ising model serves as the conceptual and computational foundation for all subsequent Monte Carlo applications in this volume.</p>
+<hr />
+<h2 id="chapter-outline"><strong>Chapter Outline</strong></h2>
+<table>
+<thead>
+<tr>
+<th><strong>Sec.</strong></th>
+<th><strong>Title</strong></th>
+<th><strong>Core Ideas &amp; Examples</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>2.1</strong></td>
+<td><strong>Chapter Opener: Emergence and the Grand Simulation</strong></td>
+<td>Historical context from Ising's 1D proof to Onsager's 2D solution; microscopic simplicity of binary spins; emergence of spontaneous symmetry breaking, criticality, and universality; computational challenge of <span class="arithmatex">\(2^L\)</span> configurations; the grand simulation perspective.</td>
+</tr>
+<tr>
+<td><strong>2.2</strong></td>
+<td><strong>The Hamiltonian and the Local Rule</strong></td>
+<td>Energy landscape <span class="arithmatex">\(E(\sigma) = -J\sum_{\langle i,j\rangle}\sigma_i\sigma_j - H\sum_i\sigma_i\)</span>; ferromagnetic vs antiferromagnetic coupling; external field competition; local energy change <span class="arithmatex">\(\Delta E\)</span> for spin flips; generalizations to inhomogeneous systems.</td>
+</tr>
+<tr>
+<td><strong>2.3</strong></td>
+<td><strong>Periodic Boundary Conditions</strong></td>
+<td>Finite-size effects and surface artifacts; wrapping lattice onto torus; uniform neighbor count; modular arithmetic implementation; alternative boundary conditions; finite-size scaling near criticality.</td>
+</tr>
+<tr>
+<td><strong>2.4</strong></td>
+<td><strong>Implementing the Metropolis Algorithm</strong></td>
+<td>Single-spin flip dynamics; accept/reject criterion <span class="arithmatex">\(\min(1, e^{-\beta\Delta E})\)</span>; random vs sequential sweeps; equilibration and decorrelation; vectorization strategies.</td>
+</tr>
+<tr>
+<td><strong>2.5</strong></td>
+<td><strong>Measuring Observables</strong></td>
+<td>Magnetization <span class="arithmatex">\(M\)</span>, energy <span class="arithmatex">\(E\)</span>, specific heat <span class="arithmatex">\(C_V\)</span>, susceptibility <span class="arithmatex">\(\chi\)</span>; ensemble averaging; autocorrelation and statistical errors; detecting the critical temperature.</td>
+</tr>
+<tr>
+<td><strong>2.6</strong></td>
+<td><strong>Validation Against Exact Results</strong></td>
+<td>Onsager's critical temperature <span class="arithmatex">\(k_BT_c/J = 2/\ln(1+\sqrt{2})\)</span>; critical exponents; finite-size corrections; comparison with simulation data.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="21-chapter-opener-emergence-and-the-grand-simulation"><strong>2.1 Chapter Opener: Emergence and the Grand Simulation</strong></h2>
+<hr />
+<h3 id="historical-context-and-motivation"><strong>Historical Context and Motivation</strong></h3>
+<p>The Ising model was introduced by Wilhelm Lenz in 1920 and studied by his student Ernst Ising in one dimension in 1924. In the one‑dimensional case, Ising proved there is <strong>no phase transition</strong> at any non‑zero temperature: the magnetization vanishes analytically for all <span class="arithmatex">\(T &gt; 0\)</span>. This result originally led Ising to conclude that phase transitions might be impossible in finite‑range models. The surprise came in 1944 when Lars Onsager solved the <strong>two‑dimensional square‑lattice Ising model</strong> and found an exact critical temperature <span class="arithmatex">\(k_{\mathrm{B}} T_c / J = 2 / \ln(1 + \sqrt{2})\)</span> with non‑analytic behaviour at <span class="arithmatex">\(T_c\)</span>. The 2D Ising model thus became the first mathematically rigorous example of a continuous phase transition.</p>
+<p>Beyond magnetism, the Ising framework has been adapted to model binary variables in neural networks, social opinion dynamics and computational biology. Its importance stems not from realism but from illustrating how <strong>collective order</strong> can emerge from simple local interactions.</p>
+<hr />
+<h3 id="microscopic-simplicity"><strong>Microscopic Simplicity</strong></h3>
+<p>At each site <span class="arithmatex">\(i\)</span> of a two‑dimensional lattice sits a spin <span class="arithmatex">\(\sigma_i \in \{+1, -1\}\)</span>. A configuration <span class="arithmatex">\(\sigma = (\sigma_1, \dots, \sigma_{N^2})\)</span> is one assignment of ±1 to each of the <span class="arithmatex">\(N^2\)</span> sites. Even for modest lattice sizes the number of possible configurations explodes exponentially; there are <span class="arithmatex">\(2^L\)</span> distinct states for a lattice of <span class="arithmatex">\(L\)</span> sites. This underscores why direct enumeration of all microstates in the partition function</p>
+<div class="arithmatex">\[
+Z(\beta) = \sum_{\sigma} \mathrm{e}^{-\beta E(\sigma)}
+\]</div>
+<p>is hopeless for <span class="arithmatex">\(N \times N\)</span> lattices with <span class="arithmatex">\(N \gtrsim 10\)</span>, and why stochastic sampling is essential.</p>
+<p>The simplicity goes further: interactions are only between nearest neighbours, and each spin is subject to an external field. The Hamiltonian in its most general form for a lattice <span class="arithmatex">\(\Lambda\)</span> reads</p>
+<div class="arithmatex">\[
+E(\sigma) = -\sum_{\langle i,j \rangle} J_{ij} \, \sigma_i \sigma_j - \mu \sum_{i} h_i \, \sigma_i,
+\]</div>
+<p>where <span class="arithmatex">\(J_{ij}\)</span> is the coupling between spins <span class="arithmatex">\(i\)</span> and <span class="arithmatex">\(j\)</span>, <span class="arithmatex">\(\mu\)</span> is the magnetic moment, and <span class="arithmatex">\(h_i\)</span> the local field. In this chapter we simplify to uniform coupling <span class="arithmatex">\(J &gt; 0\)</span> (ferromagnetic) and uniform external field <span class="arithmatex">\(H\)</span>.</p>
+<div class="admonition tip">
+<p class="admonition-title">Exponential State Space</p>
+<p>A <span class="arithmatex">\(30 \times 30\)</span> Ising lattice has <span class="arithmatex">\(2^{900} \approx 10^{270}\)</span> configurations—far exceeding the number of atoms in the observable universe. Direct enumeration is impossible; Monte Carlo sampling is essential.</p>
+</div>
+<hr />
+<h3 id="emergence-from-local-rules"><strong>Emergence from Local Rules</strong></h3>
+<p>Despite such minimalistic ingredients, the Ising model exhibits several hallmark features of complex systems:</p>
+<ul>
+<li>
+<p><strong>Spontaneous symmetry breaking.</strong><br />
+  At high temperature the average magnetization is zero because up and down spins occur equally often; the Hamiltonian is invariant under flipping all spins. Below <span class="arithmatex">\(T_c\)</span> the system chooses one of two equivalent ordered states (mostly up or mostly down), breaking the spin‑flip symmetry spontaneously. Each ordered phase has non‑zero magnetization, even though the microscopic rules are symmetric.</p>
+</li>
+<li>
+<p><strong>Criticality and universality.</strong><br />
+  At <span class="arithmatex">\(T = T_c\)</span> the correlation length diverges and the system exhibits power‑law correlations. The critical exponents describing how magnetization and susceptibility behave near <span class="arithmatex">\(T_c\)</span> are independent of microscopic details (the universality class only depends on dimensionality and symmetry).</p>
+</li>
+<li>
+<p><strong>Emergence of macroscopic order.</strong><br />
+  Local interactions propagate information across the lattice so that large domains of aligned spins form. These domains grow as the temperature decreases. The exact solution shows that magnetization jumps continuously to zero at <span class="arithmatex">\(T_c\)</span> but its derivative diverges; such non‑analytic behaviour is a purely collective effect.</p>
+</li>
+<li>
+<p><strong>Computational challenge.</strong><br />
+  Because there are <span class="arithmatex">\(2^L\)</span> configurations, one cannot exactly evaluate ensemble averages for <span class="arithmatex">\(N^2\)</span>-size systems using brute force. Efficient simulation through Monte Carlo methods is required to explore typical configurations and measure observables.</p>
+</li>
+</ul>
+<hr />
+<h3 id="the-grand-simulation-perspective"><strong>The Grand Simulation Perspective</strong></h3>
+<p>Chapter 1 introduced the concept of the <strong>grand simulation</strong>: using stochastic algorithms to sample from an exponentially large space of microstates and thereby compute macroscopic observables. The Ising model is the ideal testbed for this philosophy:</p>
+<ul>
+<li>It reduces real magnets to binary variables and nearest‑neighbour interactions, making it computationally tractable.</li>
+<li>It nonetheless exhibits non‑trivial phenomena—order, disorder, and a phase transition—that we can observe by measuring magnetization, energy, specific heat and susceptibility.</li>
+<li>It provides a clear benchmark: the exact critical temperature <span class="arithmatex">\(T_c\)</span> and known critical exponents allow us to validate our simulation machinery against analytic results.</li>
+</ul>
+<p>By applying Metropolis–Hastings to the Ising model we turn the theoretical ideas of Chapter 1 into practice, demonstrating how a simple local update rule can reveal emergent behaviour on a lattice with an astronomically large state space.</p>
+<hr />
+<h2 id="22-the-hamiltonian-and-the-local-rule"><strong>2.2 The Hamiltonian and the Local Rule</strong></h2>
+<hr />
+<h3 id="defining-the-energy-landscape"><strong>Defining the Energy Landscape</strong></h3>
+<p>In statistical mechanics, the probability of a microstate is determined by its energy through the Boltzmann factor <span class="arithmatex">\(\mathrm{e}^{-\beta E(\sigma)}\)</span>. For the Ising model, the <strong>Hamiltonian</strong> assigns an energy to each spin configuration <span class="arithmatex">\(\sigma\)</span>. On a two‑dimensional lattice <span class="arithmatex">\(\Lambda\)</span>, with ferromagnetic coupling and a uniform external magnetic field, the Hamiltonian is</p>
+<div class="arithmatex">\[
+E(\sigma) := -J \sum_{\langle i,j\rangle} \sigma_i \sigma_j - H \sum_{i \in \Lambda} \sigma_i.
+\]</div>
+<p>The sums are over unordered nearest‑neighbour pairs <span class="arithmatex">\(\langle i,j \rangle\)</span> (each bond counted once) and over all sites <span class="arithmatex">\(i\)</span> in the lattice. We adopt the conventional negative sign in front of each term. The form of <span class="arithmatex">\(E(\sigma)\)</span> encapsulates two competing tendencies.</p>
+<hr />
+<h3 id="nearest-neighbour-coupling-ferromagnetic-vs-antiferromagnetic"><strong>Nearest-Neighbour Coupling: Ferromagnetic vs Antiferromagnetic</strong></h3>
+<p>The first term describes interactions between neighbouring spins. Its contribution depends on the sign of <span class="arithmatex">\(J\)</span>:</p>
+<ul>
+<li>
+<p><strong>Ferromagnetic coupling (<span class="arithmatex">\(J &gt; 0\)</span>).</strong><br />
+  Aligned spins (<span class="arithmatex">\(\sigma_i = \sigma_j\)</span>) contribute <span class="arithmatex">\(-J\)</span> to the energy, whereas anti‑aligned spins contribute <span class="arithmatex">\(+J\)</span>. Thus parallel alignment lowers the energy and is energetically favoured. The minus sign ensures that the Hamiltonian is minimized when spins are aligned. This local rule encourages the formation of domains of uniform magnetization.</p>
+</li>
+<li>
+<p><strong>Antiferromagnetic coupling (<span class="arithmatex">\(J &lt; 0\)</span>).</strong><br />
+  Here anti‑aligned spins minimize energy. In bipartite lattices (such as the square lattice), this leads to a checkerboard pattern of alternating spins. Antiferromagnetic Ising models exhibit frustration on non‑bipartite lattices.</p>
+</li>
+<li>
+<p><strong>Non‑interacting case (<span class="arithmatex">\(J = 0\)</span>).</strong><br />
+  Spins do not interact and the system reduces to a set of independent two‑level systems. There is no collective behaviour.</p>
+</li>
+</ul>
+<p>The classification of interactions based on <span class="arithmatex">\(J\)</span> is standard in Ising models. Although this chapter focuses on ferromagnetic coupling, other choices of <span class="arithmatex">\(J\)</span> lead to different types of order.</p>
+<hr />
+<h3 id="external-field-aligning-vs-competing"><strong>External Field: Aligning vs Competing</strong></h3>
+<p>The second term couples each spin to an external magnetic field <span class="arithmatex">\(H\)</span>. Physically, this represents an externally applied field that biases spins to align in one direction. If <span class="arithmatex">\(H &gt; 0\)</span>, spins pointing up (<span class="arithmatex">\(\sigma_i = +1\)</span>) lower the energy by <span class="arithmatex">\(-H\)</span>; if <span class="arithmatex">\(H &lt; 0\)</span>, down spins are favoured. When <span class="arithmatex">\(H = 0\)</span>, up and down spins are symmetric and the model has a global <span class="arithmatex">\(\mathbb{Z}_2\)</span> symmetry. A non‑zero field breaks this symmetry explicitly.</p>
+<p>The competition between the interaction term and the external field determines the phase diagram. For <span class="arithmatex">\(H = 0\)</span>, the system undergoes a spontaneous symmetry‑breaking transition at <span class="arithmatex">\(T_c\)</span>. For <span class="arithmatex">\(H \neq 0\)</span> the magnetization is non‑zero for all temperatures, but critical behaviour can still be studied by analysing derivatives of the free energy.</p>
+<hr />
+<h3 id="local-energy-contributions-and-spin-flips"><strong>Local Energy Contributions and Spin Flips</strong></h3>
+<p>The Hamiltonian is a sum of <strong>local contributions</strong>: the energy associated with a spin <span class="arithmatex">\(i\)</span> depends only on its value and the values of its neighbours. This locality is crucial for efficient simulation. To see this, consider the energy contribution of a single spin <span class="arithmatex">\(\sigma_{i,j}\)</span> (using periodic boundary conditions so each spin has exactly four neighbours):</p>
+<div class="arithmatex">\[
+E_{i,j} = -J \, \sigma_{i,j} \sum_{(k,l) \in \mathrm{n.n.}(i,j)} \sigma_{k,l} - H \, \sigma_{i,j}.
+\]</div>
+<p>If we flip <span class="arithmatex">\(\sigma_{i,j}\)</span> to <span class="arithmatex">\(-\sigma_{i,j}\)</span>, the change in the total energy is</p>
+<div class="arithmatex">\[
+\Delta E_{i,j} := E(\sigma') - E(\sigma)
+= 2J \, \sigma_{i,j} \sum_{(k,l) \in \mathrm{n.n.}(i,j)} \sigma_{k,l} + 2H \, \sigma_{i,j}.
+\]</div>
+<p>This formula, derived from the Hamiltonian, allows us to compute the energy difference for a proposed spin flip by looking only at the four neighbours of the spin. It makes the Metropolis update an <span class="arithmatex">\(\mathcal{O}(1)\)</span> operation rather than <span class="arithmatex">\(\mathcal{O}(N^2)\)</span>.</p>
+<div class="admonition example">
+<p class="admonition-title">Local Energy Change Efficiency</p>
+<p>Computing <span class="arithmatex">\(\Delta E\)</span> for a spin flip requires only checking 4 neighbors—constant time <span class="arithmatex">\(\mathcal{O}(1)\)</span>. For a <span class="arithmatex">\(100 \times 100\)</span> lattice, this avoids recalculating the entire <span class="arithmatex">\(10{,}000\)</span>-spin energy, enabling millions of updates per second.</p>
+</div>
+<hr />
+<h3 id="generalizations-and-variants"><strong>Generalizations and Variants</strong></h3>
+<p>While the Ising model in this chapter uses uniform couplings and a scalar field, many extensions exist:</p>
+<ul>
+<li>
+<p><strong>Inhomogeneous couplings.</strong><br />
+  Real materials may have non‑uniform <span class="arithmatex">\(J_{ij}\)</span>. Randomising <span class="arithmatex">\(J_{ij}\)</span> leads to spin‑glass behaviour; randomising <span class="arithmatex">\(H_i\)</span> yields a random‑field Ising model.</p>
+</li>
+<li>
+<p><strong>Higher dimensions and other lattices.</strong><br />
+  In three dimensions the Ising model still exhibits a phase transition, but it is not exactly solvable. On non‑bipartite lattices (e.g., triangular) antiferromagnetic coupling leads to frustration.</p>
+</li>
+<li>
+<p><strong>Ising in a transverse field (quantum Ising model).</strong><br />
+  Adding a term <span class="arithmatex">\(-\Gamma \sum_i \sigma_i^x\)</span> introduces quantum fluctuations. In the classical limit (<span class="arithmatex">\(\Gamma = 0\)</span>) we recover the model described here; for <span class="arithmatex">\(\Gamma &gt; 0\)</span> the system exhibits a quantum phase transition.</p>
+</li>
+<li>
+<p><strong>Potts and clock models.</strong><br />
+  Allowing each spin to take <span class="arithmatex">\(q\)</span> discrete values generalises the Ising model (<span class="arithmatex">\(q = 2\)</span>) to the <span class="arithmatex">\(q\)</span>-state Potts model, which has different universality classes.</p>
+</li>
+</ul>
+<p>Understanding the Hamiltonian and its local rule is therefore not only essential for simulating the classic 2D Ising model but also provides a template for constructing and simulating a wide variety of lattice models in physics, biology and beyond.</p>
+<hr />
+<h2 id="23-the-computational-framework-periodic-boundary-conditions"><strong>2.3 The Computational Framework: Periodic Boundary Conditions</strong></h2>
+<hr />
+<h3 id="why-boundary-conditions-matter"><strong>Why Boundary Conditions Matter</strong></h3>
+<p>In a finite simulation of a lattice model, spins at the edges have fewer neighbours than those in the interior. For example, on an <span class="arithmatex">\(N \times N\)</span> square lattice with open (free) boundaries, a corner spin has only two neighbours, an edge spin has three, and only interior spins have the full four neighbours. This heterogeneity produces significant <strong>finite‑size effects</strong>:</p>
+<ul>
+<li>
+<p><strong>Surface effects.</strong><br />
+  Boundary spins experience a different local environment from bulk spins. This can bias observables such as magnetization and energy, especially for small lattices.</p>
+</li>
+<li>
+<p><strong>Reduced connectivity.</strong><br />
+  Domain walls (boundaries between regions of different magnetization) can pin at the edges, affecting the dynamics of ordering and disordering.</p>
+</li>
+<li>
+<p><strong>Scaling issues.</strong><br />
+  Many theoretical results assume translation invariance and infinite lattices; open boundaries violate these assumptions.</p>
+</li>
+</ul>
+<p>To mitigate these issues, one typically <strong>wraps the lattice onto a torus</strong>, thereby eliminating edges entirely.</p>
+<hr />
+<h3 id="periodic-boundary-conditions-pbcs"><strong>Periodic Boundary Conditions (PBCs)</strong></h3>
+<p>Under periodic boundary conditions, opposite edges of the lattice are identified. In a 2D square lattice, the site <span class="arithmatex">\((i,j)\)</span> is considered neighbours with <span class="arithmatex">\((i \pm 1, j)\)</span> and <span class="arithmatex">\((i, j \pm 1)\)</span>, where addition is modulo <span class="arithmatex">\(N\)</span>. Thus the point <span class="arithmatex">\((0,j)\)</span> (left edge) has a neighbour at <span class="arithmatex">\((N-1,j)\)</span> (right edge), and <span class="arithmatex">\((i,0)\)</span> is adjacent to <span class="arithmatex">\((i,N-1)\)</span>. This makes the finite lattice topologically equivalent to a <strong>torus</strong>. As a result:</p>
+<ul>
+<li>Every spin has exactly four neighbours in two dimensions, restoring uniformity.</li>
+<li>Translational invariance is preserved, so finite‑size simulations better approximate the thermodynamic limit.</li>
+</ul>
+<p>Implementing PBCs in code is straightforward. Suppose arrays <code>i</code> and <code>j</code> index lattice coordinates from 0 to <span class="arithmatex">\(N-1\)</span>. The right neighbour of <span class="arithmatex">\((i,j)\)</span> is at <code>((i + 1) % N, j)</code>, the left neighbour at <code>((i - 1 + N) % N, j)</code>, and similarly for up/down. This modular arithmetic ensures that indices "wrap around" the lattice.</p>
+<details class="question">
+<summary>Why does wrapping the lattice onto a torus preserve translational invariance?</summary>
+<p>On a torus, every site is equivalent—there are no edges or corners. Each spin has exactly 4 neighbors, making the local environment uniform. This restores translational symmetry broken by finite boundaries and better approximates an infinite system.</p>
+</details>
+<hr />
+<h3 id="alternative-boundary-conditions"><strong>Alternative Boundary Conditions</strong></h3>
+<p>While PBCs are the most common choice in Monte‑Carlo simulations, other boundary conditions can be useful:</p>
+<ul>
+<li>
+<p><strong>Fixed boundaries.</strong><br />
+  Spins on the boundary are held fixed at <span class="arithmatex">\(\sigma_i = \pm 1\)</span>. This can mimic the presence of an external magnetized medium but explicitly breaks spin‑flip symmetry.</p>
+</li>
+<li>
+<p><strong>Free (open) boundaries.</strong><br />
+  Spins at the edges have fewer neighbours. This choice is often used in exact solutions of 1D Ising models, as in Ising’s original work.</p>
+</li>
+<li>
+<p><strong>Antiperiodic boundaries.</strong><br />
+  Opposite edges are connected, but the bond across the boundary is frustrated (effectively <span class="arithmatex">\(J \to -J\)</span> for that bond). This introduces a domain wall through the system and can be used to compute interface free energies.</p>
+</li>
+<li>
+<p><strong>Mixed boundaries.</strong><br />
+  One direction is periodic and the other open (e.g., cylindrical geometry). Such choices can probe anisotropic effects.</p>
+</li>
+</ul>
+<p>Different boundary conditions can alter finite‑size corrections and effective correlation lengths, so choosing the right boundary is problem‑dependent.</p>
+<hr />
+<h3 id="scaling-and-finite-size-effects-under-pbcs"><strong>Scaling and Finite-Size Effects Under PBCs</strong></h3>
+<p>Even with PBCs, a finite lattice is not truly infinite. Correlation lengths cannot exceed half the system size, and critical behaviour is rounded off. However, periodic boundaries greatly reduce surface‑to‑volume ratios and thus reduce finite‑size errors. In practice:</p>
+<ul>
+<li>
+<p>Finite‑size scaling theory states that near a continuous phase transition, observable quantities depend on <span class="arithmatex">\(L\)</span> and <span class="arithmatex">\(T\)</span> through combinations like <span class="arithmatex">\(L / \xi\)</span>, where <span class="arithmatex">\(\xi\)</span> is the correlation length. Using PBCs allows one to extract critical exponents by studying how observables scale with <span class="arithmatex">\(L\)</span>.</p>
+</li>
+<li>
+<p>In the thermodynamic limit <span class="arithmatex">\(N \to \infty\)</span>, bulk observables become independent of the boundary condition. For instance, the number of neighbours per spin approaches four in two dimensions regardless of boundary choice.</p>
+</li>
+<li>
+<p>PBCs simplify analytic and theoretical treatments because Fourier transforms diagonalize the interaction matrix; this is essential for exact solutions of the 1D Ising model and for spin‑wave analyses of the 2D model.</p>
+</li>
+</ul>
+<hr />
+<h3 id="practical-implementation-tips"><strong>Practical Implementation Tips</strong></h3>
+<p>When coding PBCs:</p>
+<ol>
+<li>Use arrays of length <span class="arithmatex">\(N\)</span>. When accessing neighbours, compute indices using the modulo operator rather than conditional statements.</li>
+<li>Avoid negative indices by adding <span class="arithmatex">\(N\)</span> before applying the modulo operation (e.g., <span class="arithmatex">\(((i - 1 + N) \mod N)\)</span>) to ensure positive results.</li>
+<li>Precompute neighbour lists if performance is critical; this reduces overhead in inner loops.</li>
+<li>Test small systems with known analytical results to confirm that boundary conditions are implemented correctly.</li>
+</ol>
+<p>Many tutorials on Ising‑model simulations emphasise PBCs as the first step: "apply periodic boundary conditions so that all spins have the same environment". This ensures that the only differences between spins arise from thermal fluctuations rather than artificial boundary effects, enabling more reliable exploration of the model's intrinsic physics.</p>
+<hr />
+<h2 id="24-implementing-the-metropolis-algorithm-on-the-lattice"><strong>2.4 Implementing the Metropolis Algorithm on the Lattice</strong></h2>
+<hr />
+<h3 id="single-spin-flip-dynamics"><strong>Single-Spin Flip Dynamics</strong></h3>
+<p>The standard Metropolis update for the Ising model consists of selecting one spin at random and proposing to flip it. The algorithm is:</p>
+<ol>
+<li>
+<p><strong>Select a spin.</strong><br />
+   Choose a site <span class="arithmatex">\((i,j)\)</span> uniformly at random from the <span class="arithmatex">\(N \times N\)</span> lattice. Random selection avoids systematic biases that can occur with deterministic sweeps; however, sequential sweeps (looping over all sites in a fixed order) also converge to the correct distribution.</p>
+</li>
+<li>
+<p><strong>Propose a flip.</strong><br />
+   Let <span class="arithmatex">\(\sigma_{i,j}\)</span> be the current spin at that site. The proposed new spin is <span class="arithmatex">\(-\sigma_{i,j}\)</span>.</p>
+</li>
+<li>
+<p><strong>Compute <span class="arithmatex">\(\Delta E\)</span>.</strong><br />
+   Because the Hamiltonian couples only nearest neighbours, flipping a single spin changes the energy by</p>
+</li>
+</ol>
+<p>$$
+   \Delta E = 2J \, \sigma_{i,j} \sum_{k \in \mathrm{n.n.}(i,j)} \sigma_k + 2H \, \sigma_{i,j}.
+   $$</p>
+<p>This expression is derived by comparing the local contribution before and after the flip. Importantly, computing <span class="arithmatex">\(\Delta E\)</span> is an <span class="arithmatex">\(\mathcal{O}(1)\)</span> operation independent of the total number of spins.</p>
+<ol>
+<li>
+<p><strong>Accept or reject.</strong><br />
+   Draw a random number <span class="arithmatex">\(u \in [0,1)\)</span>. Accept the flip if <span class="arithmatex">\(u &lt; \min(1, \mathrm{e}^{-\beta \Delta E})\)</span>; otherwise leave the spin unchanged. If <span class="arithmatex">\(\Delta E \le 0\)</span> (the flip lowers or leaves unchanged the energy), the flip is always accepted; if <span class="arithmatex">\(\Delta E &gt; 0\)</span>, the flip is accepted with probability <span class="arithmatex">\(\exp(-\beta \Delta E)\)</span>.</p>
+</li>
+<li>
+<p><strong>Update observables.</strong><br />
+   If desired, maintain running sums of magnetization and energy as spins are flipped; this avoids recomputing them from scratch at each measurement.</p>
+</li>
+</ol>
+<p>This procedure constitutes a <strong>local update</strong> in the sense that only one spin is modified at a time. Such single‑spin flips satisfy <strong>ergodicity</strong>: one can reach any configuration from any other by a sequence of flips (assuming no field or a finite field). Each proposed flip is accepted or rejected based on local energy changes, guaranteeing detailed balance with respect to the Boltzmann distribution.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a># Metropolis single-spin flip for Ising model
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>function metropolis_spin_flip(lattice, i, j, beta, J, H):
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>    # Current spin value
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>    spin = lattice[i][j]
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>    # Sum of neighboring spins (with PBCs)
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>    neighbors_sum = (lattice[(i+1)%N][j] + lattice[(i-1+N)%N][j] +
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>                     lattice[i][(j+1)%N] + lattice[i][(j-1+N)%N])
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>    # Energy change for flipping this spin
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>    delta_E = 2 * J * spin * neighbors_sum + 2 * H * spin
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>    # Accept or reject
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>    if delta_E &lt;= 0:
+</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>        lattice[i][j] = -spin  # Always accept downhill
+</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>    else:
+</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>        if random_uniform(0, 1) &lt; exp(-beta * delta_E):
+</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>            lattice[i][j] = -spin  # Accept uphill with probability
+</span><span id="__span-0-19"><a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>
+</span><span id="__span-0-20"><a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>    return lattice
+</span></code></pre></div>
+<p>In many expositions the algorithm is summarized as: "Pick a site at random, flip it, compute <span class="arithmatex">\(\Delta E = -2J \sum_{\text{neighbours}} \sigma_k\)</span> and accept or reject the flip according to <span class="arithmatex">\(\mathrm{e}^{-\beta \Delta E}\)</span>". The factor <span class="arithmatex">\(-2J\)</span> arises because flipping <span class="arithmatex">\(\sigma_{i,j}\)</span> changes its contribution to each neighbour's bond energy by <span class="arithmatex">\(\pm J\)</span>.</p>
+<hr />
+<h3 id="defining-a-monte-carlo-sweep"><strong>Defining a Monte Carlo Sweep</strong></h3>
+<p>A single proposed flip updates only one spin. To avoid repeatedly flipping the same spin, one defines a <strong>Monte‑Carlo sweep</strong> (also called a Monte‑Carlo step per spin, MCS) as <span class="arithmatex">\(N^2\)</span> successive single‑spin update attempts. This ensures that, on average, each spin is considered once per sweep. After each sweep, one can record observables such as magnetization and energy. In sequential sweeps, the order of visiting spins can be fixed (e.g., row by row) or randomised; random ordering reduces temporal correlations.</p>
+<p>The simulation typically proceeds as:</p>
+<ul>
+<li>
+<p><strong>Equilibration phase.</strong><br />
+  Perform a large number (hundreds to thousands) of sweeps to allow the system to relax to equilibrium. Discard measurements taken during this phase.</p>
+</li>
+<li>
+<p><strong>Measurement phase.</strong><br />
+  Continue performing sweeps, measuring observables at the end of each sweep. Use these measurements to compute ensemble averages and error bars (see §2.6).</p>
+</li>
+</ul>
+<p>The number of sweeps needed for equilibration and for accurate statistics depends on system size, temperature and critical slowing down near <span class="arithmatex">\(T_c\)</span>.</p>
+<hr />
+<h3 id="random-numbers-and-efficiency"><strong>Random Numbers and Efficiency</strong></h3>
+<p>The quality of the random number generator can strongly affect Monte‑Carlo simulations. One should use a high‑quality pseudo‑random number generator with long period and good statistical properties. In practice:</p>
+<ul>
+<li>
+<p>Precompute <span class="arithmatex">\(\exp(-\beta \Delta E)\)</span> for all possible <span class="arithmatex">\(\Delta E\)</span> values.<br />
+  In a 2D Ising model with uniform <span class="arithmatex">\(J\)</span>, the local energy change can take only a small set of values (e.g., <span class="arithmatex">\(\pm 8J, \pm 4J, 0\)</span>). Tabulating these exponentials avoids costly exponent evaluations.</p>
+</li>
+<li>
+<p>Represent spins using integer ±1 values to exploit fast integer arithmetic.<br />
+  Multiplying <span class="arithmatex">\(\sigma_i \sigma_j\)</span> is cheaper than computing a conditional.</p>
+</li>
+<li>
+<p>Inline the neighbour summation to avoid function overhead.<br />
+  For example, compute <span class="arithmatex">\(\sigma_{i,j} (\sigma_{i+1,j} + \sigma_{i-1,j} + \sigma_{i,j+1} + \sigma_{i,j-1})\)</span> directly.</p>
+</li>
+</ul>
+<p>Careful coding can yield update rates of tens of millions of spin flips per second on modern CPUs.</p>
+<hr />
+<h3 id="variants-and-improvements"><strong>Variants and Improvements</strong></h3>
+<p>While the Metropolis single‑spin flip algorithm is simple and robust, several variants exist:</p>
+<ul>
+<li><strong>Heat‑bath (Glauber) dynamics.</strong><br />
+  Instead of accepting or rejecting a flip based on a probability, one directly samples the new spin from its local conditional distribution. For the Ising model the conditional probability that <span class="arithmatex">\(\sigma_{i,j} = +1\)</span> given its neighbours is</li>
+</ul>
+<p>$$
+  P(\sigma_{i,j} = +1) = \frac{1}{1 + \exp(-2\beta h_{\mathrm{loc}})},
+  $$</p>
+<p>where <span class="arithmatex">\(h_{\mathrm{loc}} = J \sum_{k \in \mathrm{n.n.}(i,j)} \sigma_k + H\)</span>. Heat‑bath updates also satisfy detailed balance and can have different dynamical properties.</p>
+<ul>
+<li>
+<p><strong>Cluster algorithms.</strong><br />
+  Near <span class="arithmatex">\(T_c\)</span> the Metropolis algorithm suffers from <strong>critical slowing down</strong>: large correlated clusters of spins flip rarely, leading to long autocorrelation times. Cluster algorithms like Swendsen–Wang and Wolff construct and flip entire clusters of aligned spins, dramatically reducing autocorrelation near criticality. However, these algorithms are more complex to implement and are discussed in later chapters.</p>
+</li>
+<li>
+<p><strong>Multispin coding.</strong><br />
+  On vector processors or GPUs one can update many spins in parallel by representing spins in bits of a machine word. This can provide massive speedups for large lattices.</p>
+</li>
+<li>
+<p><strong>Parallel tempering.</strong><br />
+  Running multiple replicas of the system at different temperatures and swapping configurations can help overcome energy barriers (e.g., in disordered systems). This is an example of an extended ensemble method.</p>
+</li>
+</ul>
+<p>Despite these options, the single‑spin Metropolis algorithm remains the most straightforward way to implement an Ising model simulation and is sufficient for exploring the basic physics of the phase transition.</p>
+<hr />
+<h3 id="analysis-i-macroscopic-observables-expanded"><strong>Analysis I: Macroscopic Observables (Expanded)</strong></h3>
+<p>In Monte‑Carlo simulations we record <em>microscopic</em> states <span class="arithmatex">\(\sigma\)</span> from which we derive <em>macroscopic</em> observables. These quantities allow us to characterize phases, detect phase transitions, and compute thermodynamic response functions. Below we describe the most important observables for the Ising model and how to estimate them.</p>
+<h4 id="magnetization"><strong>Magnetization</strong></h4>
+<p>The magnetization measures the net alignment of spins. For a configuration <span class="arithmatex">\(\sigma\)</span> on an <span class="arithmatex">\(N \times N\)</span> lattice, the <strong>magnetization per spin</strong> is</p>
+<div class="arithmatex">\[
+M(\sigma) = \frac{1}{N^2} \sum_{i=1}^{N^2} \sigma_i.
+\]</div>
+<p>Because <span class="arithmatex">\(\sigma_i \in \{\pm 1\}\)</span>, <span class="arithmatex">\(M\)</span> ranges from <span class="arithmatex">\(-1\)</span> (all spins down) to <span class="arithmatex">\(+1\)</span> (all spins up). In zero external field, the Hamiltonian is symmetric under <span class="arithmatex">\(\sigma_i \to -\sigma_i\)</span>, so the equilibrium distribution has equal probability of positive and negative magnetization. Consequently, for a finite system <span class="arithmatex">\(\langle M \rangle = 0\)</span> at all temperatures. To detect spontaneous ordering, one typically measures the <strong>absolute magnetization</strong>:</p>
+<div class="arithmatex">\[
+|M| = \frac{1}{N^2} \left| \sum_{i} \sigma_i \right|.
+\]</div>
+<p>Below the critical temperature <span class="arithmatex">\(T_c\)</span>, <span class="arithmatex">\(\langle |M| \rangle\)</span> approaches a non‑zero value indicating ferromagnetic order; above <span class="arithmatex">\(T_c\)</span> it tends to zero reflecting paramagnetic disorder. In the thermodynamic limit, <span class="arithmatex">\(\langle M \rangle\)</span> becomes non‑zero due to spontaneous symmetry breaking, but finite systems require the absolute value or an explicit symmetry‑breaking field <span class="arithmatex">\(H\)</span>.</p>
+<p><strong>Magnetic susceptibility.</strong><br />
+Fluctuations of magnetization reveal how sensitive the system is to an external field. The <strong>magnetic susceptibility</strong> is</p>
+<div class="arithmatex">\[
+\chi = \frac{N^2}{k_{\mathrm{B}} T} \left( \langle M^2 \rangle - \langle |M| \rangle^2 \right).
+\]</div>
+<p>At <span class="arithmatex">\(T_c\)</span> the susceptibility diverges in the infinite system, reflecting the emergence of long‑range correlations. In finite systems, <span class="arithmatex">\(\chi\)</span> peaks near <span class="arithmatex">\(T_c\)</span>, and the height and position of the peak can be used in finite‑size scaling analyses.</p>
+<hr />
+<h3 id="energy"><strong>Energy</strong></h3>
+<p>The total energy for a configuration <span class="arithmatex">\(\sigma\)</span> is given by the Hamiltonian</p>
+<div class="arithmatex">\[
+E(\sigma) = -J \sum_{\langle i,j \rangle} \sigma_i \sigma_j - H \sum_{i} \sigma_i.
+\]</div>
+<p>Because periodic boundary conditions ensure each spin has four neighbours, the sum over bonds has exactly <span class="arithmatex">\(2N^2\)</span> terms (each bond counted once). The <strong>energy per spin</strong> is</p>
+<div class="arithmatex">\[
+e(\sigma) = \frac{E(\sigma)}{N^2}.
+\]</div>
+<p>At low temperature and zero field the system approaches the ground state where all spins align; for a ferromagnetic Ising model the ground‑state energy per spin is <span class="arithmatex">\(-2J\)</span> (each spin has four bonds, each bond contributes <span class="arithmatex">\(-J\)</span> but is shared by two spins). At high temperature spins are disordered and the average energy per spin tends towards zero. The transition between these regimes is smooth for energy but its derivative reveals a specific‑heat peak near <span class="arithmatex">\(T_c\)</span>.</p>
+<p><strong>Specific heat.</strong><br />
+The specific heat measures how energy fluctuations respond to temperature changes. It is defined as</p>
+<div class="arithmatex">\[
+C_v = \frac{1}{N^2 \, k_{\mathrm{B}} T^2} \left( \langle E^2 \rangle - \langle E \rangle^2 \right).
+\]</div>
+<p>Like susceptibility, the specific heat exhibits a peak at the critical temperature; for the 2D Ising model the divergence is logarithmic.</p>
+<hr />
+<h3 id="correlation-functions"><strong>Correlation Functions</strong></h3>
+<p>Beyond global quantities like <span class="arithmatex">\(M\)</span> and <span class="arithmatex">\(E\)</span>, one can probe spatial structure through <strong>spin–spin correlation functions</strong>. The two‑point correlation at separation <span class="arithmatex">\(\mathbf{r}\)</span> is</p>
+<div class="arithmatex">\[
+C(\mathbf{r}) = \langle \sigma_{\mathbf{0}} \, \sigma_{\mathbf{r}} \rangle - \langle \sigma_{\mathbf{0}} \rangle \langle \sigma_{\mathbf{r}} \rangle.
+\]</div>
+<p>In the disordered phase, correlations decay exponentially with distance: <span class="arithmatex">\(C(r) \sim e^{-r / \xi(T)}\)</span>, defining a <strong>correlation length</strong> <span class="arithmatex">\(\xi(T)\)</span>. At <span class="arithmatex">\(T_c\)</span> the correlation length diverges, and correlations follow a power law <span class="arithmatex">\(C(r) \sim r^{-\eta}\)</span>. Measuring <span class="arithmatex">\(C(r)\)</span> numerically requires averaging products of spins at various separations over many samples. Alternatively, one can compute the <strong>structure factor</strong> (Fourier transform of <span class="arithmatex">\(C(r)\)</span>) to extract <span class="arithmatex">\(\xi(T)\)</span>.</p>
+<hr />
+<h3 id="estimating-observables-in-simulations"><strong>Estimating Observables in Simulations</strong></h3>
+<p>In practice, one accumulates time series of observables during the measurement phase:</p>
+<ul>
+<li>At each Monte‑Carlo sweep <span class="arithmatex">\(n\)</span>, compute <span class="arithmatex">\(M_n\)</span>, <span class="arithmatex">\(E_n\)</span>, etc.</li>
+<li>After discarding the thermalization period, estimate the mean <span class="arithmatex">\(\langle O \rangle\)</span> of an observable <span class="arithmatex">\(O\)</span> by averaging over the remaining sweeps:</li>
+</ul>
+<p>$$
+  \langle O \rangle \approx \frac{1}{N_{\text{meas}}} \sum_{n=1}^{N_{\text{meas}}} O_n.
+  $$</p>
+<ul>
+<li>Compute the variance and apply binning or autocorrelation analysis to estimate statistical errors (as discussed in §2.6).</li>
+</ul>
+<p>It is often beneficial to record not only the observables but also their products (e.g., <span class="arithmatex">\(M^2\)</span>, <span class="arithmatex">\(E^2\)</span>) to compute susceptibilities and specific heats without additional passes through the data.</p>
+<p>By systematically measuring these macroscopic quantities as a function of temperature and system size, one can map out the thermodynamic properties of the Ising model and identify the critical temperature and critical exponents.</p>
+<hr />
+<h2 id="26-analysis-ii-equilibration-and-autocorrelation"><strong>2.6 Analysis II: Equilibration and Autocorrelation</strong></h2>
+<hr />
+<h3 id="thermalization-equilibration"><strong>Thermalization (Equilibration)</strong></h3>
+<p>When a simulation starts from an arbitrary configuration (e.g., all spins up or random), the system is typically out of equilibrium. During the early part of the run the Markov chain “forgets” its initial state and relaxes towards the Boltzmann distribution. Observables such as energy and magnetization may exhibit systematic drifts during this period. Only after sufficient time does the chain sample configurations typical of the desired equilibrium ensemble.</p>
+<p><strong>How to detect.</strong></p>
+<ul>
+<li>Monitor time series of observables. Initially, values may change monotonically or show trends; later they fluctuate around a stable mean.</li>
+<li>Compute cumulative averages<br />
+  $<span class="arithmatex">\(\bar{O}(n) = \frac{1}{n} \sum_{t=1}^n O_t\)</span>$<br />
+  and look for convergence.</li>
+<li>Divide the run into blocks and compare block averages.</li>
+<li>Use diagnostics like the Gelman–Rubin <span class="arithmatex">\(\hat{R}\)</span> statistic when running multiple chains from different initial conditions.</li>
+</ul>
+<p><strong>Discarding initial samples.</strong><br />
+The early phase is called <strong>burn‑in</strong>. Discard all measurements taken during this phase. Typical burn‑in lengths range from a few hundred to a few thousand Monte‑Carlo sweeps, depending on system size, temperature, and update method.</p>
+<p><strong>Critical slowing down.</strong><br />
+Near the critical temperature <span class="arithmatex">\(T_c\)</span>, equilibration becomes slower because the correlation length diverges. This <strong>critical slowing down</strong> necessitates longer simulations and motivates the use of cluster algorithms (discussed in later chapters).</p>
+<hr />
+<h3 id="autocorrelation-and-effective-sample-size"><strong>Autocorrelation and Effective Sample Size</strong></h3>
+<p>Even after thermalization, consecutive measurements <span class="arithmatex">\(O_t\)</span> are correlated due to local updates (e.g., single spin flips). The <strong>autocorrelation function</strong> is defined as</p>
+<div class="arithmatex">\[
+C_O(\tau) = \frac{\langle O_t \, O_{t+\tau} \rangle - \langle O_t \rangle^2}{\langle O_t^2 \rangle - \langle O_t \rangle^2},
+\]</div>
+<p>where <span class="arithmatex">\(\tau\)</span> is the lag in Monte‑Carlo time. By definition <span class="arithmatex">\(C_O(0) = 1\)</span>, and <span class="arithmatex">\(C_O(\tau)\)</span> decays to zero as <span class="arithmatex">\(\tau\)</span> increases.</p>
+<p>The <strong>integrated autocorrelation time</strong> is</p>
+<div class="arithmatex">\[
+\tau_{\text{int}} = \frac{1}{2} + \sum_{\tau=1}^{\infty} C_O(\tau).
+\]</div>
+<p>This quantifies how many steps are needed between effectively independent samples. The <strong>variance of the sample mean</strong> <span class="arithmatex">\(\bar{O}\)</span> is inflated by autocorrelation:</p>
+<div class="arithmatex">\[
+\mathrm{Var}(\bar{O}) = \frac{2 \tau_{\text{int}}}{N_{\text{meas}}} \sigma_O^2,
+\]</div>
+<p>where <span class="arithmatex">\(\sigma_O^2\)</span> is the variance of <span class="arithmatex">\(O\)</span> and <span class="arithmatex">\(N_{\text{meas}}\)</span> is the number of measurements.</p>
+<p><strong>Estimating <span class="arithmatex">\(\tau_{\text{int}}\)</span>.</strong><br />
+- Directly compute <span class="arithmatex">\(C_O(\tau)\)</span> from the time series and sum until the tail becomes negligible.
+- Use <strong>binning</strong> (see next subsection) to infer <span class="arithmatex">\(\tau_{\text{int}}\)</span> from variance scaling.</p>
+<hr />
+<h3 id="data-binning-and-subsampling"><strong>Data Binning and Subsampling</strong></h3>
+<p><strong>Subsampling (thinning).</strong><br />
+Record only every <span class="arithmatex">\(k\)</span>-th sample with <span class="arithmatex">\(k &gt; \tau_{\text{int}}\)</span>. This yields approximately independent data points. However, this discards data and is less preferred when full time series are available.</p>
+<p><strong>Binning (blocking).</strong><br />
+Group measurements into blocks of size <span class="arithmatex">\(b\)</span> and average each block. If <span class="arithmatex">\(b \gg \tau_{\text{int}}\)</span>, the block averages are nearly uncorrelated.</p>
+<p><strong>Procedure:</strong>
+1. Choose initial block size <span class="arithmatex">\(b\)</span>.
+2. Form block averages<br />
+   $<span class="arithmatex">\(O_k^{(b)} = \frac{1}{b} \sum_{t=(k-1)b + 1}^{kb} O_t.\)</span>$
+3. Compute variance of block averages.
+4. Double <span class="arithmatex">\(b\)</span> and repeat until variance stabilizes.</p>
+<p>The stabilized variance gives a reliable error estimate. Binning is preferred over thinning because it retains all data and provides error diagnostics.</p>
+<hr />
+<h3 id="practical-guidelines"><strong>Practical Guidelines</strong></h3>
+<ul>
+<li><strong>Record full time series.</strong> Apply binning/subsampling in post-processing.</li>
+<li><strong>Visualize convergence.</strong> Plot observables vs. time to identify burn-in and equilibration.</li>
+<li><strong>Run multiple chains.</strong> Compare chains initialized differently to confirm they converge.</li>
+<li><strong>Use observable-specific autocorrelation times.</strong> For example, energy decorrelates faster than magnetization near <span class="arithmatex">\(T_c\)</span>.</li>
+<li><strong>Increase run length near criticality.</strong> Use longer simulations or better algorithms to mitigate critical slowing down.</li>
+</ul>
+<p>By handling equilibration and autocorrelation carefully, you ensure that your Monte‑Carlo estimates are both <strong>accurate</strong> (unbiased) and <strong>precise</strong> (with well-estimated error bars). This is essential in any simulation of statistical systems.</p>
+<hr />
+<h2 id="27-core-application-locating-the-phase-transition"><strong>2.7 Core Application: Locating the Phase Transition</strong></h2>
+<hr />
+<p>The two‑dimensional Ising model undergoes a continuous (second‑order) phase transition at an exact critical temperature  </p>
+<div class="arithmatex">\[
+k_{\mathrm{B}}T_c/J = \frac{2}{\ln(1 + \sqrt{2})} \approx 2.269.
+\]</div>
+<p>In finite simulations, we approximate <span class="arithmatex">\(T_c\)</span> by tracking how observables evolve with temperature. This section outlines how to design such simulations and interpret the results.</p>
+<h3 id="physical-picture-of-the-transition"><strong>Physical Picture of the Transition</strong></h3>
+<ul>
+<li><strong>Low temperatures (<span class="arithmatex">\(T &lt; T_c\)</span>):</strong> Spins tend to align. Large domains of like spins form, and the magnetization per spin approaches <span class="arithmatex">\(|M| \approx 1\)</span>.</li>
+<li><strong>High temperatures (<span class="arithmatex">\(T &gt; T_c\)</span>):</strong> Thermal fluctuations dominate. Spins are disordered and uncorrelated, and <span class="arithmatex">\(|M| \to 0\)</span>.</li>
+<li><strong>Critical point (<span class="arithmatex">\(T \approx T_c\)</span>):</strong> Correlated regions of all sizes coexist. Fluctuations are scale-free, and the correlation length <span class="arithmatex">\(\xi\)</span> diverges in the thermodynamic limit.</li>
+</ul>
+<pre class="mermaid"><code>flowchart LR
+    A[Low T &lt; Tc] --&gt; B[Ferromagnetic Order]
+    B --&gt; C[Large M]
+    D[High T &gt; Tc] --&gt; E[Paramagnetic Disorder]
+    E --&gt; F[M approaches 0]
+    G[Critical T = Tc] --&gt; H[Scale-Free Fluctuations]
+    H --&gt; I[Xi diverges]
+    H --&gt; J[Peaks in Chi and Cv]</code></pre>
+<hr />
+<h3 id="simulation-strategy"><strong>Simulation Strategy</strong></h3>
+<p>To numerically locate the phase transition:</p>
+<ol>
+<li>
+<p><strong>Temperature sweep:</strong><br />
+   Choose a range such as <span class="arithmatex">\(T \in [1.0, 4.0]\)</span> (in units of <span class="arithmatex">\(J/k_{\mathrm{B}}\)</span>), with fine spacing (e.g., <span class="arithmatex">\(\Delta T = 0.05\)</span>) near <span class="arithmatex">\(T_c\)</span>.</p>
+</li>
+<li>
+<p><strong>At each temperature:</strong></p>
+</li>
+<li><strong>Initialize and equilibrate</strong> for <span class="arithmatex">\(n_{\text{eq}}\)</span> Monte‑Carlo sweeps.</li>
+<li>
+<p><strong>Measure</strong> over <span class="arithmatex">\(n_{\text{meas}}\)</span> sweeps:</p>
+<ul>
+<li>Absolute magnetization <span class="arithmatex">\(\langle |M| \rangle\)</span></li>
+<li>Energy per spin <span class="arithmatex">\(e\)</span></li>
+<li>Magnetization and energy fluctuations for computing susceptibility <span class="arithmatex">\(\chi\)</span> and specific heat <span class="arithmatex">\(C_v\)</span>.</li>
+</ul>
+</li>
+<li>
+<p><strong>Analyze results:</strong></p>
+</li>
+<li>Plot <span class="arithmatex">\(\langle |M| \rangle\)</span> vs. <span class="arithmatex">\(T\)</span>: sharp drop indicates phase transition.</li>
+<li>Plot <span class="arithmatex">\(\chi(T)\)</span> and <span class="arithmatex">\(C_v(T)\)</span>: peaks indicate critical behavior.</li>
+<li>Estimate <span class="arithmatex">\(T_c\)</span> from where <span class="arithmatex">\(\langle |M| \rangle\)</span> drops or peaks in <span class="arithmatex">\(\chi\)</span> or <span class="arithmatex">\(C_v\)</span> occur.</li>
+</ol>
+<p><strong>Example:</strong><br />
+For <span class="arithmatex">\(N = 64\)</span>, a clear S-shaped magnetization curve appears. The susceptibility and specific heat show peaks near <span class="arithmatex">\(T \approx 2.26\)</span>, close to the exact <span class="arithmatex">\(T_c\)</span>.</p>
+<hr />
+<h3 id="binder-cumulant-and-finite-size-scaling"><strong>Binder Cumulant and Finite-Size Scaling</strong></h3>
+<p>To improve precision:</p>
+<ul>
+<li>
+<p><strong>Binder cumulant:</strong>
+  $$
+  U_L(T) = 1 - \frac{\langle M^4 \rangle}{3 \langle M^2 \rangle^2}.
+  $$
+  Plot <span class="arithmatex">\(U_L(T)\)</span> for several system sizes. The intersection point of the curves approximates <span class="arithmatex">\(T_c\)</span> and converges to the thermodynamic value as <span class="arithmatex">\(L \to \infty\)</span>.</p>
+</li>
+<li>
+<p><strong>Finite‑size scaling:</strong>
+  Near <span class="arithmatex">\(T_c\)</span>:
+  $$
+  \langle |M| \rangle \sim L^{-\beta/\nu} f\big((T - T_c)L^{1/\nu}\big), \quad
+  \chi \sim L^{\gamma/\nu} g\big((T - T_c)L^{1/\nu}).
+  $$
+  For the 2D Ising model: <span class="arithmatex">\(\beta = \frac{1}{8}, \gamma = \frac{7}{4}, \nu = 1\)</span>.</p>
+</li>
+</ul>
+<p>Plotting scaled observables against scaled temperature collapses data across sizes if correct exponents and <span class="arithmatex">\(T_c\)</span> are used.</p>
+<hr />
+<h3 id="practical-considerations"><strong>Practical Considerations</strong></h3>
+<ul>
+<li>
+<p><strong>Initial states:</strong><br />
+  Reuse the final configuration from the previous temperature to reduce equilibration time (especially in gradual sweeps).</p>
+</li>
+<li>
+<p><strong>Temperature spacing:</strong><br />
+  Use fine resolution near <span class="arithmatex">\(T_c\)</span> (e.g., <span class="arithmatex">\(\Delta T \le 0.01\)</span>) to resolve peaks accurately.</p>
+</li>
+<li>
+<p><strong>Lattice size:</strong><br />
+  Larger <span class="arithmatex">\(N\)</span> leads to sharper transitions. Small lattices show rounded behavior; use multiple sizes for finite‑size scaling.</p>
+</li>
+<li>
+<p><strong>Error estimation:</strong><br />
+  Use binning and autocorrelation analysis to compute error bars, especially near <span class="arithmatex">\(T_c\)</span> where fluctuations and autocorrelation times increase.</p>
+</li>
+</ul>
+<hr />
+<h3 id="summary-of-findings"><strong>Summary of Findings</strong></h3>
+<p>Metropolis simulations of the 2D Ising model reveal:</p>
+<ul>
+<li>A sharp drop in <span class="arithmatex">\(\langle |M| \rangle\)</span> near <span class="arithmatex">\(T \approx 2.269\)</span>.</li>
+<li>Peaks in susceptibility <span class="arithmatex">\(\chi(T)\)</span> and specific heat <span class="arithmatex">\(C_v(T)\)</span> at similar temperatures.</li>
+<li>Binder cumulant crossings that offer an accurate, system-size-independent estimate of <span class="arithmatex">\(T_c\)</span>.</li>
+</ul>
+<p>These results demonstrate the power of Monte‑Carlo methods to uncover collective behavior and phase transitions in many‑body systems. The methods outlined here lay the foundation for further study of critical phenomena, universality, and scaling in statistical physics.</p>
+<hr />
+<h2 id="28-chapter-summary-bridge-to-chapter-3"><strong>2.8 Chapter Summary &amp; Bridge to Chapter 3</strong></h2>
+<hr />
+<h3 id="what-we-accomplished-in-chapter-2"><strong>What We Accomplished in Chapter 2</strong></h3>
+<p>In this chapter, we moved from theory to practice: applying the Monte Carlo methods introduced in Chapter 1 to a classic model of collective behavior—the <strong>2D ferromagnetic Ising model</strong>. Along the way, we established a general simulation workflow for many-body systems:</p>
+<ul>
+<li>
+<p><strong>Model formulation:</strong><br />
+  We defined the Hamiltonian<br />
+  $$
+  E(\sigma) = -J\sum_{\langle i,j\rangle}\sigma_i\sigma_j - H\sum_i \sigma_i,
+  $$<br />
+  capturing the competition between alignment (ferromagnetic interaction, <span class="arithmatex">\(J\)</span>) and disorder (temperature), with or without an external magnetic field (<span class="arithmatex">\(H\)</span>).</p>
+</li>
+<li>
+<p><strong>Boundary conditions:</strong><br />
+  We introduced <strong>periodic boundary conditions</strong>, wrapping the lattice onto a torus to ensure uniform spin environments. This reduced surface effects and made simulations better approximate the thermodynamic limit.</p>
+</li>
+<li>
+<p><strong>Metropolis algorithm in action:</strong><br />
+  We implemented single-spin-flip Metropolis updates using only local information to compute the energy change <span class="arithmatex">\(\Delta E\)</span>, enabling efficient sampling of configurations. We also introduced <strong>Monte Carlo sweeps</strong> and strategies to accelerate simulation.</p>
+</li>
+<li>
+<p><strong>Macroscopic observables and statistics:</strong><br />
+  We computed key observables:  </p>
+</li>
+<li>Magnetization <span class="arithmatex">\(\langle |M| \rangle\)</span>  </li>
+<li>Energy per spin <span class="arithmatex">\(\langle e \rangle\)</span>  </li>
+<li>Susceptibility <span class="arithmatex">\(\chi\)</span>  </li>
+<li>
+<p>Specific heat <span class="arithmatex">\(C_v\)</span><br />
+  and related them to fluctuations of microscopic quantities. We emphasized the importance of <strong>equilibration</strong> and <strong>autocorrelation analysis</strong> to ensure statistical reliability.</p>
+</li>
+<li>
+<p><strong>Detecting the phase transition:</strong><br />
+  By sweeping temperature, we observed an S-shaped magnetization curve and identified the critical temperature<br />
+  $$
+  T_c \approx 2.269 \, \frac{J}{k_{\mathrm{B}}}
+  $$<br />
+  via peaks in susceptibility and specific heat. Using <strong>Binder cumulants</strong> and <strong>finite-size scaling</strong>, we estimated <span class="arithmatex">\(T_c\)</span> systematically and confirmed the presence of spontaneous symmetry breaking below <span class="arithmatex">\(T_c\)</span>.</p>
+</li>
+</ul>
+<p><strong>Key insight:</strong> Even with minimal ingredients—binary spins and nearest-neighbor interactions—the Ising model exhibits rich emergent behavior. It stands as a minimal yet profound demonstration of symmetry breaking, universality, and phase transitions in complex systems.</p>
+<hr />
+<h3 id="towards-chapter-3-from-spins-to-gauge-fields"><strong>Towards Chapter 3: From Spins to Gauge Fields</strong></h3>
+<p>Having mastered the Ising model, we are now ready to generalize our Monte Carlo toolkit to tackle systems that are both more abstract and more physically fundamental.</p>
+<p><strong>Enter: Lattice Gauge Theory (LGT)</strong> — a framework that discretizes quantum field theories, especially those governing the strong nuclear force (Quantum Chromodynamics, QCD). Here's how it contrasts with the Ising model:</p>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Ising Model</th>
+<th>Lattice Gauge Theory</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Variables</strong></td>
+<td>Spins <span class="arithmatex">\(\sigma_i = \pm 1\)</span> on sites</td>
+<td>Link variables: unitary matrices (e.g., SU(3)) on edges</td>
+</tr>
+<tr>
+<td><strong>Configuration space</strong></td>
+<td>Discrete</td>
+<td>Continuous and constrained (Lie groups)</td>
+</tr>
+<tr>
+<td><strong>Weight</strong></td>
+<td>Boltzmann weight via Hamiltonian</td>
+<td>Wilson action (nonlinear, gauge-invariant)</td>
+</tr>
+<tr>
+<td><strong>Sampling methods</strong></td>
+<td>Metropolis, heat-bath</td>
+<td>Heat-bath, overrelaxation, hybrid Monte Carlo</td>
+</tr>
+<tr>
+<td><strong>Goal</strong></td>
+<td>Study magnetism, phase transitions</td>
+<td>Compute hadron spectra, confinement, QCD thermodynamics</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Conceptual bridge:</strong><br />
+- <strong>Local interactions → emergent global structure</strong><br />
+  (Spins align, gauge fields confine)
+- <strong>Monte Carlo as microscope:</strong><br />
+  Reveal non-perturbative phenomena by sampling typical configurations
+- <strong>From binary to continuous:</strong><br />
+  The mathematical tools and statistical ideas remain, but the variables and symmetries become richer.</p>
+<p>🔭 <strong>What’s ahead in Chapter 3:</strong>
+- Understanding gauge symmetry and its lattice formulation
+- Sampling link variables using group-based update rules
+- Computing physical observables like Wilson loops
+- Exploring confinement, screening, and lattice artifacts</p>
+<p>Chapter 2 grounded us in a solvable yet profound model of collective behavior. Chapter 3 will lift us into the world of quantum fields and fundamental interactions—using the same principles, but on a more ambitious stage.</p>
+<hr />
+<p><strong>Takeaway:</strong><br />
+The Ising model showed us that <strong>simple local rules can give rise to complex macroscopic order</strong>. Now, we carry these ideas forward to simulate the quantum fields that govern the subatomic world—ushering in the full power of <strong>Monte Carlo physics</strong>.</p>
+<hr />
+<h2 id="references"><strong>References</strong></h2>
+<ol>
+<li>
+<p>Ising, E. (1925). "Beitrag zur Theorie des Ferromagnetismus." <em>Zeitschrift für Physik</em>, 31(1), 253–258.</p>
+</li>
+<li>
+<p>Onsager, L. (1944). "Crystal Statistics. I. A Two-Dimensional Model with an Order-Disorder Transition." <em>Physical Review</em>, 65(3-4), 117–149.</p>
+</li>
+<li>
+<p>Metropolis, N., Rosenbluth, A.W., Rosenbluth, M.N., Teller, A.H., &amp; Teller, E. (1953). "Equation of State Calculations by Fast Computing Machines." <em>The Journal of Chemical Physics</em>, 21(6), 1087–1092.</p>
+</li>
+<li>
+<p>Newman, M.E.J., &amp; Barkema, G.T. (1999). <em>Monte Carlo Methods in Statistical Physics</em>. Oxford University Press.</p>
+</li>
+<li>
+<p>Landau, D.P., &amp; Binder, K. (2014). <em>A Guide to Monte Carlo Simulations in Statistical Physics</em> (4<sup>th</sup> ed.). Cambridge University Press.</p>
+</li>
+<li>
+<p>Krauth, W. (2006). <em>Statistical Mechanics: Algorithms and Computations</em>. Oxford University Press.</p>
+</li>
+<li>
+<p>Binder, K., &amp; Heermann, D.W. (2010). <em>Monte Carlo Simulation in Statistical Physics: An Introduction</em> (5<sup>th</sup> ed.). Springer.</p>
+</li>
+<li>
+<p>Swendsen, R.H., &amp; Wang, J.S. (1987). "Nonuniversal Critical Dynamics in Monte Carlo Simulations." <em>Physical Review Letters</em>, 58(86), 86–88.</p>
+</li>
+<li>
+<p>Wolff, U. (1989). "Collective Monte Carlo Updating for Spin Systems." <em>Physical Review Letters</em>, 62(361), 361–364.</p>
+</li>
+<li>
+<p>Cardy, J. (1996). <em>Scaling and Renormalization in Statistical Physics</em>. Cambridge University Press.</p>
+</li>
+</ol>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../../chapter-1/Chapter-1-Essay/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Chapter-1 Foundations of Stochastic Simulation">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Chapter-1 Foundations of Stochastic Simulation
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../../chapter-3/Chapter-3-Essay/" class="md-footer__link md-footer__link--next" aria-label="Next: Chapter-3 Lattice Gauge Theory">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Chapter-3 Lattice Gauge Theory
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://bigbookofcomputing.github.io" target="_blank" rel="noopener" title="bigbookofcomputing.github.io" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://x.com/bigbookofcomputing" target="_blank" rel="noopener" title="x.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M459.4 151.7c.3 4.5.3 9.1.3 13.6 0 138.7-105.6 298.6-298.6 298.6-59.5 0-114.7-17.2-161.1-47.1 8.4 1 16.6 1.3 25.3 1.3 49.1 0 94.2-16.6 130.3-44.8-46.1-1-84.8-31.2-98.1-72.8 6.5 1 13 1.6 19.8 1.6 9.4 0 18.8-1.3 27.6-3.6-48.1-9.7-84.1-52-84.1-103v-1.3c14 7.8 30.2 12.7 47.4 13.3-28.3-18.8-46.8-51-46.8-87.4 0-19.5 5.2-37.4 14.3-53C87.4 130.8 165 172.4 252.1 176.9c-1.6-7.8-2.6-15.9-2.6-24C249.5 95.1 296.3 48 354.4 48c30.2 0 57.5 12.7 76.7 33.1 23.7-4.5 46.5-13.3 66.6-25.3-7.8 24.4-24.4 44.8-46.1 57.8 21.1-2.3 41.6-8.1 60.4-16.2-14.3 20.8-32.2 39.3-52.6 54.3"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.facebook.com/bigbookofcomputing" target="_blank" rel="noopener" title="www.facebook.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M512 256C512 114.6 397.4 0 256 0S0 114.6 0 256c0 120 82.7 220.8 194.2 248.5V334.2h-52.8V256h52.8v-33.7c0-87.1 39.4-127.5 125-127.5 16.2 0 44.2 3.2 55.7 6.4V172c-6-.6-16.5-1-29.6-1-42 0-58.2 15.9-58.2 57.2V256h83.6l-14.4 78.2H287v175.9C413.8 494.8 512 386.9 512 256"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.linkedin.com/bigbookofcomputing" target="_blank" rel="noopener" title="www.linkedin.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3M135.4 416H69V202.2h66.5V416zM102.2 96a38.5 38.5 0 1 1 0 77 38.5 38.5 0 1 1 0-77m282.1 320h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.youtube.com/@big-book-of-computing" target="_blank" rel="noopener" title="www.youtube.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M549.7 124.1c-6.2-23.7-24.8-42.3-48.3-48.6C458.9 64 288.1 64 288.1 64S117.3 64 74.7 75.5c-23.5 6.3-42 24.9-48.3 48.6C15 167 15 256.4 15 256.4s0 89.4 11.4 132.3c6.3 23.6 24.8 41.5 48.3 47.8C117.3 448 288.1 448 288.1 448s170.8 0 213.4-11.5c23.5-6.3 42-24.2 48.3-47.8 11.4-42.9 11.4-132.3 11.4-132.3s0-89.4-11.4-132.3zM232.2 337.6V175.2l142.7 81.2z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+      <div class="md-consent" data-md-component="consent" id="__consent" hidden>
+        <div class="md-consent__overlay"></div>
+        <aside class="md-consent__inner">
+          <form class="md-consent__form md-grid md-typeset" name="consent">
+            
+
+
+  
+
+
+<h4>Cookie consent</h4>
+<p>We use cookies to recognize your repeated visits and preferences, as well as to measure the effectiveness of our documentation and whether users find what they're searching for. With your consent, you're helping us to make our documentation better.</p>
+<input class="md-toggle" type="checkbox" id="__settings" >
+<div class="md-consent__settings">
+  <ul class="task-list">
+    
+    
+      
+        
+  
+  
+    
+    
+  
+  <li class="task-list-item">
+    <label class="task-list-control">
+      <input type="checkbox" name="analytics" checked>
+      <span class="task-list-indicator"></span>
+      Google Analytics
+    </label>
+  </li>
+
+      
+    
+    
+      
+        
+  
+  
+    
+    
+  
+  <li class="task-list-item">
+    <label class="task-list-control">
+      <input type="checkbox" name="github" checked>
+      <span class="task-list-indicator"></span>
+      GitHub
+    </label>
+  </li>
+
+      
+    
+    
+  </ul>
+</div>
+<div class="md-consent__controls">
+  
+    
+      <button class="md-button md-button--primary">Accept</button>
+    
+    
+    
+  
+    
+    
+    
+      <label class="md-button" for="__settings">Manage settings</label>
+    
+  
+</div>
+          </form>
+        </aside>
+      </div>
+      <script>var consent=__md_get("__consent");if(consent)for(var input of document.forms.consent.elements)input.name&&(input.checked=consent[input.name]||!1);else"file:"!==location.protocol&&setTimeout((function(){document.querySelector("[data-md-component=consent]").hidden=!1}),250);var form=document.forms.consent;for(var action of["submit","reset"])form.addEventListener(action,(function(e){if(e.preventDefault(),"reset"===e.type)for(var n of document.forms.consent.elements)n.name&&(n.checked=!1);__md_set("__consent",Object.fromEntries(Array.from(new FormData(form).keys()).map((function(e){return[e,!0]})))),location.hash="",location.reload()}))</script>
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["announce.dismiss", "content.action.edit", "content.action.view", "content.code.annotate", "content.code.copy", "content.tooltips", "navigation.footer", "navigation.indexes", "navigation.sections", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../../static/mathjax-config.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.0/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

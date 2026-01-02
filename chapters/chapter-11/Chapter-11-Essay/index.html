@@ -1,0 +1,3863 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="A comprehensive guide to the foundations of stochastic simulation">
+      
+      
+        <meta name="author" content="Big Book of Computing">
+      
+      
+        <link rel="canonical" href="https://bigbookofcomputing.github.io/chapters/chapter-11/Chapter-11-Essay/">
+      
+      
+        <link rel="prev" href="../../chapter-10/Chapter-10-Essay/">
+      
+      
+        <link rel="next" href="../../chapter-12/Chapter-12-Essay/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/logo.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>Chapter-11 Agent-Based & Network Models - Big Book of Computing | Simulation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+      <link rel="stylesheet" href="../../../static/styles.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  
+
+
+  
+  
+
+<script id="__analytics">function __md_analytics(){function e(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],e("js",new Date),e("config","G-ECS7B3X8JM"),document.addEventListener("DOMContentLoaded",(function(){document.forms.search&&document.forms.search.query.addEventListener("blur",(function(){this.value&&e("event","search",{search_term:this.value})}));document$.subscribe((function(){var t=document.forms.feedback;if(void 0!==t)for(var a of t.querySelectorAll("[type=submit]"))a.addEventListener("click",(function(a){a.preventDefault();var n=document.location.pathname,d=this.getAttribute("data-md-value");e("event","feedback",{page:n,data:d}),t.firstElementChild.disabled=!0;var r=t.querySelector(".md-feedback__note [data-md-value='"+d+"']");r&&(r.hidden=!1)})),t.hidden=!1})),location$.subscribe((function(t){e("config","G-ECS7B3X8JM",{page_path:t.pathname})}))}));var t=document.createElement("script");t.async=!0,t.src="https://www.googletagmanager.com/gtag/js?id=G-ECS7B3X8JM",document.getElementById("__analytics").insertAdjacentElement("afterEnd",t)}</script>
+  
+    <script>if("undefined"!=typeof __md_analytics){var consent=__md_get("__consent");consent&&consent.analytics&&__md_analytics()}</script>
+  
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#chapter-11-the-agent-based-model-abm-framework" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="Big Book of Computing | Simulation" class="md-header__button md-logo" aria-label="Big Book of Computing | Simulation" data-md-component="logo">
+      
+  <img src="../../../assets/logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Big Book of Computing | Simulation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Chapter-11 Agent-Based & Network Models
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1M8 13h8v-2H8zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4a5 5 0 0 0 5-5 5 5 0 0 0-5-5"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h10a5 5 0 0 0 5-5 5 5 0 0 0-5-5m0 8a3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3 3 3 0 0 1-3 3"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="indigo"  aria-label="Switch to system preference"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to system preference" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h10a5 5 0 0 0 5-5 5 5 0 0 0-5-5M7 15a3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3 3 3 0 0 1-3 3"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/bigbookofcomputing/simulation" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../contents/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Contents
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../introduction/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Introduction
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../chapter-1/Chapter-1-Essay/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Chapters
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../chapter-1/Chapter-1-WorkBook/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  WorkBooks
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../chapter-1/Chapter-1-CodeBook/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  CodeBooks
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Big Book of Computing | Simulation" class="md-nav__button md-logo" aria-label="Big Book of Computing | Simulation" data-md-component="logo">
+      
+  <img src="../../../assets/logo.png" alt="logo">
+
+    </a>
+    Big Book of Computing | Simulation
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/bigbookofcomputing/simulation" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contents/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contents
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introduction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapters
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Chapters
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-1/Chapter-1-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-1 Foundations of Stochastic Simulation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-2/Chapter-2-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-2 The Ising Model
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-3/Chapter-3-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-3 Lattice Gauge Theory
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-4/Chapter-4-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-4 Monte Carlo Option Pricing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-5/Chapter-5-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-5 Stochastic Systems Biology
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-6/Chapter-6-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-6 Advanced Monte Carlo Methods
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-7/Chapter-7-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-7 Molecular Dynamics (MD)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-8/Chapter-8-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-8 The Stochastic Calculus (SDEs)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-9/Chapter-9-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-9 Black-Scholes-Merton (BSM)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-10/Chapter-10-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-10 Neuroscience (Hodgkin-Huxley)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-11 Agent-Based & Network Models
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-11 Agent-Based & Network Models
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Introduction
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#chapter-outline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Chapter Outline
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#111-the-philosophy-of-emergence" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.1 The Philosophy of Emergence
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="11.1 The Philosophy of Emergence">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#from-top-down-to-bottom-up-thinking" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        From Top-Down to Bottom-Up Thinking
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-limits-of-mean-field-theory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Limits of Mean-Field Theory
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-shift-the-agent-based-model-abm-philosophy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Shift: The Agent-Based Model (ABM) Philosophy
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#emergence-local-rules-yielding-global-patterns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Emergence: Local Rules Yielding Global Patterns
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#philosophical-implications-non-equilibrium-dynamics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Philosophical Implications: Non-Equilibrium Dynamics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#conceptual-bridge-to-networks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Conceptual Bridge to Networks
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#112-the-abm-setup-the-three-pillars" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.2 The ABM Setup: The Three Pillars
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="11.2 The ABM Setup: The Three Pillars">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pillar-1-the-agents-the-actors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pillar 1: The Agents (The Actors)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Pillar 1: The Agents (The Actors)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#state-vector" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        State Vector
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#autonomy-and-logic" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Autonomy and Logic
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pillar-2-the-environment-the-world" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pillar 2: The Environment (The World)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Pillar 2: The Environment (The World)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#structure-and-locality" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Structure and Locality
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#environmental-state" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Environmental State
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pillar-3-the-rules-of-interaction-the-glue" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pillar 3: The Rules of Interaction (The Glue)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Pillar 3: The Rules of Interaction (The Glue)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bidirectional-feedback" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bidirectional Feedback
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#from-specification-to-simulation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        From Specification to Simulation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#113-simulation-and-concept-emergence-in-practice" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.3 Simulation and Concept: Emergence in Practice
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="11.3 Simulation and Concept: Emergence in Practice">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-operational-definition-of-emergence" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Operational Definition of Emergence
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-schelling-segregation-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Schelling Segregation Model
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The Schelling Segregation Model">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#model-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Model Setup
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#emergent-outcome" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Emergent Outcome
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-mechanism-of-amplification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Mechanism of Amplification
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quantifying-emergence-and-phase-transitions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quantifying Emergence and Phase Transitions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-computational-role" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Computational Role
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#114-implementing-a-simple-abm-loop" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.4 Implementing a Simple ABM Loop
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="11.4 Implementing a Simple ABM Loop">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-general-abm-loop-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The General ABM Loop Structure
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#synchronous-updates-parallel-time-step" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Synchronous Updates (Parallel Time Step)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Synchronous Updates (Parallel Time Step)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#methodological-characteristics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Methodological Characteristics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#algorithmic-outline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Algorithmic Outline
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#asynchronous-updates-sequential-or-random-order" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Asynchronous Updates (Sequential or Random Order)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Asynchronous Updates (Sequential or Random Order)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#methodological-characteristics_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Methodological Characteristics
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#performance-and-scalability" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Performance and Scalability
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#115-chapter-summary-bridge-to-chapter-12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.5 Chapter Summary &amp; Bridge to Chapter 12
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="11.5 Chapter Summary &amp; Bridge to Chapter 12">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#synthesis-of-the-abm-framework" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Synthesis of the ABM Framework
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Synthesis of the ABM Framework">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-three-pillars" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Three Pillars
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#emergence-and-time-flow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Emergence and Time Flow
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#computational-and-philosophical-implications" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Computational and Philosophical Implications
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bridge-to-chapter-12-agent-based-financial-markets" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bridge to Chapter 12: Agent-Based Financial Markets
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        References
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-12/Chapter-12-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-12 Collective Behavior & Pattern Formation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-13/Chapter-13-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-13 Collective Behavior & Pattern Formation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-14/Chapter-14-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-14 Computational Neuroscience
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-15/Chapter-15-Essay.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-15 Graph and Network Models
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    WorkBooks
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    WorkBooks
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-1/Chapter-1-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-1 Foundations of Stochastic Simulation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-2/Chapter-2-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-2 The Ising Model
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-3/Chapter-3-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-3 Lattice Gauge Theory
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-4/Chapter-4-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-4 Monte Carlo Option Pricing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-5/Chapter-5-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-5 Stochastic Systems Biology
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-6/Chapter-6-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-6 Advanced Monte Carlo Methods
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-7/Chapter-7-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-7 Molecular Dynamics (MD)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-8/Chapter-8-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-8 The Stochastic Calculus (SDEs)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-9/Chapter-9-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-9 Black-Scholes-Merton (BSM)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-10/Chapter-10-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-10 Neuroscience (Hodgkin-Huxley)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Chapter-11-WorkBook" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-11 Agent-Based & Network Models
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-12/Chapter-12-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-12 Collective Behavior & Pattern Formation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-13/Chapter-13-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-13 Collective Behavior & Pattern Formation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-14/Chapter-14-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-14 Computational Neuroscience
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-15/Chapter-15-WorkBook.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-15 Graph and Network Models
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CodeBooks
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    CodeBooks
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-1/Chapter-1-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-1 Foundations of Stochastic Simulation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-2/Chapter-2-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-2 The Ising Model
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-3/Chapter-3-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-3 Lattice Gauge Theory
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-4/Chapter-4-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-4 Monte Carlo Option Pricing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-5/Chapter-5-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-5 Stochastic Systems Biology
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-6/Chapter-6-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-6 Advanced Monte Carlo Methods
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-7/Chapter-7-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-7 Molecular Dynamics (MD)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-8/Chapter-8-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-8 The Stochastic Calculus (SDEs)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-9/Chapter-9-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-9 Black-Scholes-Merton (BSM)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-10/Chapter-10-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-10 Neuroscience (Hodgkin-Huxley)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Chapter-11-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-11 Agent-Based & Network Models
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-12/Chapter-12-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-12 Collective Behavior & Pattern Formation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-13/Chapter-13-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-13 Collective Behavior & Pattern Formation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-14/Chapter-14-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-14 Computational Neuroscience
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-15/Chapter-15-CodeBook.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-15 Graph and Network Models
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Introduction
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#chapter-outline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Chapter Outline
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#111-the-philosophy-of-emergence" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.1 The Philosophy of Emergence
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="11.1 The Philosophy of Emergence">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#from-top-down-to-bottom-up-thinking" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        From Top-Down to Bottom-Up Thinking
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-limits-of-mean-field-theory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Limits of Mean-Field Theory
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-shift-the-agent-based-model-abm-philosophy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Shift: The Agent-Based Model (ABM) Philosophy
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#emergence-local-rules-yielding-global-patterns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Emergence: Local Rules Yielding Global Patterns
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#philosophical-implications-non-equilibrium-dynamics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Philosophical Implications: Non-Equilibrium Dynamics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#conceptual-bridge-to-networks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Conceptual Bridge to Networks
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#112-the-abm-setup-the-three-pillars" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.2 The ABM Setup: The Three Pillars
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="11.2 The ABM Setup: The Three Pillars">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pillar-1-the-agents-the-actors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pillar 1: The Agents (The Actors)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Pillar 1: The Agents (The Actors)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#state-vector" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        State Vector
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#autonomy-and-logic" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Autonomy and Logic
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pillar-2-the-environment-the-world" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pillar 2: The Environment (The World)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Pillar 2: The Environment (The World)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#structure-and-locality" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Structure and Locality
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#environmental-state" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Environmental State
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pillar-3-the-rules-of-interaction-the-glue" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pillar 3: The Rules of Interaction (The Glue)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Pillar 3: The Rules of Interaction (The Glue)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bidirectional-feedback" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bidirectional Feedback
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#from-specification-to-simulation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        From Specification to Simulation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#113-simulation-and-concept-emergence-in-practice" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.3 Simulation and Concept: Emergence in Practice
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="11.3 Simulation and Concept: Emergence in Practice">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-operational-definition-of-emergence" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Operational Definition of Emergence
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-schelling-segregation-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Schelling Segregation Model
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The Schelling Segregation Model">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#model-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Model Setup
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#emergent-outcome" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Emergent Outcome
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-mechanism-of-amplification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Mechanism of Amplification
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quantifying-emergence-and-phase-transitions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quantifying Emergence and Phase Transitions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-computational-role" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Computational Role
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#114-implementing-a-simple-abm-loop" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.4 Implementing a Simple ABM Loop
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="11.4 Implementing a Simple ABM Loop">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-general-abm-loop-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The General ABM Loop Structure
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#synchronous-updates-parallel-time-step" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Synchronous Updates (Parallel Time Step)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Synchronous Updates (Parallel Time Step)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#methodological-characteristics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Methodological Characteristics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#algorithmic-outline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Algorithmic Outline
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#asynchronous-updates-sequential-or-random-order" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Asynchronous Updates (Sequential or Random Order)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Asynchronous Updates (Sequential or Random Order)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#methodological-characteristics_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Methodological Characteristics
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#performance-and-scalability" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Performance and Scalability
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#115-chapter-summary-bridge-to-chapter-12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.5 Chapter Summary &amp; Bridge to Chapter 12
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="11.5 Chapter Summary &amp; Bridge to Chapter 12">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#synthesis-of-the-abm-framework" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Synthesis of the ABM Framework
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Synthesis of the ABM Framework">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-three-pillars" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Three Pillars
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#emergence-and-time-flow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Emergence and Time Flow
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#computational-and-philosophical-implications" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Computational and Philosophical Implications
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bridge-to-chapter-12-agent-based-financial-markets" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bridge to Chapter 12: Agent-Based Financial Markets
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        References
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+    <a href="https://github.com/bigbookofcomputing/simulation/edit/master/docs/chapters/chapter-11/Chapter-11-Essay.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+    
+      
+    
+    <a href="https://github.com/bigbookofcomputing/simulation/raw/master/docs/chapters/chapter-11/Chapter-11-Essay.md" title="View source of this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.2 8.2 0 0 1-1.23-2"/></svg>
+    </a>
+  
+
+
+<h1 id="chapter-11-the-agent-based-model-abm-framework"><strong>Chapter 11: The Agent-Based Model (ABM) Framework</strong></h1>
+<hr />
+<h2 id="introduction"><strong>Introduction</strong></h2>
+<p>Throughout Chapters 1–10, we modeled physical, financial, and biological systems using <strong>top-down continuous frameworks</strong>: partial differential equations for diffusion (heat, Black–Scholes), ordinary differential equations for deterministic dynamics (Hodgkin–Huxley neurons), and stochastic differential equations for random processes (geometric Brownian motion). These approaches rest on a fundamental simplification—the <strong>mean-field assumption</strong>—where every element interacts with a smooth average of its surroundings rather than specific local neighbors. This assumption enables elegant calculus-based solutions but catastrophically fails for <strong>complex adaptive systems</strong> characterized by <strong>heterogeneity</strong> (agents with diverse internal states and strategies) and <strong>locality</strong> (interactions confined to immediate neighbors, not global averages). Social networks, ecosystems, financial markets, and immune systems exhibit emergent collective behaviors that cannot be captured by global field variables <span class="arithmatex">\(\rho(\mathbf{x},t)\)</span> or aggregate macroscopic equations—the very patterns we seek arise from discrete, decentralized interactions that mean-field theory erases.</p>
+<p>This chapter introduces the <strong>Agent-Based Model (ABM)</strong> paradigm, a <strong>bottom-up computational framework</strong> where global complexity emerges from simple local rules applied to autonomous discrete entities. Rather than seeking one master equation for the entire system, ABMs specify three pillars: (1) <strong>Agents</strong>—discrete entities with internal state vectors <span class="arithmatex">\(\mathbf{s}_i = \{x_i, v_i, \text{opinion}_i, \text{strategy}_i, \dots\}\)</span> and autonomous behavioral logic; (2) <strong>Environment</strong>—the spatial or network topology defining neighborhood structure (lattice grids, continuous space, or graphs); (3) <strong>Rules of Interaction</strong>—simple deterministic or probabilistic logic governing how agents update their states based on local observations. The central mechanism is <strong>emergence</strong>: macroscopic patterns that are qualitatively different from, and not explicitly programmed into, the microscopic rules. In Schelling's segregation model, agents with mild preference for similar neighbors (tolerance threshold <span class="arithmatex">\(T = 0.30\)</span>) spontaneously generate extreme global segregation through positive feedback—unhappy agents move, creating homogeneous clusters that attract more similar agents, amplifying separation without any agent desiring complete isolation.</p>
+<p>By the end of this chapter, you will understand the philosophical shift from continuous field equations to discrete agent dynamics, master the three-pillar ABM architecture, implement the core <strong>Sense → Decide → Act</strong> simulation loop with synchronous vs. asynchronous update strategies, and recognize emergence as algorithmic surprise arising from nonlinear feedback between micro-decisions and macro-states. You will see how ABMs reveal non-intuitive behaviors (Schelling's paradox: individual tolerance <span class="arithmatex">\(\neq\)</span> collective integration) and phase transitions in order parameters (segregation index vs. tolerance threshold). This framework completes the modeling trilogy—differential equations for continuous change, stochastic models for randomness, agent-based models for decentralized emergence—and prepares you for Chapter 12, where heterogeneous trader agents with imitation rules endogenously generate market phenomena (volatility clustering, fat tails, boom-bust cycles) that cannot arise from exogenous white noise in traditional SDEs.</p>
+<h2 id="chapter-outline"><strong>Chapter Outline</strong></h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;"><strong>Sec.</strong></th>
+<th style="text-align: left;"><strong>Title</strong></th>
+<th style="text-align: left;"><strong>Core Ideas &amp; Examples</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>11.1</strong></td>
+<td style="text-align: left;">The Philosophy of Emergence</td>
+<td style="text-align: left;"><strong>Mean-field breakdown</strong>: Heterogeneity (diverse agents) and locality (neighbor-specific interactions) violate global averaging assumptions. <strong>Bottom-up paradigm</strong>: No master equation, local rules generate global patterns. <strong>Emergence definition</strong>: Macroscopic structure qualitatively different from microscopic rules (flocking from align/cohere/separate, segregation from mild tolerance). Recursive feedback: agents → environment → agents.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>11.2</strong></td>
+<td style="text-align: left;">The Three Pillars of ABM</td>
+<td style="text-align: left;"><strong>Agents</strong>: Discrete entities with state vectors <span class="arithmatex">\(\mathbf{s}_i = \{x_i, v_i, P_i, \text{memory}_i\}\)</span>, autonomous logic, local knowledge only. <strong>Environment</strong>: Topology (lattice grid, continuous space, network graph) defining neighborhood structure and boundary conditions (periodic, reflective). <strong>Rules of Interaction</strong>: Local update logic (if-then conditions, probabilistic choices) creating bidirectional feedback between micro-states and macro-observables.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>11.3</strong></td>
+<td style="text-align: left;">Emergence in Practice</td>
+<td style="text-align: left;"><strong>Schelling segregation model</strong>: Agents happy if <span class="arithmatex">\(\geq T\)</span> fraction of neighbors are similar, move if unhappy. Mild tolerance (<span class="arithmatex">\(T=0.30\)</span>) yields extreme segregation via positive feedback (cluster formation → boundary agents leave → cluster reinforcement). <strong>Phase transitions</strong>: Segregation index (order parameter) vs. tolerance threshold <span class="arithmatex">\(T\)</span> shows critical transition. <strong>Nonlinear amplification</strong>: Microscopic intentions ≠ macroscopic outcomes.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>11.4</strong></td>
+<td style="text-align: left;">Implementing the ABM Loop</td>
+<td style="text-align: left;"><strong>Simulation cycle</strong>: Initialize agents/environment → Loop: (1) Sense (query neighbors), (2) Decide (apply rules), (3) Act (update states), (4) Measure observables → Repeat. <strong>Synchronous vs. asynchronous</strong>: Parallel update (all agents simultaneously, efficient, deterministic ordering) vs. sequential update (random order, realistic, connects to MCMC). Computational efficiency: vectorization, spatial indexing.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>11.5</strong></td>
+<td style="text-align: left;">Chapter Summary &amp; Bridge</td>
+<td style="text-align: left;"><strong>Paradigm shift</strong>: Top-down continuous equations → bottom-up discrete agents. ABM for systems too heterogeneous, local, or adaptive for mean-field theory. <strong>Emergence as computation</strong>: Simple rules + iteration = complex patterns (Schelling paradox). Bridge to Chapter 12: From exogenous noise (SDE <span class="arithmatex">\(dS = \mu dt + \sigma dW\)</span>) to endogenous volatility—heterogeneous trader agents with imitation/herding rules generate market phenomena (clustering, fat tails, crashes) as emergent properties.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="111-the-philosophy-of-emergence"><strong>11.1 The Philosophy of Emergence</strong></h2>
+<hr />
+<h3 id="from-top-down-to-bottom-up-thinking"><strong>From Top-Down to Bottom-Up Thinking</strong></h3>
+<p>Throughout the preceding volumes, our analytical approach has predominantly relied on <strong>top-down</strong> methods. These methods seek to describe the system as a whole using <strong>continuous field equations</strong>:
+* <strong>Mechanics and PDEs:</strong> Systems like fluid dynamics or heat transfer are governed by macro-level conservation laws (<span class="arithmatex">\(F=ma\)</span>) or diffusion equations.
+* <strong>Finance and Neuroscience:</strong> Even systems involving complex dynamics, such as the Black–Scholes PDE or the Hodgkin–Huxley ODEs, treat the system's core variables (price, voltage, density) as continuous entities governed by universal equations.</p>
+<p>This top-down approach rests on a crucial simplification: the <strong>mean-field assumption</strong>.</p>
+<hr />
+<h3 id="the-limits-of-mean-field-theory"><strong>The Limits of Mean-Field Theory</strong></h3>
+<p>The <strong>mean-field assumption</strong> posits that every element in a system interacts with a smooth average of its surroundings, ignoring individual identities and specific local connections. This approximation breaks down when studying many complex adaptive systems, such as social networks, ecosystems, and financial markets, for two principal reasons:</p>
+<ol>
+<li><strong>Heterogeneity:</strong> Real actors (people, cells, traders) possess unique internal states, rules, and preferences, which cannot be adequately captured by a single, aggregated variable.</li>
+<li><strong>Local Interactions:</strong> Interactions are often confined to specific neighbors, friends, or adjacent cells, rather than being distributed uniformly across the entire system.</li>
+</ol>
+<p>When heterogeneity and locality dominate, global averages <strong>erase the very patterns</strong> that define the system's dynamics, rendering traditional calculus-based models ineffective.</p>
+<div class="admonition tip">
+<p class="admonition-title">When Mean-Field Theory Fails</p>
+<p>The mean-field assumption works beautifully for gases (where molecules interact randomly with many others) or well-mixed chemical reactions. It catastrophically fails for social networks (you interact with specific friends, not the population average), ecosystems (predators hunt nearby prey, not a uniform density field), and markets (traders copy visible neighbors, creating localized bubbles). When <strong>who interacts with whom matters</strong>, you need ABMs.</p>
+</div>
+<hr />
+<h3 id="the-shift-the-agent-based-model-abm-philosophy"><strong>The Shift: The Agent-Based Model (ABM) Philosophy</strong></h3>
+<p>To model these systems successfully, we adopt the <strong>Agent-Based Model (ABM)</strong> philosophy—a <strong>bottom-up</strong> computational paradigm. Instead of seeking one equation for the whole system, ABM focuses on:</p>
+<ul>
+<li><strong>Agents:</strong> Discrete, autonomous entities, each possessing an internal state and behavioral logic.</li>
+<li><strong>Rules:</strong> Simple, deterministic or probabilistic logic governing the agent's interaction with its neighbors and environment.</li>
+</ul>
+<p>In an ABM, there is no central planner or master equation. The system's complexity is generated <strong>endogenously</strong> through the iterative application of these local rules.</p>
+<hr />
+<h3 id="emergence-local-rules-yielding-global-patterns"><strong>Emergence: Local Rules Yielding Global Patterns</strong></h3>
+<p>The defining characteristic of an ABM is <strong>emergence</strong>: the appearance of macroscopic structure or behavior that is qualitatively different from, and cannot be easily deduced from, the simple rules governing the individual parts.</p>
+<ul>
+<li><strong>Simple Input <span class="arithmatex">\(\to\)</span> Complex Output:</strong> For example, in the <strong>Boids model</strong> (Reynolds, 1987), simple local rules (align, separate, cohere) lead to the emergent, lifelike global pattern of flocking behavior.</li>
+<li><strong>Unintended Structure:</strong> In <strong>Schelling’s Segregation Model</strong> (1971), mild individual preference for similar neighbors generates extreme global segregation, a structure that was not explicitly programmed into any agent's logic.</li>
+</ul>
+<p>The mechanism for emergence is the <strong>recursive feedback loop</strong>: agents act on their local environment, their actions aggregate to change the macro-state, and the macro-state then influences the agents' future local decisions.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Framework</th>
+<th style="text-align: left;">Unit of Analysis</th>
+<th style="text-align: left;">Typical Behavior</th>
+<th style="text-align: left;">Core Tool</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Traditional ODE/PDE</strong></td>
+<td style="text-align: left;">Continuous, macro-level laws</td>
+<td style="text-align: left;">Predictable, smooth</td>
+<td style="text-align: left;">Calculus</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Agent-Based Model</strong></td>
+<td style="text-align: left;">Discrete, autonomous agents</td>
+<td style="text-align: left;">Complex, emergent</td>
+<td style="text-align: left;">Simulation</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="philosophical-implications-non-equilibrium-dynamics"><strong>Philosophical Implications: Non-Equilibrium Dynamics</strong></h3>
+<p>Traditional models often aim for <strong>equilibrium</strong>—a steady, predictable state. ABMs, by contrast, frequently describe <strong>complex adaptive systems</strong> that operate in a <strong>non-equilibrium steady state</strong>. These systems are dynamic, constantly adapting, and highly sensitive to history, making ABMs a more suitable descriptive framework for processes where continuous adaptation is key (e.g., market behavior, biological evolution).</p>
+<p>The ABM framework is essential for studying systems that are:
+* Too complex for continuous equations.
+* Too local for global averages.
+* Too adaptive for equilibrium assumptions.</p>
+<hr />
+<h3 id="conceptual-bridge-to-networks"><strong>Conceptual Bridge to Networks</strong></h3>
+<p>The ABM framework is the natural extension of the single-system dynamics explored in Chapter 10. Instead of modeling a single neuron with continuous ODEs, we move to a network where each neuron is an <strong>agent</strong> and each synapse is a <strong>local rule</strong> of interaction. The global structure of the resulting network is an emergent property of the collective interactions of its parts.</p>
+<p>The ABM completes the modeling trilogy:
+* <strong>Differential Equations</strong> predict continuous change.
+* <strong>Stochastic Models</strong> describe noise and probability.
+* <strong>Agent-Based Models</strong> reveal decentralized emergence and complexity.</p>
+<p>This bottom-up modeling approach will form the foundation for exploring complex adaptive systems in the chapters that follow.</p>
+<hr />
+<h2 id="112-the-abm-setup-the-three-pillars"><strong>11.2 The ABM Setup: The Three Pillars</strong></h2>
+<p>Every Agent-Based Model (ABM), regardless of its domain (social, biological, or economic), is defined by three fundamental and interconnected components. These "three pillars" form the architectural specification for the bottom-up simulation:</p>
+<ol>
+<li><strong>Agents</strong> (The Actors)</li>
+<li><strong>Environment</strong> (The World)</li>
+<li><strong>Rules of Interaction</strong> (The Glue)</li>
+</ol>
+<hr />
+<h3 id="pillar-1-the-agents-the-actors"><strong>Pillar 1: The Agents (The Actors)</strong></h3>
+<p>Agents are the <strong>discrete, autonomous entities</strong> that populate the ABM. They are the individual atoms whose collective behavior creates the macroscopic pattern.</p>
+<hr />
+<h4 id="state-vector"><strong>State Vector</strong></h4>
+<p>Each agent <span class="arithmatex">\(i\)</span> is uniquely defined by its <strong>internal state vector (<span class="arithmatex">\(\mathbf{s}_i\)</span>)</strong>:
+$$
+\mathbf{s}_i = {x_i, v_i, P_i, \text{memory}_i, \text{type}_i, \dots}
+$$
+The components of the state vector depend on the model:
+* In a spatial model, the state includes <strong>position (<span class="arithmatex">\(x_i\)</span>)</strong> and <strong>velocity (<span class="arithmatex">\(v_i\)</span>)</strong>.
+* In an economic model, the state may include <strong>capital (<span class="arithmatex">\(C_i\)</span>)</strong> or a <strong>trading strategy (<span class="arithmatex">\(S_i\)</span>)</strong>.
+* In a social model, the state holds an <strong>opinion (<span class="arithmatex">\(o_i\)</span>)</strong> or belief.</p>
+<hr />
+<h4 id="autonomy-and-logic"><strong>Autonomy and Logic</strong></h4>
+<p>Agents operate <strong>autonomously</strong>, following internal behavioral logic. An agent typically only possesses <strong>local knowledge</strong>, meaning it perceives only its immediate neighborhood and its own state; it does not have access to the global state of the system. The logic is encoded in conditional or probabilistic rules.</p>
+<div class="admonition example">
+<p class="admonition-title">Agent Heterogeneity in Practice</p>
+<p>In a financial ABM, you might have 1000 trader agents where 70% are "fundamentalists" (buy when price &lt; value, sell when price &gt; value) and 30% are "chartists" (follow momentum trends). Each agent has identical logic structure but different parameter values (risk tolerance, memory length). This heterogeneity—impossible to capture in a single mean-field equation—generates realistic market dynamics like bubbles and crashes.</p>
+</div>
+<hr />
+<h3 id="pillar-2-the-environment-the-world"><strong>Pillar 2: The Environment (The World)</strong></h3>
+<p>The Environment provides the <strong>stage</strong> or context for the simulation, defining the topology and neighborhood structure for agent interactions.</p>
+<hr />
+<h4 id="structure-and-locality"><strong>Structure and Locality</strong></h4>
+<p>The environment can be represented in several ways, with the choice dictating how "locality" is measured:
+* <strong>Lattice/Grid:</strong> A discrete grid of cells (e.g., <span class="arithmatex">\(N \times N\)</span> matrix) often used for cellular automata and spatial models like Schelling's Segregation Model. Locality is defined by adjacent cells (e.g., Moore or von Neumann neighborhoods).
+* <strong>Continuous Space:</strong> Agents exist at continuous coordinates <span class="arithmatex">\((x, y, z)\)</span>, common for physical models like particle motion or <strong>Boids flocking</strong>. Locality is defined as proximity within a specific radius <span class="arithmatex">\(r\)</span>.
+* <strong>Network/Graph:</strong> Agents are nodes connected by edges, useful for social or communication systems. Locality is defined by direct graph connections.</p>
+<hr />
+<h4 id="environmental-state"><strong>Environmental State</strong></h4>
+<p>The environment also stores variables that are external to the agents but influence them (e.g., global interest rates, local food resources, pheromone trails). Agents <strong>read and often modify</strong> these environmental variables, contributing to the system's dynamic feedback loop.</p>
+<hr />
+<h3 id="pillar-3-the-rules-of-interaction-the-glue"><strong>Pillar 3: The Rules of Interaction (The Glue)</strong></h3>
+<p>The Rules of Interaction form the <strong>logic engine</strong> that defines how agents update their state in response to their environment and neighbors. This is formalized by the update function <span class="arithmatex">\(F\)</span>:
+$$
+\mathbf{s}_i(t+\Delta t) = F(\mathbf{s}_i(t), \text{neighbors}_i(t), \text{environment}(t))
+$$
+The function <span class="arithmatex">\(F\)</span> can be deterministic (e.g., move away from repulsion) or stochastic (e.g., infect a neighbor with probability <span class="arithmatex">\(p\)</span>).</p>
+<hr />
+<h4 id="bidirectional-feedback"><strong>Bidirectional Feedback</strong></h4>
+<p>The system's dynamic complexity is generated by <strong>bidirectional feedback</strong>:
+1.  <strong>Micro <span class="arithmatex">\(\to\)</span> Macro:</strong> Individual agent actions (e.g., consuming resources or placing a trade) collectively change the environment's state.
+2.  <strong>Macro <span class="arithmatex">\(\to\)</span> Micro:</strong> The changed environmental state (e.g., resource scarcity or a high market price) then alters the incentives and local rules for future agent actions.</p>
+<p>This continuous, recursive cycle prevents the system from settling into a simple equilibrium, allowing for the appearance of <strong>emergent behavior</strong>.</p>
+<hr />
+<h3 id="from-specification-to-simulation"><strong>From Specification to Simulation</strong></h3>
+<p>Once these three pillars are defined, the simulation proceeds through an iterative loop of updates: <strong>Sense, Decide, Act, Repeat</strong>. The implementation of this loop dictates the <em>flow of time</em>, which is governed by the two primary update paradigms: synchronous and asynchronous (discussed in Section 11.4).</p>
+<hr />
+<h2 id="113-simulation-and-concept-emergence-in-practice"><strong>11.3 Simulation and Concept: Emergence in Practice</strong></h2>
+<hr />
+<h3 id="the-operational-definition-of-emergence"><strong>The Operational Definition of Emergence</strong></h3>
+<p>In the context of computational modeling, <strong>emergence</strong> is the core operational principle of Agent-Based Modeling (ABM). It describes the spontaneous appearance of macroscopic structure or behavior that is qualitatively distinct from the simple rules governing the individual agents. Emergence is often described as <strong>algorithmic surprise</strong>—complexity generated implicitly by the system's execution, not explicitly by the programmer.</p>
+<p>Emergent behavior requires several computational ingredients to appear:</p>
+<ol>
+<li><strong>Local Interactions:</strong> Agents must interact primarily with immediate neighbors, thus breaking the <strong>mean-field approximation</strong>.</li>
+<li><strong>Feedback Loops:</strong> Agent actions must modify the environment or other agents, and that modified state must, in turn, affect the agent's future decisions (micro <span class="arithmatex">\(\to\)</span> macro <span class="arithmatex">\(\to\)</span> micro).</li>
+<li><strong>Nonlinearity:</strong> The aggregate effect of local decisions is often non-proportional to the magnitude of the inputs.</li>
+</ol>
+<details class="question">
+<summary>Can We Predict Emergence Analytically?</summary>
+<p>Generally, no. Emergence is fundamentally a <strong>computational phenomenon</strong>—the pattern exists implicitly in the rules but cannot be deduced through algebraic manipulation or closed-form solutions. You must <em>run</em> the simulation to observe what emerges. This is why ABMs are essential: they reveal behaviors that even their creators didn't anticipate. However, post-hoc analysis (phase diagrams, order parameters) can quantify and classify emergent regimes.</p>
+</details>
+<hr />
+<h3 id="the-schelling-segregation-model"><strong>The Schelling Segregation Model</strong></h3>
+<p>The most celebrated demonstration of emergence in a social context is <strong>Thomas Schelling's Segregation Model</strong> (1971). This model elegantly illustrates how simple, mild local preferences can aggregate to produce extreme, unintended <strong>global segregation</strong>.</p>
+<hr />
+<h4 id="model-setup"><strong>Model Setup</strong></h4>
+<ul>
+<li><strong>Agents:</strong> Two types of agents (e.g., Red and Blue) randomly distributed on a lattice grid, which represents a city.</li>
+<li><strong>Local Rule (Tolerance):</strong> Each agent possesses a single local rule: the agent is deemed "happy" if at least a specific <strong>tolerance threshold (<span class="arithmatex">\(T\)</span>)</strong> percentage of its local neighbors are of the same type. If the fraction of similar neighbors is below <span class="arithmatex">\(T\)</span>, the agent is "unhappy" and moves.</li>
+<li><strong>Action:</strong> Unhappy agents move to a randomly selected empty cell in the grid.</li>
+</ul>
+<hr />
+<h4 id="emergent-outcome"><strong>Emergent Outcome</strong></h4>
+<p>The simulation reveals that even with a low tolerance threshold (e.g., <span class="arithmatex">\(T=0.30\)</span>, meaning agents are happy as long as 30% of their neighbors are similar), the system quickly evolves from an initially mixed state to one of <strong>near-total global segregation</strong>. No individual agent explicitly desires complete separation; they merely desire to avoid being a significant local minority. The extreme global pattern is a collective, unintended consequence of local satisfaction rules.</p>
+<hr />
+<h3 id="the-mechanism-of-amplification"><strong>The Mechanism of Amplification</strong></h3>
+<p>The segregation phenomenon arises from a mechanism of <strong>local reinforcement and positive feedback</strong>:
+1.  A small, random cluster of one type forms.
+2.  Agents of the other type on the cluster boundary become unhappy and move away.
+3.  This departure lowers the threshold satisfaction for remaining agents on the boundary, causing them to move, which in turn reinforces the homogeneity of the cluster.
+4.  The large, homogeneous cluster becomes an "attractor" for any similar unhappy agents, amplifying the separation.</p>
+<p>The model demonstrates the critical point that <strong>macroscopic outcomes are decoupled from microscopic intentions</strong>. Simple, linear reasoning ("most people are tolerant") fails to predict the nonlinear, paradoxical behavior of the collective system.</p>
+<hr />
+<h3 id="quantifying-emergence-and-phase-transitions"><strong>Quantifying Emergence and Phase Transitions</strong></h3>
+<p>To quantify the emergent pattern, ABMs use a <strong>global order parameter</strong>, such as a <strong>segregation index</strong> (e.g., the average fraction of similar neighbors across all agents). Plotting this global order parameter against the control parameter (the local tolerance threshold <span class="arithmatex">\(T\)</span>) allows one to observe <strong>emergent phase transitions</strong>.</p>
+<p>In the Schelling model, there is a <strong>critical tolerance level</strong> where the system abruptly shifts from a mixed state (low segregation index) to a stable, highly segregated state (high index), analogous to the phase transitions found in statistical physics models like the Ising model. This abrupt, nonlinear shift is the quantitative signature of true emergence.</p>
+<hr />
+<h3 id="the-computational-role"><strong>The Computational Role</strong></h3>
+<p>The ABM framework provides the computational environment to discover these non-intuitive behaviors. By translating the model into a <strong>discrete simulation loop</strong> and efficiently calculating local interactions (e.g., using fast array operations like 2D convolutions for neighborhood sums), the simulator allows the system to evolve and reveal its inherent structural properties. This approach of <strong>computational emergence</strong> is essential when systems are too adaptive, heterogeneous, or localized for reductionist, calculus-based methods.</p>
+<hr />
+<h2 id="114-implementing-a-simple-abm-loop"><strong>11.4 Implementing a Simple ABM Loop</strong></h2>
+<p>The core computational structure of any <strong>Agent-Based Model (ABM)</strong> is the <strong>iterative simulation loop</strong>, which drives the system through cycles of <strong>sensing, deciding, and acting</strong>. This mechanism defines how the local rules of interaction translate into macroscopic, emergent dynamics. The primary methodological decision in designing this loop is the choice between <strong>synchronous</strong> and <strong>asynchronous</strong> time stepping.</p>
+<hr />
+<h3 id="the-general-abm-loop-structure"><strong>The General ABM Loop Structure</strong></h3>
+<p>The flow of time in an ABM is generally a discrete event loop that iteratively updates the state of the system:</p>
+<ol>
+<li><strong>Sense:</strong> Each agent observes its local environment and the state of its neighbors.</li>
+<li><strong>Decide (Apply Rules):</strong> Based on its internal state and sensed information, the agent applies its behavioral logic (the interaction rule) to determine an action.</li>
+<li><strong>Act:</strong> Agents execute their action, modifying their own state or the state of the environment.</li>
+<li><strong>Repeat:</strong> The process iterates for the next time step, creating a continuous feedback mechanism.</li>
+</ol>
+<hr />
+<h3 id="synchronous-updates-parallel-time-step"><strong>Synchronous Updates (Parallel Time Step)</strong></h3>
+<p>In the <strong>synchronous update</strong> paradigm, all agents execute their actions simultaneously at the end of a time step, ensuring they all perceive the exact same environment state.</p>
+<hr />
+<h4 id="methodological-characteristics"><strong>Methodological Characteristics</strong></h4>
+<ul>
+<li><strong>Time Concept:</strong> Time is discrete and progresses in uniform steps (<span class="arithmatex">\(\Delta t\)</span>), with all agents acting in <strong>lockstep</strong>. The system updates as a unified snapshot or "frame".</li>
+<li><strong>Suitability:</strong> This method is ideal for models where simultaneity is inherent, such as <strong>cellular automata</strong> (e.g., Conway’s Game of Life) or highly idealized <strong>deterministic models</strong>.</li>
+<li><strong>Computational Efficiency:</strong> Synchronous updates are highly amenable to <strong>parallel processing</strong> and <strong>vectorization</strong>. Techniques like using array operations (e.g., convolution for neighborhood checks) allow for efficient calculation of local interactions across the entire system, accelerating simulations and potentially reducing computational complexity to <span class="arithmatex">\(\mathcal{O}(N)\)</span>.</li>
+<li><strong>Drawbacks:</strong> Simultaneous actions can lead to <strong>non-physical artifacts</strong>, such as oscillating patterns or deadlocks, especially if agents compete for the same physical location or resource without resolving simultaneous demands. It often necessitates temporary memory to store agents' <em>intended</em> "next states" before committing the changes to the <em>new</em> global state.</li>
+</ul>
+<hr />
+<h4 id="algorithmic-outline"><strong>Algorithmic Outline</strong></h4>
+<p>The core logic separates the sensing/decision phase from the action phase:
+1.  <strong>Sense &amp; Decide:</strong> All agents read the system state at <span class="arithmatex">\(t\)</span> and determine their action (e.g., move, change opinion). Intentions are recorded.
+2.  <strong>Act:</strong> All recorded intentions are executed simultaneously to update the system state from <span class="arithmatex">\(t\)</span> to <span class="arithmatex">\(t+\Delta t\)</span>.</p>
+<p>Here is a basic synchronous ABM loop implementation:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">synchronous_abm_loop</span><span class="p">(</span><span class="n">agents</span><span class="p">,</span> <span class="n">environment</span><span class="p">,</span> <span class="n">n_steps</span><span class="p">):</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="sd">    Synchronous ABM simulation loop (all agents update in parallel).</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="sd">    Parameters:</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="sd">    - agents: List of agent objects with state and behavior methods</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="sd">    - environment: Environment object (grid, network, continuous space)</span>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="sd">    - n_steps: Number of simulation iterations</span>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>    <span class="n">observables</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># Store system-level measurements</span>
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>    <span class="k">for</span> <span class="n">step</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_steps</span><span class="p">):</span>
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>        <span class="c1"># Phase 1: SENSE &amp; DECIDE (all agents perceive current state)</span>
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>        <span class="n">intended_actions</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>        <span class="k">for</span> <span class="n">agent</span> <span class="ow">in</span> <span class="n">agents</span><span class="p">:</span>
+</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>            <span class="n">neighbors</span> <span class="o">=</span> <span class="n">environment</span><span class="o">.</span><span class="n">get_neighbors</span><span class="p">(</span><span class="n">agent</span><span class="p">)</span>
+</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>            <span class="n">action</span> <span class="o">=</span> <span class="n">agent</span><span class="o">.</span><span class="n">decide</span><span class="p">(</span><span class="n">agent</span><span class="o">.</span><span class="n">state</span><span class="p">,</span> <span class="n">neighbors</span><span class="p">,</span> <span class="n">environment</span><span class="p">)</span>
+</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>            <span class="n">intended_actions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">action</span><span class="p">)</span>
+</span><span id="__span-0-19"><a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>
+</span><span id="__span-0-20"><a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>        <span class="c1"># Phase 2: ACT (execute all actions simultaneously)</span>
+</span><span id="__span-0-21"><a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>        <span class="k">for</span> <span class="n">agent</span><span class="p">,</span> <span class="n">action</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">agents</span><span class="p">,</span> <span class="n">intended_actions</span><span class="p">):</span>
+</span><span id="__span-0-22"><a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>            <span class="n">agent</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">action</span><span class="p">)</span>
+</span><span id="__span-0-23"><a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a>            <span class="n">environment</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">agent</span><span class="p">,</span> <span class="n">action</span><span class="p">)</span>
+</span><span id="__span-0-24"><a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a>
+</span><span id="__span-0-25"><a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a>        <span class="c1"># Phase 3: MEASURE (compute global observables)</span>
+</span><span id="__span-0-26"><a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a>        <span class="n">observables</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">compute_order_parameter</span><span class="p">(</span><span class="n">agents</span><span class="p">,</span> <span class="n">environment</span><span class="p">))</span>
+</span><span id="__span-0-27"><a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a>
+</span><span id="__span-0-28"><a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a>    <span class="k">return</span> <span class="n">observables</span>
+</span></code></pre></div>
+<hr />
+<h3 id="asynchronous-updates-sequential-or-random-order"><strong>Asynchronous Updates (Sequential or Random Order)</strong></h3>
+<p>In the <strong>asynchronous update</strong> paradigm, agents are selected sequentially to act, and the environment is updated immediately after each individual action.</p>
+<hr />
+<h4 id="methodological-characteristics_1"><strong>Methodological Characteristics</strong></h4>
+<ul>
+<li><strong>Time Concept:</strong> Time flows more realistically and <strong>continuously</strong>, as the agent's actions influence the decisions of subsequent agents within the same global simulation step.</li>
+<li><strong>Suitability:</strong> This approach is preferred for models of <strong>social, biological, and economic systems</strong> where actions are sequential, irregular, and heterogeneous.</li>
+<li><strong>Realism and Dynamics:</strong> Asynchronous updating avoids the artificial oscillations and non-physical deadlocks associated with simultaneous actions. The sequential nature closely resembles local updating rules used in <strong>Markov Chain Monte Carlo (MCMC)</strong> methods in statistical physics, where a single event (spin flip, move) updates the local state.</li>
+<li><strong>Implementation:</strong> Agents are typically selected in a <strong>random order</strong> to avoid introducing systematic directional biases into the system dynamics.</li>
+<li><strong>Drawbacks:</strong> Sequential processing makes direct parallelization more challenging, potentially impacting performance in very large simulations.</li>
+</ul>
+<hr />
+<h3 id="performance-and-scalability"><strong>Performance and Scalability</strong></h3>
+<p>The choice of update paradigm is a critical design trade-off between <strong>computational performance</strong> and <strong>model realism</strong>.</p>
+<ul>
+<li><strong>Realism Priority:</strong> Asynchronous updates are favored when sequential influence (e.g., one neighbor moving and immediately affecting the next neighbor's satisfaction, as in Schelling’s model) is fundamental to the emergent behavior.</li>
+<li><strong>Performance Priority:</strong> The efficiency of synchronous updates, combined with <strong>vectorization</strong> techniques (replacing computational loops with efficient array operations), makes it the standard choice when modeling highly scalable systems. Vectorization is essential for minimizing complexity and transforming ABM from a theoretical tool into a practical large-scale simulation technique.</li>
+</ul>
+<hr />
+<h2 id="115-chapter-summary-bridge-to-chapter-12"><strong>11.5 Chapter Summary &amp; Bridge to Chapter 12</strong></h2>
+<p>This chapter marked a significant shift in modeling philosophy, moving from <strong>top-down continuous methods</strong> (ODEs, PDEs, and SDEs) to <strong>bottom-up discrete modeling</strong> using the <strong>Agent-Based Model (ABM) framework</strong>. We replaced global, continuous equations with <strong>local, rule-based logic</strong> applied to autonomous individual entities.</p>
+<pre class="mermaid"><code>flowchart TD
+    A[Initialize System&lt;br/&gt;Agents + Environment] --&gt; B[Simulation Loop Start&lt;br/&gt;t = 0]
+    B --&gt; C[SENSE Phase&lt;br/&gt;Each agent queries neighbors]
+    C --&gt; D[DECIDE Phase&lt;br/&gt;Apply local rules F(state, neighbors)]
+    D --&gt; E{Update Strategy?}
+    E --&gt;|Synchronous| F[Record All Intentions&lt;br/&gt;Parallel Decision]
+    E --&gt;|Asynchronous| G[Select Random Agent&lt;br/&gt;Sequential Decision]
+    F --&gt; H[ACT Phase Parallel&lt;br/&gt;Execute all actions simultaneously]
+    G --&gt; I[ACT Phase Sequential&lt;br/&gt;Update single agent immediately]
+    H --&gt; J[Update Environment&lt;br/&gt;Aggregate effects]
+    I --&gt; J
+    J --&gt; K[MEASURE Phase&lt;br/&gt;Compute order parameters]
+    K --&gt; L{More steps?}
+    L --&gt;|Yes| C
+    L --&gt;|No| M[Emergent Patterns Revealed&lt;br/&gt;Analyze results]
+
+    style C fill:#e6f3ff
+    style D fill:#fff3e6
+    style H fill:#e6ffe6
+    style I fill:#ffe6f3
+    style M fill:#f0e6ff</code></pre>
+<hr />
+<h3 id="synthesis-of-the-abm-framework"><strong>Synthesis of the ABM Framework</strong></h3>
+<p>The ABM methodology provides a tool for studying <strong>complex adaptive systems</strong> where traditional mean-field approximations fail due to <strong>heterogeneity</strong> and <strong>local interactions</strong>.</p>
+<hr />
+<h4 id="the-three-pillars"><strong>The Three Pillars</strong></h4>
+<p>Every ABM is defined by three interconnected components:
+1.  <strong>Agents:</strong> Discrete entities with internal states (e.g., position, opinion, wealth) and autonomous decision logic.
+2.  <strong>Environment:</strong> The setting (grid, continuous space, or network) that defines the topology and <strong>locality</strong> of interactions.
+3.  <strong>Rules of Interaction:</strong> Simple, local rules (deterministic or stochastic) that govern how agents update their state in response to their neighbors, creating <strong>bidirectional feedback</strong>.</p>
+<hr />
+<h4 id="emergence-and-time-flow"><strong>Emergence and Time Flow</strong></h4>
+<p>The core outcome of ABM is <strong>emergence</strong>. When local rules are executed repeatedly in the iterative <strong>Sense <span class="arithmatex">\(\to\)</span> Decide <span class="arithmatex">\(\to\)</span> Act</strong> loop, <strong>higher-order structure</strong> (patterns, organization, or chaos) arises spontaneously from the collective, decentralized interactions.</p>
+<p>The choice of time step—<strong>synchronous</strong> (parallel update, good for efficiency) versus <strong>asynchronous</strong> (sequential update, better for realism and MCMC analogy)—defines the simulation's dynamics.</p>
+<hr />
+<h3 id="computational-and-philosophical-implications"><strong>Computational and Philosophical Implications</strong></h3>
+<p>The ABM framework forces a shift in modeling mindset:</p>
+<ul>
+<li><strong>From Prediction to Explanation:</strong> The focus moves from solving predictive macro-equations to <strong>simulating generative micro-mechanisms</strong>.</li>
+<li><strong>Complexity as Computation:</strong> ABMs demonstrate that complexity is not necessarily inherent in complex equations but is often an <strong>algorithmic result</strong> of simple rules executed in parallel or sequence.</li>
+<li><strong>Non-Intuitive Outcomes:</strong> Models like <strong>Schelling’s segregation</strong> provided a profound lesson: mild individual preferences (micro-rules) can aggregate to produce <strong>extreme, unintended collective outcomes</strong> (macro-patterns).</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Framework</th>
+<th style="text-align: left;">Focus</th>
+<th style="text-align: left;">Interaction Style</th>
+<th style="text-align: left;">Key Insight</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Traditional (ODE/PDE/SDE)</strong></td>
+<td style="text-align: left;">Global Averages</td>
+<td style="text-align: left;">Homogeneous (Mean-Field)</td>
+<td style="text-align: left;">Predictable, equilibrium-seeking</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>ABM (This Chapter)</strong></td>
+<td style="text-align: left;">Local Rules</td>
+<td style="text-align: left;"><strong>Heterogeneous, Explicit</strong></td>
+<td style="text-align: left;"><strong>Emergence</strong>, adaptation, history matters</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="bridge-to-chapter-12-agent-based-financial-markets"><strong>Bridge to Chapter 12: Agent-Based Financial Markets</strong></h3>
+<p>The ABM methodology provides the ideal platform for exploring phenomena in finance that cannot be captured by continuous models.</p>
+<p>In <strong>traditional finance</strong> (Chapters 8–9), volatility and randomness were treated as <strong>external white noise</strong> (exogenous input). However, in <strong>real markets</strong>, volatility is <strong>endogenously generated</strong>.</p>
+<p>In <strong>Chapter 12: Finance IV: Market Microstructure</strong>, we will apply the ABM framework directly to financial systems by modeling traders as autonomous agents:
+1.  <strong>Agents:</strong> Traders with heterogeneous strategies (e.g., fundamentalists, trend followers) will replace the stochastic noise of the SDE.
+2.  <strong>Rules:</strong> Simple local rules like <strong>imitation</strong> and <strong>herd behavior</strong> will govern trading decisions.
+3.  <strong>Emergence:</strong> The collective action of these agents will spontaneously generate real-world market features, such as <strong>volatility clustering</strong>, <strong>fat tails</strong> in return distributions, and <strong>boom-bust cycles</strong>—patterns that are difficult to derive from mean-field equations.</p>
+<p>The next chapter will demonstrate that the complex dynamics of the stock market are an <strong>emergent property</strong> of decentralized, rule-based interactions, bridging the gap between complexity science and economic modeling.</p>
+<hr />
+<h2 id="references"><strong>References</strong></h2>
+<ol>
+<li>
+<p><strong>Schelling, T. C. (1971).</strong> "Dynamic Models of Segregation." <em>Journal of Mathematical Sociology</em>, 1(2), 143–186. — The original paper introducing the segregation model demonstrating emergent macro-patterns from micro-preferences.</p>
+</li>
+<li>
+<p><strong>Epstein, J. M., &amp; Axtell, R. (1996).</strong> <em>Growing Artificial Societies: Social Science from the Bottom Up</em>. MIT Press. — Foundational text on agent-based modeling introducing the Sugarscape model and generative social science.</p>
+</li>
+<li>
+<p><strong>Wilensky, U., &amp; Rand, W. (2015).</strong> <em>An Introduction to Agent-Based Modeling: Modeling Natural, Social, and Engineered Complex Systems with NetLogo</em>. MIT Press. — Comprehensive textbook with practical implementations in NetLogo platform.</p>
+</li>
+<li>
+<p><strong>Railsback, S. F., &amp; Grimm, V. (2019).</strong> <em>Agent-Based and Individual-Based Modeling: A Practical Introduction</em> (2<sup>nd</sup> ed.). Princeton University Press. — Systematic guide to ABM design patterns and ODD (Overview, Design concepts, Details) protocol.</p>
+</li>
+<li>
+<p><strong>Bonabeau, E. (2002).</strong> "Agent-Based Modeling: Methods and Techniques for Simulating Human Systems." <em>Proceedings of the National Academy of Sciences</em>, 99(suppl 3), 7280–7287. — Survey article on ABM methodology and applications across disciplines.</p>
+</li>
+<li>
+<p><strong>Reynolds, C. W. (1987).</strong> "Flocks, Herds and Schools: A Distributed Behavioral Model." <em>ACM SIGGRAPH Computer Graphics</em>, 21(4), 25–34. — Introduces the Boids model demonstrating emergent flocking from three simple rules.</p>
+</li>
+<li>
+<p><strong>Axelrod, R. (1997).</strong> <em>The Complexity of Cooperation: Agent-Based Models of Competition and Collaboration</em>. Princeton University Press. — Applications of ABM to game theory, cultural dissemination, and evolution of cooperation.</p>
+</li>
+<li>
+<p><strong>Miller, J. H., &amp; Page, S. E. (2007).</strong> <em>Complex Adaptive Systems: An Introduction to Computational Models of Social Life</em>. Princeton University Press. — Theoretical foundations linking ABM to complexity science and adaptive systems.</p>
+</li>
+<li>
+<p><strong>Gilbert, N., &amp; Troitzsch, K. (2005).</strong> <em>Simulation for the Social Scientist</em> (2<sup>nd</sup> ed.). Open University Press. — Practical guide to computational social science methods including ABM implementation strategies.</p>
+</li>
+<li>
+<p><strong>Macal, C. M., &amp; North, M. J. (2010).</strong> "Tutorial on Agent-Based Modelling and Simulation." <em>Journal of Simulation</em>, 4(3), 151–162. — Accessible tutorial covering ABM concepts, design principles, and verification/validation techniques.</p>
+</li>
+</ol>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../../chapter-10/Chapter-10-Essay/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Chapter-10 Neuroscience (Hodgkin-Huxley)">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Chapter-10 Neuroscience (Hodgkin-Huxley)
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../../chapter-12/Chapter-12-Essay/" class="md-footer__link md-footer__link--next" aria-label="Next: Chapter-12 Collective Behavior &amp; Pattern Formation">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Chapter-12 Collective Behavior & Pattern Formation
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://bigbookofcomputing.github.io" target="_blank" rel="noopener" title="bigbookofcomputing.github.io" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://x.com/bigbookofcomputing" target="_blank" rel="noopener" title="x.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M459.4 151.7c.3 4.5.3 9.1.3 13.6 0 138.7-105.6 298.6-298.6 298.6-59.5 0-114.7-17.2-161.1-47.1 8.4 1 16.6 1.3 25.3 1.3 49.1 0 94.2-16.6 130.3-44.8-46.1-1-84.8-31.2-98.1-72.8 6.5 1 13 1.6 19.8 1.6 9.4 0 18.8-1.3 27.6-3.6-48.1-9.7-84.1-52-84.1-103v-1.3c14 7.8 30.2 12.7 47.4 13.3-28.3-18.8-46.8-51-46.8-87.4 0-19.5 5.2-37.4 14.3-53C87.4 130.8 165 172.4 252.1 176.9c-1.6-7.8-2.6-15.9-2.6-24C249.5 95.1 296.3 48 354.4 48c30.2 0 57.5 12.7 76.7 33.1 23.7-4.5 46.5-13.3 66.6-25.3-7.8 24.4-24.4 44.8-46.1 57.8 21.1-2.3 41.6-8.1 60.4-16.2-14.3 20.8-32.2 39.3-52.6 54.3"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.facebook.com/bigbookofcomputing" target="_blank" rel="noopener" title="www.facebook.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M512 256C512 114.6 397.4 0 256 0S0 114.6 0 256c0 120 82.7 220.8 194.2 248.5V334.2h-52.8V256h52.8v-33.7c0-87.1 39.4-127.5 125-127.5 16.2 0 44.2 3.2 55.7 6.4V172c-6-.6-16.5-1-29.6-1-42 0-58.2 15.9-58.2 57.2V256h83.6l-14.4 78.2H287v175.9C413.8 494.8 512 386.9 512 256"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.linkedin.com/bigbookofcomputing" target="_blank" rel="noopener" title="www.linkedin.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3M135.4 416H69V202.2h66.5V416zM102.2 96a38.5 38.5 0 1 1 0 77 38.5 38.5 0 1 1 0-77m282.1 320h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.youtube.com/@big-book-of-computing" target="_blank" rel="noopener" title="www.youtube.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M549.7 124.1c-6.2-23.7-24.8-42.3-48.3-48.6C458.9 64 288.1 64 288.1 64S117.3 64 74.7 75.5c-23.5 6.3-42 24.9-48.3 48.6C15 167 15 256.4 15 256.4s0 89.4 11.4 132.3c6.3 23.6 24.8 41.5 48.3 47.8C117.3 448 288.1 448 288.1 448s170.8 0 213.4-11.5c23.5-6.3 42-24.2 48.3-47.8 11.4-42.9 11.4-132.3 11.4-132.3s0-89.4-11.4-132.3zM232.2 337.6V175.2l142.7 81.2z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+      <div class="md-consent" data-md-component="consent" id="__consent" hidden>
+        <div class="md-consent__overlay"></div>
+        <aside class="md-consent__inner">
+          <form class="md-consent__form md-grid md-typeset" name="consent">
+            
+
+
+  
+
+
+<h4>Cookie consent</h4>
+<p>We use cookies to recognize your repeated visits and preferences, as well as to measure the effectiveness of our documentation and whether users find what they're searching for. With your consent, you're helping us to make our documentation better.</p>
+<input class="md-toggle" type="checkbox" id="__settings" >
+<div class="md-consent__settings">
+  <ul class="task-list">
+    
+    
+      
+        
+  
+  
+    
+    
+  
+  <li class="task-list-item">
+    <label class="task-list-control">
+      <input type="checkbox" name="analytics" checked>
+      <span class="task-list-indicator"></span>
+      Google Analytics
+    </label>
+  </li>
+
+      
+    
+    
+      
+        
+  
+  
+    
+    
+  
+  <li class="task-list-item">
+    <label class="task-list-control">
+      <input type="checkbox" name="github" checked>
+      <span class="task-list-indicator"></span>
+      GitHub
+    </label>
+  </li>
+
+      
+    
+    
+  </ul>
+</div>
+<div class="md-consent__controls">
+  
+    
+      <button class="md-button md-button--primary">Accept</button>
+    
+    
+    
+  
+    
+    
+    
+      <label class="md-button" for="__settings">Manage settings</label>
+    
+  
+</div>
+          </form>
+        </aside>
+      </div>
+      <script>var consent=__md_get("__consent");if(consent)for(var input of document.forms.consent.elements)input.name&&(input.checked=consent[input.name]||!1);else"file:"!==location.protocol&&setTimeout((function(){document.querySelector("[data-md-component=consent]").hidden=!1}),250);var form=document.forms.consent;for(var action of["submit","reset"])form.addEventListener(action,(function(e){if(e.preventDefault(),"reset"===e.type)for(var n of document.forms.consent.elements)n.name&&(n.checked=!1);__md_set("__consent",Object.fromEntries(Array.from(new FormData(form).keys()).map((function(e){return[e,!0]})))),location.hash="",location.reload()}))</script>
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["announce.dismiss", "content.action.edit", "content.action.view", "content.code.annotate", "content.code.copy", "content.tooltips", "navigation.footer", "navigation.indexes", "navigation.sections", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../../static/mathjax-config.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.0/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

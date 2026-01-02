@@ -1,0 +1,3652 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="A comprehensive guide to the foundations of stochastic simulation">
+      
+      
+        <meta name="author" content="Big Book of Computing">
+      
+      
+        <link rel="canonical" href="https://bigbookofcomputing.github.io/chapters/chapter-14/Chapter-14-Essay/">
+      
+      
+        <link rel="prev" href="../../chapter-13/Chapter-13-Essay/">
+      
+      
+        <link rel="next" href="../../chapter-1/Chapter-1-WorkBook/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/logo.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>Chapter-14 Computational Neuroscience - Big Book of Computing | Simulation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+      <link rel="stylesheet" href="../../../static/styles.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  
+
+
+  
+  
+
+<script id="__analytics">function __md_analytics(){function e(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],e("js",new Date),e("config","G-ECS7B3X8JM"),document.addEventListener("DOMContentLoaded",(function(){document.forms.search&&document.forms.search.query.addEventListener("blur",(function(){this.value&&e("event","search",{search_term:this.value})}));document$.subscribe((function(){var t=document.forms.feedback;if(void 0!==t)for(var a of t.querySelectorAll("[type=submit]"))a.addEventListener("click",(function(a){a.preventDefault();var n=document.location.pathname,d=this.getAttribute("data-md-value");e("event","feedback",{page:n,data:d}),t.firstElementChild.disabled=!0;var r=t.querySelector(".md-feedback__note [data-md-value='"+d+"']");r&&(r.hidden=!1)})),t.hidden=!1})),location$.subscribe((function(t){e("config","G-ECS7B3X8JM",{page_path:t.pathname})}))}));var t=document.createElement("script");t.async=!0,t.src="https://www.googletagmanager.com/gtag/js?id=G-ECS7B3X8JM",document.getElementById("__analytics").insertAdjacentElement("afterEnd",t)}</script>
+  
+    <script>if("undefined"!=typeof __md_analytics){var consent=__md_get("__consent");consent&&consent.analytics&&__md_analytics()}</script>
+  
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#chapter-14-computational-neuroscience" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="Big Book of Computing | Simulation" class="md-header__button md-logo" aria-label="Big Book of Computing | Simulation" data-md-component="logo">
+      
+  <img src="../../../assets/logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Big Book of Computing | Simulation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Chapter-14 Computational Neuroscience
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1M8 13h8v-2H8zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4a5 5 0 0 0 5-5 5 5 0 0 0-5-5"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h10a5 5 0 0 0 5-5 5 5 0 0 0-5-5m0 8a3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3 3 3 0 0 1-3 3"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="indigo"  aria-label="Switch to system preference"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to system preference" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h10a5 5 0 0 0 5-5 5 5 0 0 0-5-5M7 15a3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3 3 3 0 0 1-3 3"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/bigbookofcomputing/simulation" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../contents/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Contents
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../introduction/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Introduction
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../chapter-1/Chapter-1-Essay/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Chapters
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../chapter-1/Chapter-1-WorkBook/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  WorkBooks
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../chapter-1/Chapter-1-CodeBook/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  CodeBooks
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Big Book of Computing | Simulation" class="md-nav__button md-logo" aria-label="Big Book of Computing | Simulation" data-md-component="logo">
+      
+  <img src="../../../assets/logo.png" alt="logo">
+
+    </a>
+    Big Book of Computing | Simulation
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/bigbookofcomputing/simulation" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contents/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contents
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introduction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapters
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Chapters
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-1/Chapter-1-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-1 Foundations of Stochastic Simulation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-2/Chapter-2-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-2 The Ising Model
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-3/Chapter-3-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-3 Lattice Gauge Theory
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-4/Chapter-4-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-4 Monte Carlo Option Pricing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-5/Chapter-5-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-5 Stochastic Systems Biology
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-6/Chapter-6-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-6 Advanced Monte Carlo Methods
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-7/Chapter-7-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-7 Molecular Dynamics (MD)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-8/Chapter-8-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-8 The Stochastic Calculus (SDEs)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-9/Chapter-9-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-9 Black-Scholes-Merton (BSM)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-10/Chapter-10-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-10 Neuroscience (Hodgkin-Huxley)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-11/Chapter-11-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-11 Agent-Based & Network Models
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-12/Chapter-12-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-12 Collective Behavior & Pattern Formation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-13/Chapter-13-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-13 Collective Behavior & Pattern Formation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-14 Computational Neuroscience
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-14 Computational Neuroscience
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Introduction
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#chapter-outline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Chapter Outline
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#141-the-network-as-a-computer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.1 The Network as a Computer
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="14.1 The Network as a Computer">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#from-neuron-to-network" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        From Neuron to Network
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-new-goal-modeling-collective-memory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The New Goal: Modeling Collective Memory
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-hopfield-insight-energy-minimization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Hopfield Insight: Energy Minimization
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#analogy-to-physics-ising-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Analogy to Physics (Ising Model)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#emergence-of-computation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Emergence of Computation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#simplification-to-integrate-and-fire" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Simplification to Integrate-and-Fire
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#142-simplification-to-integrate-and-fire" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.2 Simplification to Integrate-and-Fire
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="14.2 Simplification to Integrate-and-Fire">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#from-biophysics-to-abstraction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        From Biophysics to Abstraction
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-integrate-and-fire-abstraction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Integrate-and-Fire Abstraction
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#binary-simplification-the-agent-as-a-spin" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Binary Simplification: The Agent as a Spin
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-discrete-update-rule" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Discrete Update Rule
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#summary-of-simplification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Summary of Simplification
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#143-the-hopfield-network-and-memory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.3 The Hopfield Network and Memory
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="14.3 The Hopfield Network and Memory">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#from-neurons-to-energy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        From Neurons to Energy
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-hopfield-energy-function" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Hopfield Energy Function
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-ising-analogy-energy-minimization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Ising Analogy: Energy Minimization
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#memory-as-a-stable-attractor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Memory as a Stable Attractor
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-computational-conclusion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Computational Conclusion
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#144-storing-and-retrieving-patterns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.4 Storing and Retrieving Patterns
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="14.4 Storing and Retrieving Patterns">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#encoding-the-hebbian-learning-rule" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Encoding: The Hebbian Learning Rule
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#retrieval-asynchronous-energy-descent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Retrieval: Asynchronous Energy Descent
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Retrieval: Asynchronous Energy Descent">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-asynchronous-update-loop" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Asynchronous Update Loop
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pattern-completion-and-error-correction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pattern Completion and Error Correction
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#visualizing-energy-descent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Visualizing Energy Descent
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#145-chapter-summary-and-end-of-volume-ii" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.5 Chapter Summary and End of Volume II
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="14.5 Chapter Summary and End of Volume II">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-grand-unification-physics-and-memory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Grand Unification: Physics and Memory
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-universal-rule-dynamics-as-computation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Universal Rule: Dynamics as Computation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-bridge-to-volume-iii-data-and-intelligence" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Bridge to Volume III: Data and Intelligence
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        References
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-15/Chapter-15-Essay.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-15 Graph and Network Models
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    WorkBooks
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    WorkBooks
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-1/Chapter-1-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-1 Foundations of Stochastic Simulation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-2/Chapter-2-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-2 The Ising Model
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-3/Chapter-3-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-3 Lattice Gauge Theory
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-4/Chapter-4-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-4 Monte Carlo Option Pricing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-5/Chapter-5-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-5 Stochastic Systems Biology
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-6/Chapter-6-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-6 Advanced Monte Carlo Methods
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-7/Chapter-7-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-7 Molecular Dynamics (MD)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-8/Chapter-8-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-8 The Stochastic Calculus (SDEs)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-9/Chapter-9-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-9 Black-Scholes-Merton (BSM)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-10/Chapter-10-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-10 Neuroscience (Hodgkin-Huxley)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-11/Chapter-11-WorkBook" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-11 Agent-Based & Network Models
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-12/Chapter-12-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-12 Collective Behavior & Pattern Formation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-13/Chapter-13-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-13 Collective Behavior & Pattern Formation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Chapter-14-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-14 Computational Neuroscience
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-15/Chapter-15-WorkBook.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-15 Graph and Network Models
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CodeBooks
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    CodeBooks
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-1/Chapter-1-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-1 Foundations of Stochastic Simulation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-2/Chapter-2-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-2 The Ising Model
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-3/Chapter-3-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-3 Lattice Gauge Theory
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-4/Chapter-4-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-4 Monte Carlo Option Pricing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-5/Chapter-5-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-5 Stochastic Systems Biology
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-6/Chapter-6-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-6 Advanced Monte Carlo Methods
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-7/Chapter-7-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-7 Molecular Dynamics (MD)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-8/Chapter-8-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-8 The Stochastic Calculus (SDEs)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-9/Chapter-9-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-9 Black-Scholes-Merton (BSM)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-10/Chapter-10-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-10 Neuroscience (Hodgkin-Huxley)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-11/Chapter-11-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-11 Agent-Based & Network Models
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-12/Chapter-12-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-12 Collective Behavior & Pattern Formation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-13/Chapter-13-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-13 Collective Behavior & Pattern Formation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Chapter-14-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-14 Computational Neuroscience
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-15/Chapter-15-CodeBook.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-15 Graph and Network Models
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Introduction
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#chapter-outline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Chapter Outline
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#141-the-network-as-a-computer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.1 The Network as a Computer
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="14.1 The Network as a Computer">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#from-neuron-to-network" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        From Neuron to Network
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-new-goal-modeling-collective-memory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The New Goal: Modeling Collective Memory
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-hopfield-insight-energy-minimization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Hopfield Insight: Energy Minimization
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#analogy-to-physics-ising-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Analogy to Physics (Ising Model)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#emergence-of-computation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Emergence of Computation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#simplification-to-integrate-and-fire" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Simplification to Integrate-and-Fire
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#142-simplification-to-integrate-and-fire" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.2 Simplification to Integrate-and-Fire
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="14.2 Simplification to Integrate-and-Fire">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#from-biophysics-to-abstraction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        From Biophysics to Abstraction
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-integrate-and-fire-abstraction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Integrate-and-Fire Abstraction
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#binary-simplification-the-agent-as-a-spin" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Binary Simplification: The Agent as a Spin
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-discrete-update-rule" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Discrete Update Rule
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#summary-of-simplification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Summary of Simplification
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#143-the-hopfield-network-and-memory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.3 The Hopfield Network and Memory
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="14.3 The Hopfield Network and Memory">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#from-neurons-to-energy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        From Neurons to Energy
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-hopfield-energy-function" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Hopfield Energy Function
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-ising-analogy-energy-minimization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Ising Analogy: Energy Minimization
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#memory-as-a-stable-attractor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Memory as a Stable Attractor
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-computational-conclusion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Computational Conclusion
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#144-storing-and-retrieving-patterns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.4 Storing and Retrieving Patterns
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="14.4 Storing and Retrieving Patterns">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#encoding-the-hebbian-learning-rule" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Encoding: The Hebbian Learning Rule
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#retrieval-asynchronous-energy-descent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Retrieval: Asynchronous Energy Descent
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Retrieval: Asynchronous Energy Descent">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-asynchronous-update-loop" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Asynchronous Update Loop
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pattern-completion-and-error-correction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pattern Completion and Error Correction
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#visualizing-energy-descent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Visualizing Energy Descent
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#145-chapter-summary-and-end-of-volume-ii" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.5 Chapter Summary and End of Volume II
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="14.5 Chapter Summary and End of Volume II">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-grand-unification-physics-and-memory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Grand Unification: Physics and Memory
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-universal-rule-dynamics-as-computation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Universal Rule: Dynamics as Computation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-bridge-to-volume-iii-data-and-intelligence" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Bridge to Volume III: Data and Intelligence
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        References
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+    <a href="https://github.com/bigbookofcomputing/simulation/edit/master/docs/chapters/chapter-14/Chapter-14-Essay.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+    
+      
+    
+    <a href="https://github.com/bigbookofcomputing/simulation/raw/master/docs/chapters/chapter-14/Chapter-14-Essay.md" title="View source of this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.2 8.2 0 0 1-1.23-2"/></svg>
+    </a>
+  
+
+
+<h1 id="chapter-14-computational-neuroscience"><strong>Chapter 14: Computational Neuroscience</strong></h1>
+<hr />
+<h2 id="introduction"><strong>Introduction</strong></h2>
+<p>While the Hodgkin–Huxley model (Chapter 10) explains the biophysical mechanisms of a single neuron through continuous voltage dynamics and ion channel kinetics, the phenomenal complexity of cognition and memory arises not from individual cells but from <strong>collective emergent behavior</strong> of billions of interconnected neurons. Simulating networks of full H–H neurons—each requiring four coupled nonlinear ODEs <span class="arithmatex">\((V_m, m, h, n)\)</span>—is computationally intractable at brain scale. Moreover, the essential computational function of neurons for network-level information processing is not the detailed ionic currents but their <strong>binary all-or-nothing firing decision</strong>: integrating weighted inputs <span class="arithmatex">\(\sum_j w_{ij} s_j\)</span> and firing when threshold <span class="arithmatex">\(\theta\)</span> is exceeded. This leads to radical simplification: collapsing continuous voltage into <strong>binary states</strong> <span class="arithmatex">\(s_i \in \{+1, -1\}\)</span> (active/silent), transforming the neuron from a complex dynamical system into a simple threshold logic unit. The profound insight of John Hopfield (1982) was recognizing that networks of such binary neurons are mathematically identical to <strong>Ising spin glasses from statistical physics</strong>, where neuron states map to spins, synaptic weights to coupling constants, and network dynamics to energy minimization.</p>
+<p>This chapter develops the <strong>Hopfield Network</strong> as a computational model of associative memory, demonstrating that memory storage and retrieval are emergent consequences of <strong>thermodynamic relaxation</strong> on an energy landscape. The network is governed by the energy function <span class="arithmatex">\(E(\mathbf{s}) = -\frac{1}{2}\sum_{i \neq j} w_{ij} s_i s_j + \sum_i \theta_i s_i\)</span>, mathematically equivalent to the Ising Hamiltonian with synaptic weights <span class="arithmatex">\(w_{ij}\)</span> as coupling strengths and thresholds <span class="arithmatex">\(\theta_i\)</span> as external fields. <strong>Memory encoding</strong> uses the Hebbian learning rule—"neurons that fire together, wire together"—computing weights as <span class="arithmatex">\(w_{ij} = \frac{1}{M}\sum_{m=1}^M s_i^{(m)} s_j^{(m)}\)</span> to carve low-energy basins (attractors) for each stored pattern <span class="arithmatex">\(\mathbf{s}^{(m)}\)</span>. <strong>Memory retrieval</strong> occurs through asynchronous updates: neurons sequentially flip to align with weighted inputs <span class="arithmatex">\(s_i \gets \text{sign}(\sum_j w_{ij} s_j - \theta_i)\)</span>, guaranteed to decrease or maintain energy <span class="arithmatex">\(\Delta E \leq 0\)</span>, driving the network downhill to the nearest attractor. Presenting a noisy or partial input (cue) initializes the system in a high-energy state; relaxation dynamics then perform <strong>pattern completion</strong>, converging to the stored memory that best matches the cue.</p>
+<p>By the end of this chapter, you will master the complete Hopfield framework: implementing binary neuron dynamics with asynchronous update rules, encoding multiple memory patterns using Hebbian weights, simulating energy descent to stable attractors, and understanding capacity limits (<span class="arithmatex">\(M_{\text{max}} \approx 0.138N\)</span> patterns before spurious minima emerge). You will recognize memory not as static data storage but as an <strong>emergent physical process</strong>—stable fixed points in a dynamical system's evolution, computed through distributed energy minimization without centralized control. This unifies statistical mechanics (Ising energy minimization), morphogenesis (GRN attractors as cell types), and cognition (Hopfield attractors as memories), revealing the universal principle: <strong>complex computation emerges from simple local rules through collective relaxation to stability</strong>. This completes Volume II's journey from simulation (rules → data) and bridges to Volume III's inverse problem (data → rules), where Hopfield networks inspire energy-based learning models (Boltzmann Machines) and gradient descent on energy landscapes becomes the foundation of deep learning.</p>
+<hr />
+<h2 id="chapter-outline"><strong>Chapter Outline</strong></h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;"><strong>Sec.</strong></th>
+<th style="text-align: left;"><strong>Title</strong></th>
+<th style="text-align: left;"><strong>Core Ideas &amp; Examples</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>14.1</strong></td>
+<td style="text-align: left;">The Network as Computer</td>
+<td style="text-align: left;"><strong>From single neuron to collective intelligence</strong>: H–H model (Chapter 10) captures single-cell biophysics, but cognition is network-level emergence. <strong>Memory as attractors</strong>: Stored memories = stable low-energy states in network's energy landscape, recall = relaxation to nearest attractor. <strong>Ising analogy</strong>: Neuron firing <span class="arithmatex">\(s_i = \pm 1 \leftrightarrow\)</span> spin, synaptic weight <span class="arithmatex">\(w_{ij} \leftrightarrow\)</span> coupling <span class="arithmatex">\(J\)</span>, network energy <span class="arithmatex">\(E \leftrightarrow\)</span> Hamiltonian. <strong>Thermodynamic computation</strong>: Brain computes by relaxing to equilibrium, not sequential instructions. Binary simplification: integrate-and-fire → threshold logic.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>14.2</strong></td>
+<td style="text-align: left;">Integrate-and-Fire Simplification</td>
+<td style="text-align: left;"><strong>From H–H to binary</strong>: Full model <span class="arithmatex">\((V_m, m, h, n)\)</span> intractable for large networks, essential function is threshold firing decision. <strong>Integrate-and-fire dynamics</strong>: <span class="arithmatex">\(\tau \frac{dV_i}{dt} = -V_i + \sum_j w_{ij} s_j + I_i^{\text{ext}}\)</span>, fire when <span class="arithmatex">\(V_i &gt; \theta\)</span>. <strong>Binary abstraction</strong>: <span class="arithmatex">\(s_i \in \{+1, -1\}\)</span> (active/silent), all physiology absorbed into synaptic weights <span class="arithmatex">\(w_{ij}\)</span>. <strong>Discrete update rule</strong>: <span class="arithmatex">\(s_i(t+1) = \text{sign}(\sum_j w_{ij} s_j(t) - \theta_i)\)</span>. Asynchronous vs. synchronous updates.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>14.3</strong></td>
+<td style="text-align: left;">Hopfield Network and Memory</td>
+<td style="text-align: left;"><strong>Energy function</strong>: <span class="arithmatex">\(E(\mathbf{s}) = -\frac{1}{2}\sum_{i \neq j} w_{ij} s_i s_j + \sum_i \theta_i s_i\)</span>, equivalent to Ising spin glass Hamiltonian. <strong>Hebbian encoding</strong>: <span class="arithmatex">\(w_{ij} = \frac{1}{M}\sum_{m=1}^M s_i^{(m)} s_j^{(m)}\)</span> creates attractor basins for stored patterns. <strong>Energy descent</strong>: Asynchronous updates guarantee <span class="arithmatex">\(\Delta E \leq 0\)</span>, network converges to stable minima. <strong>Associative memory</strong>: Pattern completion from noisy/partial cues, retrieval as downhill relaxation to nearest attractor. Capacity limit <span class="arithmatex">\(M_{\text{max}} \approx 0.138N\)</span> before spurious minima.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>14.4</strong></td>
+<td style="text-align: left;">Storing and Retrieving Patterns</td>
+<td style="text-align: left;"><strong>Encoding phase</strong>: Compute weight matrix <span class="arithmatex">\(\mathbf{W}\)</span> via Hebbian rule for <span class="arithmatex">\(M\)</span> binary patterns (e.g., images, text). <strong>Retrieval simulation</strong>: Initialize with corrupted pattern (flip random bits), iterate asynchronous updates until convergence (energy minimum). <strong>Pattern completion demo</strong>: Partial input → full memory reconstruction. <strong>Capacity analysis</strong>: Success rate vs. number of stored patterns, spurious attractor emergence beyond <span class="arithmatex">\(0.138N\)</span>. Visualizing energy landscape and basin structure.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>14.5</strong></td>
+<td style="text-align: left;">Chapter Summary &amp; Volume End</td>
+<td style="text-align: left;"><strong>Physics-cognition unification</strong>: Hopfield network = Ising spin glass, memory = attractor, recall = energy minimization. <strong>Universal dynamics archetype</strong>: Change <span class="arithmatex">\(\propto -\nabla E\)</span> across all Volume II systems (MC equilibrium sampling, MD potential minimization, BSM hedging, Turing/Hopfield emergence). <strong>Simulation synthesis</strong>: Rules → data (forward modeling). Bridge to Volume III: Data → rules (inverse problem)—Hopfield inspires Boltzmann Machines, energy landscapes → deep learning gradient descent. <strong>Grand conclusion</strong>: Computation discovered, not invented—energy minimization governs matter, life, intelligence.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="141-the-network-as-a-computer"><strong>14.1 The Network as a Computer</strong></h2>
+<hr />
+<h3 id="from-neuron-to-network"><strong>From Neuron to Network</strong></h3>
+<p>In Chapter 10, we achieved a detailed, biophysical understanding of the single neuron using the <strong>Hodgkin–Huxley (H–H) equations</strong>, modeling continuous voltage, ion channel dynamics, and membrane capacitance. However, the phenomenal complexity and intelligence of the brain do not reside within a single neuron; they are <strong>distributed</strong> and arise from the <strong>collective interaction</strong> of billions of neurons connected by thousands of synapses.</p>
+<p>To model <strong>cognition</strong> and <strong>memory</strong>, the computational challenge requires shifting focus from the continuous physics of one cell to the <strong>emergent behavior</strong> of the entire network.</p>
+<hr />
+<h3 id="the-new-goal-modeling-collective-memory"><strong>The New Goal: Modeling Collective Memory</strong></h3>
+<p>The central question in network-level computational neuroscience is how a complex network of simple, interconnected units can perform higher-level functions like <strong>memory and pattern recognition</strong>.</p>
+<p>Memory is not stored in a centralized file system; it is <strong>reconstructed</strong> by the network from partial inputs. This reconstruction process is modeled as the network dynamically evolving toward a <strong>stable network state</strong>.</p>
+<p>This perspective leads directly to the <strong>Hopfield Network</strong>, a model that unifies physics and cognition.</p>
+<div class="admonition tip">
+<p class="admonition-title">Why Energy Functions for Memory?</p>
+<p>Energy functions provide a natural framework for understanding stability. In physics, stable states (like a ball at the bottom of a valley) are energy minima—small perturbations don't change the state. Similarly, memories must be stable against noise (forgetting). By mapping memory to energy minima, Hopfield guaranteed that corrupted inputs naturally flow downhill to the nearest stored pattern, implementing error correction through pure physics.</p>
+</div>
+<hr />
+<h3 id="the-hopfield-insight-energy-minimization"><strong>The Hopfield Insight: Energy Minimization</strong></h3>
+<p>In 1982, physicist <strong>John Hopfield</strong> formalized this connection with a crucial insight: the dynamics of a neural network can be related to a scalar quantity—the <strong>energy function</strong>.</p>
+<p>His model showed that the network's collective activity evolves to <strong>minimize this energy function</strong>, just like a physical system moving toward thermal equilibrium or its ground state.</p>
+<ul>
+<li><strong>Memories as Attractors:</strong> In this framework, stored <strong>memories</strong> correspond to <strong>stable, low-energy minima (attractors)</strong> in the network's high-dimensional energy landscape.</li>
+<li><strong>Recall as Relaxation:</strong> Presenting a noisy or partial input (a "cue") puts the network in a high-energy state. The network then evolves dynamically (relaxes) until it settles into the nearest low-energy minimum, thereby <strong>recalling (completing) the associated memory</strong>.</li>
+</ul>
+<p>This views the brain as a <strong>thermodynamic computer</strong> that computes by <strong>relaxing to equilibrium</strong>, not by following sequential instructions.</p>
+<hr />
+<h3 id="analogy-to-physics-ising-model"><strong>Analogy to Physics (Ising Model)</strong></h3>
+<p>The Hopfield Network draws a direct analogy to the <strong>Ising Hamiltonian</strong> (Chapter 2):</p>
+<ul>
+<li><strong>Neuron Firing State (<span class="arithmatex">\(s_i = \pm 1\)</span>)</strong> maps to the <strong>Ising Spin</strong> (<span class="arithmatex">\(\pm 1\)</span>).</li>
+<li><strong>Synaptic Weight (<span class="arithmatex">\(w_{ij}\)</span>)</strong> maps to the <strong>Ising Coupling Constant (<span class="arithmatex">\(J_{ij}\)</span>)</strong>.</li>
+<li><strong>Network Energy (<span class="arithmatex">\(E\)</span>)</strong> measures the consistency of neuron interactions.</li>
+</ul>
+<p>The <strong>Energy Function</strong> of the Hopfield Network is mathematically equivalent to the Hamiltonian of a generalized <strong>Ising spin glass</strong>. This establishes a profound link: a network that thinks is essentially an Ising model that minimizes its energy.</p>
+<hr />
+<h3 id="emergence-of-computation"><strong>Emergence of Computation</strong></h3>
+<p>The Hopfield model provides a powerful realization of <strong>emergent computation</strong>:
+* <strong>Local Physics Yields Global Intelligence:</strong> Each neuron follows a simple local rule based on input. The collective asynchronous updating yields a global, ordered outcome (a stable memory).
+* <strong>Distributed Storage:</strong> Memory is not stored in a single neuron or central location; it is <strong>distributed</strong> across the pattern of <strong>synaptic weights</strong>.</p>
+<p>The complexity of the brain is thus explained by <strong>local physics yielding global intelligence</strong>—a self-organizing process where <strong>local stability produces global order</strong>.</p>
+<hr />
+<h3 id="simplification-to-integrate-and-fire"><strong>Simplification to Integrate-and-Fire</strong></h3>
+<p>Simulating the full <span class="arithmatex">\(\text{H-H}\)</span> model for large networks is computationally infeasible. Therefore, analysis must simplify the neuron to its essential functional output, shifting the computational focus from complex membrane dynamics to network connectivity.</p>
+<p>The simplification is the <strong>Integrate-and-Fire</strong> model, abstracted into a <strong>Binary Neuron State</strong> (<span class="arithmatex">\(s_i \in \{+1, -1\}\)</span>):
+* <strong>Integration:</strong> The neuron sums the weighted inputs from its neighbors (<span class="arithmatex">\(\sum_j w_{ij} s_j\)</span>).
+* <strong>Firing:</strong> It sets its state to <span class="arithmatex">\(+1\)</span> if this integrated input exceeds a threshold (<span class="arithmatex">\(\theta_i\)</span>).</p>
+<p>This binary simplification successfully captures the <strong>all-or-nothing nature</strong> of the action potential (Chapter 10), which is the essential functional output required for network-level computation.</p>
+<hr />
+<h2 id="142-simplification-to-integrate-and-fire"><strong>14.2 Simplification to Integrate-and-Fire</strong></h2>
+<hr />
+<h3 id="from-biophysics-to-abstraction"><strong>From Biophysics to Abstraction</strong></h3>
+<p>The detailed <strong>Hodgkin–Huxley (H–H)</strong> model (Chapter 10) accurately describes a single neuron’s firing through continuous, nonlinear ODEs. However, simulating the complex ionic currents (<span class="arithmatex">\(I_{\text{Na}}, I_{\text{K}}\)</span>) and four state variables (<span class="arithmatex">\(V_m, m, h, n\)</span>) for large <strong>networks</strong> of neurons quickly becomes <strong>computationally intractable</strong>.</p>
+<p>To study cognition and memory at the network scale, we must simplify the neuron, retaining only its essential information-processing role: 
+<strong>integration</strong> of inputs and <strong>firing</strong> when a threshold is met. This is the basis of the <strong>Integrate-and-Fire neuron</strong> model.</p>
+<hr />
+<h3 id="the-integrate-and-fire-abstraction"><strong>The Integrate-and-Fire Abstraction</strong></h3>
+<p>The Integrate-and-Fire (IF) model abstracts the neuron as a circuit that sums incoming signals and compares the result to a voltage threshold (<span class="arithmatex">\(\theta\)</span>).</p>
+<p>The evolution of the membrane potential (<span class="arithmatex">\(V_i\)</span>) is governed by an ODE that models the passive decay of charge and the influx of synaptic current:</p>
+<div class="arithmatex">\[\tau \frac{dV_i}{dt} = -V_i + \sum_{j} w_{ij} s_j + I_i^{\text{ext}}\]</div>
+<p>Where:
+* <span class="arithmatex">\(\mathbf{w_{ij}}\)</span> is the <strong>synaptic weight</strong> (influence) from neuron <span class="arithmatex">\(j\)</span> to <span class="arithmatex">\(i\)</span>.
+* <span class="arithmatex">\(\mathbf{s_j}\)</span> is the output state (activity) of neuron <span class="arithmatex">\(j\)</span>.
+* The <strong>Integration</strong> step is the summation <span class="arithmatex">\(\sum_{j} w_{ij} s_j\)</span>.</p>
+<p>The <strong>Firing</strong> event occurs when <span class="arithmatex">\(V_i(t)\)</span> exceeds the threshold <span class="arithmatex">\(\theta\)</span>, after which <span class="arithmatex">\(V_i\)</span> is reset.</p>
+<div class="admonition example">
+<p class="admonition-title">The McCulloch-Pitts Neuron: The Original Binary Model</p>
+<p>In 1943, McCulloch and Pitts proposed the first mathematical neuron model with binary output:
+$<span class="arithmatex">\(y = \begin{cases} 1 &amp; \text{if } \sum_j w_j x_j \geq \theta \\\\ 0 &amp; \text{otherwise} \end{cases}\)</span>$
+This showed that networks of such units could implement any logical function (AND, OR, NOT), proving that neural circuits are universal computers. Hopfield extended this by adding dynamics (temporal evolution) and energy functions (global stability), transforming static logic gates into dynamical memory systems.</p>
+</div>
+<hr />
+<h3 id="binary-simplification-the-agent-as-a-spin"><strong>Binary Simplification: The Agent as a Spin</strong></h3>
+<p>The <strong>Hopfield Network</strong> simplifies the IF model further by collapsing the continuous voltage dynamics into a <strong>binary state</strong>. This abstraction maintains the core decision behavior while enabling massive network simulation.</p>
+<p>The state of each neuron <span class="arithmatex">\(i\)</span> is modeled as a <strong>spin</strong>:
+$<span class="arithmatex">\(\mathbf{s_i \in \{+1, -1\}}\)</span>$
+* <span class="arithmatex">\(\mathbf{s_i = +1}\)</span> means the neuron is <strong>active</strong> (firing).
+* <span class="arithmatex">\(\mathbf{s_i = -1}\)</span> means the neuron is <strong>silent</strong> (not firing).</p>
+<p>This reduction makes the network <strong>mathematically identical to the Ising model</strong>. All complex physiological details (ionic currents, spikes, refractory periods) are absorbed into the scalar synaptic weight <span class="arithmatex">\(\mathbf{w_{ij}}\)</span>.</p>
+<hr />
+<h3 id="the-discrete-update-rule"><strong>The Discrete Update Rule</strong></h3>
+<p>The local behavior of the binary neuron is defined by a simple <strong>threshold rule</strong>:</p>
+<div class="arithmatex">\[s_i(t + 1) = \text{sign}\left( \sum_{j} w_{ij} s_j(t) - \theta_i \right)\]</div>
+<p>Where the sum <span class="arithmatex">\(\sum_j w_{ij} s_j(t)\)</span> is the total <strong>weighted input</strong>.</p>
+<p>This rule is executed via <strong>asynchronous updates</strong> (randomly picking one neuron at a time). The process repeats until the network reaches a stable configuration, which is the <strong>memory attractor</strong>.</p>
+<p>The core benefit of this simplification is stability: the asynchronous update ensures <strong>local energy descent</strong>, guaranteeing that the network <strong>converges</strong> to a stable, low-energy state. This convergence is the engine of <strong>memory formation</strong>.</p>
+<hr />
+<h3 id="summary-of-simplification"><strong>Summary of Simplification</strong></h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Concept</th>
+<th style="text-align: left;">Biological Reality (H–H)</th>
+<th style="text-align: left;">Computational Abstraction (Hopfield)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Agent State</strong></td>
+<td style="text-align: left;">Continuous Voltage (<span class="arithmatex">\(V_m\)</span>)</td>
+<td style="text-align: left;">Binary Spin (<span class="arithmatex">\(s_i = \pm 1\)</span>)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Input Current</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(\text{Na}^+/\text{K}^+\)</span> Ionic Dynamics</td>
+<td style="text-align: left;">Weighted Sum (<span class="arithmatex">\(\sum w_{ij}s_j\)</span>)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Decision</strong></td>
+<td style="text-align: left;"><span class="arithmatex">\(\frac{dV}{dt} &gt; 0\)</span> and <span class="arithmatex">\(V &gt; \theta\)</span></td>
+<td style="text-align: left;">Sign Function (<span class="arithmatex">\(\text{sign}(h_i - \theta_i)\)</span>)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Equivalence</strong></td>
+<td style="text-align: left;">Biophysics</td>
+<td style="text-align: left;"><strong>Ising Model</strong></td>
+</tr>
+</tbody>
+</table>
+<p>The computational power of the Hopfield Network lies in this strategic simplification: retaining the <strong>all-or-nothing threshold decision</strong> while leveraging the <strong>thermodynamic principles</strong> of the Ising model.</p>
+<hr />
+<h2 id="143-the-hopfield-network-and-memory"><strong>14.3 The Hopfield Network and Memory</strong></h2>
+<hr />
+<h3 id="from-neurons-to-energy"><strong>From Neurons to Energy</strong></h3>
+<p>The <strong>Hopfield Network</strong> establishes a profound connection between <strong>neural computation</strong> and <strong>statistical mechanics</strong> by showing that the network's behavior can be described by a scalar quantity: the <strong>Energy Function</strong> (<span class="arithmatex">\(E\)</span>). This function allows us to ask, "What is the network as a whole trying to do?" The answer is simple: it is evolving to <strong>minimize its total energy</strong>.</p>
+<p>Hopfield deliberately constructed the local update rule (Section 14.2) to guarantee that every asynchronous decision made by a neuron <strong>decreases or maintains the network's total energy</strong> (<span class="arithmatex">\(\Delta E \le 0\)</span>). This guarantees the network will always converge to a stable state.</p>
+<hr />
+<h3 id="the-hopfield-energy-function"><strong>The Hopfield Energy Function</strong></h3>
+<p>The Energy Function, <span class="arithmatex">\(E(\mathbf{s})\)</span>, defines a high-dimensional <strong>energy landscape</strong> over the network's configuration space (all possible <span class="arithmatex">\(2^N\)</span> states):</p>
+<div class="arithmatex">\[E(\mathbf{s}) = -\frac{1}{2} \sum_{i \neq j} w_{ij} s_i s_j + \sum_i \theta_i s_i\]</div>
+<p>Here:
+* <span class="arithmatex">\(\mathbf{s} = [s_1, \ldots, s_N]\)</span> is the vector of binary neuron states (<span class="arithmatex">\(s_i = \pm 1\)</span>).
+* The first term, <span class="arithmatex">\(- \frac{1}{2} \sum w_{ij} s_i s_j\)</span>, represents the <strong>pairwise interaction</strong> between neurons, weighted by their symmetric <strong>synaptic connection (<span class="arithmatex">\(w_{ij}\)</span>)</strong>.
+* The second term, <span class="arithmatex">\(\sum_i \theta_i s_i\)</span>, accounts for the <strong>individual neuron thresholds</strong> (<span class="arithmatex">\(\theta_i\)</span>) or biases.</p>
+<p>This function dictates the stability of any given pattern of neural firing.</p>
+<hr />
+<h3 id="the-ising-analogy-energy-minimization"><strong>The Ising Analogy: Energy Minimization</strong></h3>
+<p>The Hopfield Energy Function is mathematically equivalent to the Hamiltonian of the <strong>Ising spin glass</strong>:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Hopfield Term</th>
+<th style="text-align: left;">Ising Term</th>
+<th style="text-align: left;">Interpretation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><span class="arithmatex">\(-\frac{1}{2}\sum_{i,j} w_{ij}s_is_j\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(-J\sum_{\langle i,j\rangle}s_is_j\)</span></td>
+<td style="text-align: left;"><strong>Coupling:</strong> Synaptic weight (<span class="arithmatex">\(w_{ij}\)</span>) is analogous to spin coupling (<span class="arithmatex">\(J\)</span>).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><span class="arithmatex">\(+\sum_i\theta_is_i\)</span></td>
+<td style="text-align: left;"><span class="arithmatex">\(-H\sum_is_i\)</span></td>
+<td style="text-align: left;"><strong>Bias:</strong> Neuron threshold (<span class="arithmatex">\(\theta_i\)</span>) is analogous to the external magnetic field (<span class="arithmatex">\(H\)</span>).</td>
+</tr>
+</tbody>
+</table>
+<p>This means that the process of <strong>thinking</strong> (network evolution) is physically equivalent to a disordered magnetic material <strong>relaxing to its ground state</strong>.</p>
+<details class="question">
+<summary>Why Does Asynchronous Update Guarantee Energy Descent?</summary>
+<p>When neuron <span class="arithmatex">\(i\)</span> flips from <span class="arithmatex">\(s_i\)</span> to <span class="arithmatex">\(-s_i\)</span>, the energy change is <span class="arithmatex">\(\Delta E = -2s_i(\sum_j w_{ij}s_j - \theta_i)\)</span>. The update rule flips <span class="arithmatex">\(s_i\)</span> only when <span class="arithmatex">\(\text{sign}(\sum_j w_{ij}s_j - \theta_i) \neq s_i\)</span>, which means the product <span class="arithmatex">\(s_i \cdot (\sum_j w_{ij}s_j - \theta_i) &lt; 0\)</span>. Therefore <span class="arithmatex">\(\Delta E = -2 \times (\text{negative}) = \text{negative}\)</span>, guaranteeing energy always decreases or stays constant. This is why asynchronous (one neuron at a time) updates are crucial—synchronous updates can create oscillations.</p>
+</details>
+<hr />
+<h3 id="memory-as-a-stable-attractor"><strong>Memory as a Stable Attractor</strong></h3>
+<p>The primary function of the Hopfield Network is <strong>associative memory</strong>. Memory is stored by shaping the energy landscape such that desired patterns become stable minima.</p>
+<ol>
+<li>
+<p><strong>Encoding (Hebbian Learning):</strong> The <strong>synaptic weights (<span class="arithmatex">\(w_{ij}\)</span>) are calculated using the Hebbian learning rule</strong> (inspired by the idea that "neurons that fire together, wire together"):
+    $<span class="arithmatex">\(w_{ij} = \frac{1}{M} \sum_{m=1}^{M} s_i^{(m)} s_j^{(m)}\)</span>$
+    This rule strengthens connections between co-active neurons across all stored patterns (<span class="arithmatex">\(\mathbf{s}^{(m)}\)</span>), effectively carving out basins of attraction (low-energy valleys) for each memory.</p>
+</li>
+<li>
+<p><strong>Storage (Attractors):</strong> Each stored pattern <span class="arithmatex">\(\mathbf{s}^{(m)}\)</span> becomes a <strong>stable, low-energy minimum (attractor)</strong> in the landscape.</p>
+</li>
+<li><strong>Retrieval (Relaxation):</strong> When the network is presented with a <strong>noisy or corrupted input pattern (a cue)</strong>, the system is placed in a high-energy state. The asynchronous update dynamics then drive the system downhill, causing it to <strong>converge to the nearest attractor</strong>. This process is <strong>pattern completion</strong>—recalling the full memory from a partial input.</li>
+</ol>
+<p>The network's ability to store and retrieve multiple patterns is limited by its capacity (<span class="arithmatex">\(M_{\text{max}} \approx 0.138N\)</span>). Exceeding this limit causes attractor basins to overlap, creating spurious minima and leading to memory interference.</p>
+<hr />
+<h3 id="the-computational-conclusion"><strong>The Computational Conclusion</strong></h3>
+<p>The Hopfield Network demonstrates that memory is not merely data storage but an <strong>emergent, physical process</strong>. The computation of memory is achieved through <strong>dynamic relaxation</strong>, with the <strong>stable fixed points</strong> of the network's evolution corresponding directly to the information it has learned.</p>
+<hr />
+<h2 id="144-storing-and-retrieving-patterns"><strong>14.4 Storing and Retrieving Patterns</strong></h2>
+<p>The simulation of the Hopfield Network involves two primary computational phases: <strong>encoding</strong> (storing memory) and <strong>retrieval</strong> (recalling memory), both leveraging the principle of energy minimization.</p>
+<hr />
+<h3 id="encoding-the-hebbian-learning-rule"><strong>Encoding: The Hebbian Learning Rule</strong></h3>
+<p>The encoding phase is static, focusing on calculating the <strong>synaptic weight matrix (<span class="arithmatex">\(\mathbf{W}\)</span>) ** that defines the energy landscape. The weights are determined using the **Hebbian learning rule</strong>:</p>
+<div class="arithmatex">\[w_{ij} = \frac{1}{M} \sum_{m=1}^{M} s_i^{(m)} s_j^{(m)}, \quad w_{ii} = 0\]</div>
+<ul>
+<li><strong>Correlation Storage:</strong> This rule ensures that connections between neurons are strengthened (made more excitatory) if they are frequently <strong>co-active</strong> (i.e., firing together, <span class="arithmatex">\(s_i=s_j\)</span>), and weakened (made inhibitory) if they are active in opposition (<span class="arithmatex">\(s_i \neq s_j\)</span>).</li>
+<li><strong>Attractor Carving:</strong> The resulting <span class="arithmatex">\(\mathbf{W}\)</span> matrix embeds the desired <strong>memory patterns (<span class="arithmatex">\(\mathbf{s}^{(m)}\)</span>)</strong> as <strong>stable fixed points</strong> or low-energy minima in the network's energy landscape.</li>
+</ul>
+<p>The computation involves simple matrix operations to calculate the correlation (outer product) of all stored binary patterns.</p>
+<hr />
+<h3 id="retrieval-asynchronous-energy-descent"><strong>Retrieval: Asynchronous Energy Descent</strong></h3>
+<p>The retrieval phase is dynamic, simulating the network's evolution from a noisy input to a stored memory. This process is equivalent to the system performing a <strong>gradient descent</strong> in the energy landscape.</p>
+<hr />
+<h4 id="the-asynchronous-update-loop"><strong>The Asynchronous Update Loop</strong></h4>
+<p>Retrieval uses an <strong>asynchronous update scheme</strong>, where a single, random neuron (<span class="arithmatex">\(i\)</span>) is selected and updated at a time:</p>
+<ol>
+<li><strong>Select Neuron:</strong> Choose a random neuron <span class="arithmatex">\(i\)</span> from <span class="arithmatex">\(N\)</span> neurons.</li>
+<li><strong>Calculate Local Input:</strong> Compute the neuron's weighted input (<span class="arithmatex">\(h_i\)</span>) from all other neurons in the current state <span class="arithmatex">\(\mathbf{s}(t)\)</span>:
+    $<span class="arithmatex">\(h_i = \sum_{j \neq i} w_{ij} s_j(t)\)</span>$</li>
+<li><strong>Update State:</strong> Set the neuron's new state (<span class="arithmatex">\(s_i\)</span>) based on the sign of the local input:
+    $<span class="arithmatex">\(s_i(t+1) = \text{sign}(h_i)\)</span>$</li>
+</ol>
+<p>This iteration repeats until the state vector <span class="arithmatex">\(\mathbf{s}\)</span> stabilizes (i.e., no neuron can change its state, meaning the system has reached a minimum where <span class="arithmatex">\(\Delta E = 0\)</span>).</p>
+<hr />
+<h4 id="pattern-completion-and-error-correction"><strong>Pattern Completion and Error Correction</strong></h4>
+<p>The core function demonstrated during retrieval is <strong>pattern completion (associative recall)</strong>:
+* The network is initialized with a <strong>noisy cue</strong> (a corrupted version of a stored memory).
+* The energy minimization dynamics drive the network away from the high-energy, noisy state.
+* The system relaxes into the nearest attractor, resulting in the reconstruction of the full, uncorrupted stored memory. This is the computational equivalent of human memory recall from a partial fragment.</p>
+<hr />
+<h4 id="visualizing-energy-descent"><strong>Visualizing Energy Descent</strong></h4>
+<p>Monitoring the network's total <strong>Energy (<span class="arithmatex">\(E\)</span>)</strong> during the retrieval simulation confirms that the process is a relaxation. Plotting <span class="arithmatex">\(E(t)\)</span> versus time shows a <strong>monotonically non-increasing</strong> function, confirming that the update rule guarantees movement only toward a lower energy state, physically validating the memory mechanism.</p>
+<p>The network's functionality is bounded by its <strong>memory capacity</strong> (<span class="arithmatex">\(M_{\text{max}} \approx 0.138N\)</span>); attempting to store too many patterns causes interference and unreliable recall.</p>
+<p>Here is the complete Hopfield Network implementation:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="k">def</span><span class="w"> </span><span class="nf">hopfield_encode</span><span class="p">(</span><span class="n">patterns</span><span class="p">):</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="sd">    Encode memory patterns using Hebbian learning.</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="sd">    Parameters:</span>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="sd">    - patterns: List of M binary patterns, each of shape (N,)</span>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="sd">              Values should be +1 or -1</span>
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="sd">    Returns:</span>
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="sd">    - W: Weight matrix (N, N) with zero diagonal</span>
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>    <span class="n">M</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">patterns</span><span class="p">)</span>
+</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>    <span class="n">N</span> <span class="o">=</span> <span class="n">patterns</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>
+</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>    <span class="c1"># Initialize weight matrix</span>
+</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>    <span class="n">W</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">N</span><span class="p">,</span> <span class="n">N</span><span class="p">))</span>
+</span><span id="__span-0-19"><a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>
+</span><span id="__span-0-20"><a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>    <span class="c1"># Hebbian learning: w_ij = (1/M) * sum over patterns of s_i * s_j</span>
+</span><span id="__span-0-21"><a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>    <span class="k">for</span> <span class="n">pattern</span> <span class="ow">in</span> <span class="n">patterns</span><span class="p">:</span>
+</span><span id="__span-0-22"><a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>        <span class="n">W</span> <span class="o">+=</span> <span class="n">np</span><span class="o">.</span><span class="n">outer</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">pattern</span><span class="p">)</span>
+</span><span id="__span-0-23"><a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a>
+</span><span id="__span-0-24"><a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a>    <span class="n">W</span> <span class="o">=</span> <span class="n">W</span> <span class="o">/</span> <span class="n">M</span>
+</span><span id="__span-0-25"><a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a>
+</span><span id="__span-0-26"><a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a>    <span class="c1"># Zero diagonal (no self-connections)</span>
+</span><span id="__span-0-27"><a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a>    <span class="n">np</span><span class="o">.</span><span class="n">fill_diagonal</span><span class="p">(</span><span class="n">W</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+</span><span id="__span-0-28"><a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a>
+</span><span id="__span-0-29"><a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a>    <span class="k">return</span> <span class="n">W</span>
+</span><span id="__span-0-30"><a id="__codelineno-0-30" name="__codelineno-0-30" href="#__codelineno-0-30"></a>
+</span><span id="__span-0-31"><a id="__codelineno-0-31" name="__codelineno-0-31" href="#__codelineno-0-31"></a><span class="k">def</span><span class="w"> </span><span class="nf">hopfield_energy</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="n">theta</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+</span><span id="__span-0-32"><a id="__codelineno-0-32" name="__codelineno-0-32" href="#__codelineno-0-32"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="__span-0-33"><a id="__codelineno-0-33" name="__codelineno-0-33" href="#__codelineno-0-33"></a><span class="sd">    Compute Hopfield energy for a given state.</span>
+</span><span id="__span-0-34"><a id="__codelineno-0-34" name="__codelineno-0-34" href="#__codelineno-0-34"></a>
+</span><span id="__span-0-35"><a id="__codelineno-0-35" name="__codelineno-0-35" href="#__codelineno-0-35"></a><span class="sd">    E = -0.5 * sum(w_ij * s_i * s_j) + sum(theta_i * s_i)</span>
+</span><span id="__span-0-36"><a id="__codelineno-0-36" name="__codelineno-0-36" href="#__codelineno-0-36"></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="__span-0-37"><a id="__codelineno-0-37" name="__codelineno-0-37" href="#__codelineno-0-37"></a>    <span class="k">if</span> <span class="n">theta</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="__span-0-38"><a id="__codelineno-0-38" name="__codelineno-0-38" href="#__codelineno-0-38"></a>        <span class="n">theta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">state</span><span class="p">))</span>
+</span><span id="__span-0-39"><a id="__codelineno-0-39" name="__codelineno-0-39" href="#__codelineno-0-39"></a>
+</span><span id="__span-0-40"><a id="__codelineno-0-40" name="__codelineno-0-40" href="#__codelineno-0-40"></a>    <span class="n">interaction_energy</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.5</span> <span class="o">*</span> <span class="n">state</span> <span class="o">@</span> <span class="n">W</span> <span class="o">@</span> <span class="n">state</span>
+</span><span id="__span-0-41"><a id="__codelineno-0-41" name="__codelineno-0-41" href="#__codelineno-0-41"></a>    <span class="n">threshold_energy</span> <span class="o">=</span> <span class="n">theta</span> <span class="o">@</span> <span class="n">state</span>
+</span><span id="__span-0-42"><a id="__codelineno-0-42" name="__codelineno-0-42" href="#__codelineno-0-42"></a>
+</span><span id="__span-0-43"><a id="__codelineno-0-43" name="__codelineno-0-43" href="#__codelineno-0-43"></a>    <span class="k">return</span> <span class="n">interaction_energy</span> <span class="o">+</span> <span class="n">threshold_energy</span>
+</span><span id="__span-0-44"><a id="__codelineno-0-44" name="__codelineno-0-44" href="#__codelineno-0-44"></a>
+</span><span id="__span-0-45"><a id="__codelineno-0-45" name="__codelineno-0-45" href="#__codelineno-0-45"></a><span class="k">def</span><span class="w"> </span><span class="nf">hopfield_retrieve</span><span class="p">(</span><span class="n">initial_state</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="n">theta</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="mi">1000</span><span class="p">):</span>
+</span><span id="__span-0-46"><a id="__codelineno-0-46" name="__codelineno-0-46" href="#__codelineno-0-46"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="__span-0-47"><a id="__codelineno-0-47" name="__codelineno-0-47" href="#__codelineno-0-47"></a><span class="sd">    Retrieve memory from noisy input via asynchronous update.</span>
+</span><span id="__span-0-48"><a id="__codelineno-0-48" name="__codelineno-0-48" href="#__codelineno-0-48"></a>
+</span><span id="__span-0-49"><a id="__codelineno-0-49" name="__codelineno-0-49" href="#__codelineno-0-49"></a><span class="sd">    Parameters:</span>
+</span><span id="__span-0-50"><a id="__codelineno-0-50" name="__codelineno-0-50" href="#__codelineno-0-50"></a><span class="sd">    - initial_state: Corrupted pattern (N,) with values +1 or -1</span>
+</span><span id="__span-0-51"><a id="__codelineno-0-51" name="__codelineno-0-51" href="#__codelineno-0-51"></a><span class="sd">    - W: Weight matrix from encoding</span>
+</span><span id="__span-0-52"><a id="__codelineno-0-52" name="__codelineno-0-52" href="#__codelineno-0-52"></a><span class="sd">    - theta: Threshold vector (default: zeros)</span>
+</span><span id="__span-0-53"><a id="__codelineno-0-53" name="__codelineno-0-53" href="#__codelineno-0-53"></a><span class="sd">    - max_iter: Maximum iterations before stopping</span>
+</span><span id="__span-0-54"><a id="__codelineno-0-54" name="__codelineno-0-54" href="#__codelineno-0-54"></a>
+</span><span id="__span-0-55"><a id="__codelineno-0-55" name="__codelineno-0-55" href="#__codelineno-0-55"></a><span class="sd">    Returns:</span>
+</span><span id="__span-0-56"><a id="__codelineno-0-56" name="__codelineno-0-56" href="#__codelineno-0-56"></a><span class="sd">    - state: Converged state (retrieved memory)</span>
+</span><span id="__span-0-57"><a id="__codelineno-0-57" name="__codelineno-0-57" href="#__codelineno-0-57"></a><span class="sd">    - energy_history: Energy at each iteration</span>
+</span><span id="__span-0-58"><a id="__codelineno-0-58" name="__codelineno-0-58" href="#__codelineno-0-58"></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="__span-0-59"><a id="__codelineno-0-59" name="__codelineno-0-59" href="#__codelineno-0-59"></a>    <span class="n">N</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">initial_state</span><span class="p">)</span>
+</span><span id="__span-0-60"><a id="__codelineno-0-60" name="__codelineno-0-60" href="#__codelineno-0-60"></a>    <span class="n">state</span> <span class="o">=</span> <span class="n">initial_state</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+</span><span id="__span-0-61"><a id="__codelineno-0-61" name="__codelineno-0-61" href="#__codelineno-0-61"></a>
+</span><span id="__span-0-62"><a id="__codelineno-0-62" name="__codelineno-0-62" href="#__codelineno-0-62"></a>    <span class="k">if</span> <span class="n">theta</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="__span-0-63"><a id="__codelineno-0-63" name="__codelineno-0-63" href="#__codelineno-0-63"></a>        <span class="n">theta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
+</span><span id="__span-0-64"><a id="__codelineno-0-64" name="__codelineno-0-64" href="#__codelineno-0-64"></a>
+</span><span id="__span-0-65"><a id="__codelineno-0-65" name="__codelineno-0-65" href="#__codelineno-0-65"></a>    <span class="n">energy_history</span> <span class="o">=</span> <span class="p">[</span><span class="n">hopfield_energy</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="n">theta</span><span class="p">)]</span>
+</span><span id="__span-0-66"><a id="__codelineno-0-66" name="__codelineno-0-66" href="#__codelineno-0-66"></a>
+</span><span id="__span-0-67"><a id="__codelineno-0-67" name="__codelineno-0-67" href="#__codelineno-0-67"></a>    <span class="k">for</span> <span class="n">iteration</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">max_iter</span><span class="p">):</span>
+</span><span id="__span-0-68"><a id="__codelineno-0-68" name="__codelineno-0-68" href="#__codelineno-0-68"></a>        <span class="c1"># Asynchronous update: pick random neuron</span>
+</span><span id="__span-0-69"><a id="__codelineno-0-69" name="__codelineno-0-69" href="#__codelineno-0-69"></a>        <span class="n">i</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="n">N</span><span class="p">)</span>
+</span><span id="__span-0-70"><a id="__codelineno-0-70" name="__codelineno-0-70" href="#__codelineno-0-70"></a>
+</span><span id="__span-0-71"><a id="__codelineno-0-71" name="__codelineno-0-71" href="#__codelineno-0-71"></a>        <span class="c1"># Compute local field (weighted input)</span>
+</span><span id="__span-0-72"><a id="__codelineno-0-72" name="__codelineno-0-72" href="#__codelineno-0-72"></a>        <span class="n">h_i</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">W</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:]</span> <span class="o">*</span> <span class="n">state</span><span class="p">)</span> <span class="o">-</span> <span class="n">theta</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+</span><span id="__span-0-73"><a id="__codelineno-0-73" name="__codelineno-0-73" href="#__codelineno-0-73"></a>
+</span><span id="__span-0-74"><a id="__codelineno-0-74" name="__codelineno-0-74" href="#__codelineno-0-74"></a>        <span class="c1"># Update neuron state</span>
+</span><span id="__span-0-75"><a id="__codelineno-0-75" name="__codelineno-0-75" href="#__codelineno-0-75"></a>        <span class="n">new_state_i</span> <span class="o">=</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">h_i</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="k">else</span> <span class="o">-</span><span class="mi">1</span>
+</span><span id="__span-0-76"><a id="__codelineno-0-76" name="__codelineno-0-76" href="#__codelineno-0-76"></a>
+</span><span id="__span-0-77"><a id="__codelineno-0-77" name="__codelineno-0-77" href="#__codelineno-0-77"></a>        <span class="c1"># Check if state changed</span>
+</span><span id="__span-0-78"><a id="__codelineno-0-78" name="__codelineno-0-78" href="#__codelineno-0-78"></a>        <span class="k">if</span> <span class="n">state</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="n">new_state_i</span><span class="p">:</span>
+</span><span id="__span-0-79"><a id="__codelineno-0-79" name="__codelineno-0-79" href="#__codelineno-0-79"></a>            <span class="n">state</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_state_i</span>
+</span><span id="__span-0-80"><a id="__codelineno-0-80" name="__codelineno-0-80" href="#__codelineno-0-80"></a>            <span class="n">energy_history</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">hopfield_energy</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="n">theta</span><span class="p">))</span>
+</span><span id="__span-0-81"><a id="__codelineno-0-81" name="__codelineno-0-81" href="#__codelineno-0-81"></a>        <span class="k">else</span><span class="p">:</span>
+</span><span id="__span-0-82"><a id="__codelineno-0-82" name="__codelineno-0-82" href="#__codelineno-0-82"></a>            <span class="c1"># Check for convergence (no neurons want to flip)</span>
+</span><span id="__span-0-83"><a id="__codelineno-0-83" name="__codelineno-0-83" href="#__codelineno-0-83"></a>            <span class="n">converged</span> <span class="o">=</span> <span class="kc">True</span>
+</span><span id="__span-0-84"><a id="__codelineno-0-84" name="__codelineno-0-84" href="#__codelineno-0-84"></a>            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+</span><span id="__span-0-85"><a id="__codelineno-0-85" name="__codelineno-0-85" href="#__codelineno-0-85"></a>                <span class="n">h_j</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">W</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="p">:]</span> <span class="o">*</span> <span class="n">state</span><span class="p">)</span> <span class="o">-</span> <span class="n">theta</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+</span><span id="__span-0-86"><a id="__codelineno-0-86" name="__codelineno-0-86" href="#__codelineno-0-86"></a>                <span class="n">new_state_j</span> <span class="o">=</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">h_j</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="k">else</span> <span class="o">-</span><span class="mi">1</span>
+</span><span id="__span-0-87"><a id="__codelineno-0-87" name="__codelineno-0-87" href="#__codelineno-0-87"></a>                <span class="k">if</span> <span class="n">state</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">!=</span> <span class="n">new_state_j</span><span class="p">:</span>
+</span><span id="__span-0-88"><a id="__codelineno-0-88" name="__codelineno-0-88" href="#__codelineno-0-88"></a>                    <span class="n">converged</span> <span class="o">=</span> <span class="kc">False</span>
+</span><span id="__span-0-89"><a id="__codelineno-0-89" name="__codelineno-0-89" href="#__codelineno-0-89"></a>                    <span class="k">break</span>
+</span><span id="__span-0-90"><a id="__codelineno-0-90" name="__codelineno-0-90" href="#__codelineno-0-90"></a>
+</span><span id="__span-0-91"><a id="__codelineno-0-91" name="__codelineno-0-91" href="#__codelineno-0-91"></a>            <span class="k">if</span> <span class="n">converged</span><span class="p">:</span>
+</span><span id="__span-0-92"><a id="__codelineno-0-92" name="__codelineno-0-92" href="#__codelineno-0-92"></a>                <span class="k">break</span>
+</span><span id="__span-0-93"><a id="__codelineno-0-93" name="__codelineno-0-93" href="#__codelineno-0-93"></a>
+</span><span id="__span-0-94"><a id="__codelineno-0-94" name="__codelineno-0-94" href="#__codelineno-0-94"></a>    <span class="k">return</span> <span class="n">state</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">energy_history</span><span class="p">)</span>
+</span><span id="__span-0-95"><a id="__codelineno-0-95" name="__codelineno-0-95" href="#__codelineno-0-95"></a>
+</span><span id="__span-0-96"><a id="__codelineno-0-96" name="__codelineno-0-96" href="#__codelineno-0-96"></a><span class="c1"># Example usage:</span>
+</span><span id="__span-0-97"><a id="__codelineno-0-97" name="__codelineno-0-97" href="#__codelineno-0-97"></a><span class="c1"># patterns = [np.array([1, -1, 1, -1, 1]),  # Pattern 1</span>
+</span><span id="__span-0-98"><a id="__codelineno-0-98" name="__codelineno-0-98" href="#__codelineno-0-98"></a><span class="c1">#             np.array([-1, 1, -1, 1, -1])]  # Pattern 2</span>
+</span><span id="__span-0-99"><a id="__codelineno-0-99" name="__codelineno-0-99" href="#__codelineno-0-99"></a><span class="c1"># W = hopfield_encode(patterns)</span>
+</span><span id="__span-0-100"><a id="__codelineno-0-100" name="__codelineno-0-100" href="#__codelineno-0-100"></a><span class="c1"># noisy_input = np.array([1, -1, -1, -1, 1])  # Corrupted version of pattern 1</span>
+</span><span id="__span-0-101"><a id="__codelineno-0-101" name="__codelineno-0-101" href="#__codelineno-0-101"></a><span class="c1"># retrieved, energy = hopfield_retrieve(noisy_input, W)</span>
+</span></code></pre></div>
+<hr />
+<h2 id="145-chapter-summary-and-end-of-volume-ii"><strong>14.5 Chapter Summary and End of Volume II</strong></h2>
+<hr />
+<h3 id="the-grand-unification-physics-and-memory"><strong>The Grand Unification: Physics and Memory</strong></h3>
+<p>The analysis of the <strong>Hopfield Network</strong> in Chapter 14 serves as the conceptual culmination of the volume, demonstrating the direct link between <strong>physical principles</strong> and <strong>cognitive function</strong>. The network provided a unified view of memory by showing it is an <strong>emergent, physical process</strong>.</p>
+<ul>
+<li><strong>Network as an Ising System:</strong> The Hopfield Energy Function (<span class="arithmatex">\(\mathbf{E}\)</span>) is mathematically identical to the Hamiltonian of a generalized <strong>Ising spin glass</strong>.</li>
+<li><strong>Memory as an Attractor:</strong> Stored memories correspond to <strong>stable, low-energy minima (attractors)</strong> in the network’s high-dimensional energy landscape.</li>
+<li><strong>Recall as Relaxation:</strong> Memory retrieval is simulated as <strong>asynchronous energy descent</strong> (<span class="arithmatex">\(\mathbf{\Delta E \le 0}\)</span>). The network finds the nearest attractor, thus performing <strong>pattern completion</strong>.</li>
+</ul>
+<p>This principle confirms the view of the brain as a <strong>thermodynamic computer</strong>, which computes by <strong>relaxing to stability</strong> rather than executing sequential instructions.</p>
+<hr />
+<h3 id="the-universal-rule-dynamics-as-computation"><strong>The Universal Rule: Dynamics as Computation</strong></h3>
+<p>Across the diverse models in Volume II, a single mathematical archetype governs system dynamics: change is driven by the minimization of an energy or potential function. The evolution of the system is dictated by the negative gradient of this function (<span class="arithmatex">\(\mathbf{Change \propto -\nabla E}\)</span>).</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">System</th>
+<th style="text-align: left;">Governing Equation Archetype</th>
+<th style="text-align: left;">Dynamics and Outcome</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Statistical Mechanics</strong> (Monte Carlo)</td>
+<td style="text-align: left;"><span class="arithmatex">\(P(s) \propto e^{-\beta E}\)</span></td>
+<td style="text-align: left;"><strong>Random Search:</strong> Explores the energy landscape probabilistically to sample thermal equilibrium.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Molecular Dynamics</strong> (MD)</td>
+<td style="text-align: left;"><span class="arithmatex">\(\frac{dx}{dt} = -\nabla U(x)\)</span></td>
+<td style="text-align: left;"><strong>Deterministic Motion:</strong> Finds stable structures by minimizing potential energy.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Financial Markets</strong> (SDEs/BSM)</td>
+<td style="text-align: left;"><span class="arithmatex">\(dS = \mu dt + \sigma dW_t\)</span></td>
+<td style="text-align: left;"><strong>Stochastic Structure:</strong> Noise generates volatility, and hedging eliminates it to find deterministic price.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Biological Emergence</strong> (Turing/Hopfield)</td>
+<td style="text-align: left;"><span class="arithmatex">\(\frac{d\mathbf{S}}{dt} = f(\mathbf{S}_{\text{neighbors}})\)</span></td>
+<td style="text-align: left;"><strong>Emergent Order:</strong> Local feedback creates stable spatial (Turing) or cognitive (Hopfield) patterns.</td>
+</tr>
+</tbody>
+</table>
+<p>In every instance, the system performs a computation—whether calculating the <strong>equilibrium state</strong>, the <strong>optimal price</strong>, or the <strong>stable memory pattern</strong>—by evolving according to a set of simple, local rules.</p>
+<hr />
+<h3 id="the-bridge-to-volume-iii-data-and-intelligence"><strong>The Bridge to Volume III: Data and Intelligence</strong></h3>
+<p>The completion of Volume II signifies the end of our exploration of <strong>simulation and modeling</strong> (the forward process: <em>rules <span class="arithmatex">\(\to\)</span> data</em>). We have successfully demonstrated how complex systems <strong>generate data</strong>.</p>
+<p><strong>Volume III</strong> will transition to <strong>Data, Inference, and AI</strong> (the inverse process: <em>data <span class="arithmatex">\(\to\)</span> rules</em>). The core principles established here—<strong>energy landscapes, optimization, and emergence</strong>—are the exact foundational concepts that govern modern machine learning:</p>
+<ul>
+<li>The <strong>Hopfield Network</strong> is a direct precursor to energy-based learning models like <strong>Boltzmann Machines</strong>.</li>
+<li>The <strong>gradient descent</strong> process used to minimize network energy is the central algorithm for training <strong>Deep Learning</strong> models.</li>
+</ul>
+<p>The final conclusion of this volume is a unifying vision: <strong>computation is not something invented, but discovered</strong>. The principles of <strong>energy minimization</strong> and <strong>distributed computation</strong> govern the structure of matter, the architecture of life, and the mechanisms of intelligence.</p>
+<p>Here is the Hopfield Network memory cycle:</p>
+<pre class="mermaid"><code>graph TD
+    A["Memory Encoding Phase&lt;br/&gt;(Hebbian Learning)"] --&gt; B["Define M Binary Patterns&lt;br/&gt;s⁽¹⁾, s⁽²⁾, ..., s⁽ᴹ⁾ ∈ {±1}ⁿ"]
+    B --&gt; C["Compute Weight Matrix&lt;br/&gt;wᵢⱼ = (1/M) Σₘ sᵢ⁽ᵐ⁾ sⱼ⁽ᵐ⁾&lt;br/&gt;wᵢᵢ = 0 (no self-connections)"]
+    C --&gt; D["Energy Landscape Carved&lt;br/&gt;Patterns = Low-Energy Attractors"]
+
+    D --&gt; E["Memory Retrieval Phase&lt;br/&gt;(Asynchronous Dynamics)"]
+    E --&gt; F["Present Noisy/Partial Cue&lt;br/&gt;sᵢₙᵢₜ(0) (corrupted memory)"]
+    F --&gt; G["Compute Initial Energy&lt;br/&gt;E(0) = -0.5 Σ wᵢⱼ sᵢ sⱼ + Σ θᵢ sᵢ"]
+
+    G --&gt; H["Asynchronous Update Loop"]
+    H --&gt; I["Select Random Neuron i"]
+    I --&gt; J["Compute Local Field&lt;br/&gt;hᵢ = Σⱼ wᵢⱼ sⱼ - θᵢ"]
+    J --&gt; K["Update Neuron State&lt;br/&gt;sᵢ ← sign(hᵢ)"]
+    K --&gt; L["Compute New Energy E(t+1)"]
+    L --&gt; M{"Energy Descent Check"}
+    M --&gt;|"ΔE ≤ 0&lt;br/&gt;(Guaranteed)"| N{"Converged?"}
+    N --&gt;|"No&lt;br/&gt;(state still changing)"| H
+    N --&gt;|"Yes&lt;br/&gt;(stable minimum)"| O["Retrieved Memory&lt;br/&gt;sᶠᵢₙₐₗ = Nearest Stored Pattern"]
+
+    O --&gt; P["Pattern Completion&lt;br/&gt;✓ Noise removed&lt;br/&gt;✓ Missing bits filled&lt;br/&gt;✓ Memory reconstructed"]
+
+    Q["Capacity Limit Analysis"] --&gt; R["M &lt; 0.138N: Reliable recall&lt;br/&gt;M &gt; 0.138N: Spurious attractors&lt;br/&gt;Interference between memories"]
+
+    P --&gt; S["Volume II Complete:&lt;br/&gt;Rules → Data (Forward Simulation)&lt;br/&gt;Energy Minimization → Emergence"]
+    S --&gt; T["Bridge to Volume III:&lt;br/&gt;Data → Rules (Inverse Problem)&lt;br/&gt;Hopfield → Boltzmann Machines → Deep Learning"]
+
+    style A fill:#e1f5ff
+    style D fill:#fff3cd
+    style G fill:#ffe1e1
+    style M fill:#d4edda
+    style O fill:#d4edda
+    style P fill:#d1ecf1
+    style S fill:#f8d7da
+    style T fill:#cfe2ff</code></pre>
+<hr />
+<h2 id="references"><strong>References</strong></h2>
+<ol>
+<li>
+<p><strong>Hopfield, J. J.</strong> (1982). <em>Neural Networks and Physical Systems with Emergent Collective Computational Abilities</em>. Proceedings of the National Academy of Sciences, 79(8), 2554-2558. [Seminal paper introducing Hopfield networks and energy-based associative memory]</p>
+</li>
+<li>
+<p><strong>Amit, D. J., Gutfreund, H., &amp; Sompolinsky, H.</strong> (1985). <em>Storing Infinite Numbers of Patterns in a Spin-Glass Model of Neural Networks</em>. Physical Review Letters, 55(14), 1530-1533. [Statistical mechanics analysis of Hopfield network capacity limits]</p>
+</li>
+<li>
+<p><strong>Hertz, J., Krogh, A., &amp; Palmer, R. G.</strong> (1991). <em>Introduction to the Theory of Neural Computation</em>. Addison-Wesley. [Comprehensive treatment of Hopfield networks, statistical physics connections, and learning theory]</p>
+</li>
+<li>
+<p><strong>Hopfield, J. J., &amp; Tank, D. W.</strong> (1985). <em>"Neural" Computation of Decisions in Optimization Problems</em>. Biological Cybernetics, 52(3), 141-152. [Application of Hopfield networks to combinatorial optimization problems like TSP]</p>
+</li>
+<li>
+<p><strong>McCulloch, W. S., &amp; Pitts, W.</strong> (1943). <em>A Logical Calculus of the Ideas Immanent in Nervous Activity</em>. Bulletin of Mathematical Biophysics, 5(4), 115-133. [Foundational paper on binary neuron models and neural computation]</p>
+</li>
+<li>
+<p><strong>Gerstner, W., &amp; Kistler, W. M.</strong> (2002). <em>Spiking Neuron Models: Single Neurons, Populations, Plasticity</em>. Cambridge University Press. [Detailed treatment of integrate-and-fire models and biological neurons]</p>
+</li>
+<li>
+<p><strong>Ackley, D. H., Hinton, G. E., &amp; Sejnowski, T. J.</strong> (1985). <em>A Learning Algorithm for Boltzmann Machines</em>. Cognitive Science, 9(1), 147-169. [Extension of Hopfield networks to stochastic Boltzmann Machines with learning algorithms]</p>
+</li>
+<li>
+<p><strong>Hebb, D. O.</strong> (1949). <em>The Organization of Behavior: A Neuropsychological Theory</em>. Wiley. [Classic text introducing Hebbian learning principle: "neurons that fire together, wire together"]</p>
+</li>
+<li>
+<p><strong>Abbott, L. F., &amp; Dayan, P.</strong> (1999). <em>The Effect of Correlated Variability on the Accuracy of a Population Code</em>. Neural Computation, 11(1), 91-101. [Population coding and network-level neural computation]</p>
+</li>
+<li>
+<p><strong>Rojas, R.</strong> (1996). <em>Neural Networks: A Systematic Introduction</em>. Springer. [Comprehensive textbook covering Hopfield networks, energy functions, and neural network theory]</p>
+</li>
+</ol>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../../chapter-13/Chapter-13-Essay/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Chapter-13 Collective Behavior &amp; Pattern Formation">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Chapter-13 Collective Behavior & Pattern Formation
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../../chapter-1/Chapter-1-WorkBook/" class="md-footer__link md-footer__link--next" aria-label="Next: Chapter-1 Foundations of Stochastic Simulation">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Chapter-1 Foundations of Stochastic Simulation
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://bigbookofcomputing.github.io" target="_blank" rel="noopener" title="bigbookofcomputing.github.io" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://x.com/bigbookofcomputing" target="_blank" rel="noopener" title="x.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M459.4 151.7c.3 4.5.3 9.1.3 13.6 0 138.7-105.6 298.6-298.6 298.6-59.5 0-114.7-17.2-161.1-47.1 8.4 1 16.6 1.3 25.3 1.3 49.1 0 94.2-16.6 130.3-44.8-46.1-1-84.8-31.2-98.1-72.8 6.5 1 13 1.6 19.8 1.6 9.4 0 18.8-1.3 27.6-3.6-48.1-9.7-84.1-52-84.1-103v-1.3c14 7.8 30.2 12.7 47.4 13.3-28.3-18.8-46.8-51-46.8-87.4 0-19.5 5.2-37.4 14.3-53C87.4 130.8 165 172.4 252.1 176.9c-1.6-7.8-2.6-15.9-2.6-24C249.5 95.1 296.3 48 354.4 48c30.2 0 57.5 12.7 76.7 33.1 23.7-4.5 46.5-13.3 66.6-25.3-7.8 24.4-24.4 44.8-46.1 57.8 21.1-2.3 41.6-8.1 60.4-16.2-14.3 20.8-32.2 39.3-52.6 54.3"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.facebook.com/bigbookofcomputing" target="_blank" rel="noopener" title="www.facebook.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M512 256C512 114.6 397.4 0 256 0S0 114.6 0 256c0 120 82.7 220.8 194.2 248.5V334.2h-52.8V256h52.8v-33.7c0-87.1 39.4-127.5 125-127.5 16.2 0 44.2 3.2 55.7 6.4V172c-6-.6-16.5-1-29.6-1-42 0-58.2 15.9-58.2 57.2V256h83.6l-14.4 78.2H287v175.9C413.8 494.8 512 386.9 512 256"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.linkedin.com/bigbookofcomputing" target="_blank" rel="noopener" title="www.linkedin.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3M135.4 416H69V202.2h66.5V416zM102.2 96a38.5 38.5 0 1 1 0 77 38.5 38.5 0 1 1 0-77m282.1 320h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.youtube.com/@big-book-of-computing" target="_blank" rel="noopener" title="www.youtube.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M549.7 124.1c-6.2-23.7-24.8-42.3-48.3-48.6C458.9 64 288.1 64 288.1 64S117.3 64 74.7 75.5c-23.5 6.3-42 24.9-48.3 48.6C15 167 15 256.4 15 256.4s0 89.4 11.4 132.3c6.3 23.6 24.8 41.5 48.3 47.8C117.3 448 288.1 448 288.1 448s170.8 0 213.4-11.5c23.5-6.3 42-24.2 48.3-47.8 11.4-42.9 11.4-132.3 11.4-132.3s0-89.4-11.4-132.3zM232.2 337.6V175.2l142.7 81.2z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+      <div class="md-consent" data-md-component="consent" id="__consent" hidden>
+        <div class="md-consent__overlay"></div>
+        <aside class="md-consent__inner">
+          <form class="md-consent__form md-grid md-typeset" name="consent">
+            
+
+
+  
+
+
+<h4>Cookie consent</h4>
+<p>We use cookies to recognize your repeated visits and preferences, as well as to measure the effectiveness of our documentation and whether users find what they're searching for. With your consent, you're helping us to make our documentation better.</p>
+<input class="md-toggle" type="checkbox" id="__settings" >
+<div class="md-consent__settings">
+  <ul class="task-list">
+    
+    
+      
+        
+  
+  
+    
+    
+  
+  <li class="task-list-item">
+    <label class="task-list-control">
+      <input type="checkbox" name="analytics" checked>
+      <span class="task-list-indicator"></span>
+      Google Analytics
+    </label>
+  </li>
+
+      
+    
+    
+      
+        
+  
+  
+    
+    
+  
+  <li class="task-list-item">
+    <label class="task-list-control">
+      <input type="checkbox" name="github" checked>
+      <span class="task-list-indicator"></span>
+      GitHub
+    </label>
+  </li>
+
+      
+    
+    
+  </ul>
+</div>
+<div class="md-consent__controls">
+  
+    
+      <button class="md-button md-button--primary">Accept</button>
+    
+    
+    
+  
+    
+    
+    
+      <label class="md-button" for="__settings">Manage settings</label>
+    
+  
+</div>
+          </form>
+        </aside>
+      </div>
+      <script>var consent=__md_get("__consent");if(consent)for(var input of document.forms.consent.elements)input.name&&(input.checked=consent[input.name]||!1);else"file:"!==location.protocol&&setTimeout((function(){document.querySelector("[data-md-component=consent]").hidden=!1}),250);var form=document.forms.consent;for(var action of["submit","reset"])form.addEventListener(action,(function(e){if(e.preventDefault(),"reset"===e.type)for(var n of document.forms.consent.elements)n.name&&(n.checked=!1);__md_set("__consent",Object.fromEntries(Array.from(new FormData(form).keys()).map((function(e){return[e,!0]})))),location.hash="",location.reload()}))</script>
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["announce.dismiss", "content.action.edit", "content.action.view", "content.code.annotate", "content.code.copy", "content.tooltips", "navigation.footer", "navigation.indexes", "navigation.sections", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../../static/mathjax-config.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.0/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

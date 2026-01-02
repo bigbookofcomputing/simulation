@@ -1,0 +1,2739 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="A comprehensive guide to the foundations of stochastic simulation">
+      
+      
+        <meta name="author" content="Big Book of Computing">
+      
+      
+        <link rel="canonical" href="https://bigbookofcomputing.github.io/chapters/chapter-1/Chapter-1-Essay-OLD/">
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/logo.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>Chapter 1: Foundations of Stochastic Simulation - Big Book of Computing | Simulation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+      <link rel="stylesheet" href="../../../static/styles.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  
+
+
+  
+  
+
+<script id="__analytics">function __md_analytics(){function e(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],e("js",new Date),e("config","G-ECS7B3X8JM"),document.addEventListener("DOMContentLoaded",(function(){document.forms.search&&document.forms.search.query.addEventListener("blur",(function(){this.value&&e("event","search",{search_term:this.value})}));document$.subscribe((function(){var t=document.forms.feedback;if(void 0!==t)for(var a of t.querySelectorAll("[type=submit]"))a.addEventListener("click",(function(a){a.preventDefault();var n=document.location.pathname,d=this.getAttribute("data-md-value");e("event","feedback",{page:n,data:d}),t.firstElementChild.disabled=!0;var r=t.querySelector(".md-feedback__note [data-md-value='"+d+"']");r&&(r.hidden=!1)})),t.hidden=!1})),location$.subscribe((function(t){e("config","G-ECS7B3X8JM",{page_path:t.pathname})}))}));var t=document.createElement("script");t.async=!0,t.src="https://www.googletagmanager.com/gtag/js?id=G-ECS7B3X8JM",document.getElementById("__analytics").insertAdjacentElement("afterEnd",t)}</script>
+  
+    <script>if("undefined"!=typeof __md_analytics){var consent=__md_get("__consent");consent&&consent.analytics&&__md_analytics()}</script>
+  
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#chapter-1-foundations-of-stochastic-simulation" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="Big Book of Computing | Simulation" class="md-header__button md-logo" aria-label="Big Book of Computing | Simulation" data-md-component="logo">
+      
+  <img src="../../../assets/logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Big Book of Computing | Simulation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Chapter 1: Foundations of Stochastic Simulation
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1M8 13h8v-2H8zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4a5 5 0 0 0 5-5 5 5 0 0 0-5-5"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h10a5 5 0 0 0 5-5 5 5 0 0 0-5-5m0 8a3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3 3 3 0 0 1-3 3"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="indigo"  aria-label="Switch to system preference"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to system preference" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h10a5 5 0 0 0 5-5 5 5 0 0 0-5-5M7 15a3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3 3 3 0 0 1-3 3"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/bigbookofcomputing/simulation" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../contents/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Contents
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../introduction/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Introduction
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../Chapter-1-Essay/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Chapters
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../Chapter-1-WorkBook/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  WorkBooks
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../Chapter-1-CodeBook/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  CodeBooks
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Big Book of Computing | Simulation" class="md-nav__button md-logo" aria-label="Big Book of Computing | Simulation" data-md-component="logo">
+      
+  <img src="../../../assets/logo.png" alt="logo">
+
+    </a>
+    Big Book of Computing | Simulation
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/bigbookofcomputing/simulation" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contents/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contents
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introduction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapters
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Chapters
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Chapter-1-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-1 Foundations of Stochastic Simulation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-2/Chapter-2-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-2 The Ising Model
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-3/Chapter-3-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-3 Lattice Gauge Theory
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-4/Chapter-4-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-4 Monte Carlo Option Pricing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-5/Chapter-5-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-5 Stochastic Systems Biology
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-6/Chapter-6-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-6 Advanced Monte Carlo Methods
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-7/Chapter-7-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-7 Molecular Dynamics (MD)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-8/Chapter-8-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-8 The Stochastic Calculus (SDEs)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-9/Chapter-9-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-9 Black-Scholes-Merton (BSM)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-10/Chapter-10-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-10 Neuroscience (Hodgkin-Huxley)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-11/Chapter-11-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-11 Agent-Based & Network Models
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-12/Chapter-12-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-12 Collective Behavior & Pattern Formation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-13/Chapter-13-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-13 Collective Behavior & Pattern Formation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-14/Chapter-14-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-14 Computational Neuroscience
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-15/Chapter-15-Essay.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-15 Graph and Network Models
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    WorkBooks
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    WorkBooks
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Chapter-1-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-1 Foundations of Stochastic Simulation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-2/Chapter-2-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-2 The Ising Model
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-3/Chapter-3-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-3 Lattice Gauge Theory
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-4/Chapter-4-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-4 Monte Carlo Option Pricing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-5/Chapter-5-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-5 Stochastic Systems Biology
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-6/Chapter-6-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-6 Advanced Monte Carlo Methods
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-7/Chapter-7-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-7 Molecular Dynamics (MD)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-8/Chapter-8-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-8 The Stochastic Calculus (SDEs)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-9/Chapter-9-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-9 Black-Scholes-Merton (BSM)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-10/Chapter-10-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-10 Neuroscience (Hodgkin-Huxley)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-11/Chapter-11-WorkBook" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-11 Agent-Based & Network Models
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-12/Chapter-12-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-12 Collective Behavior & Pattern Formation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-13/Chapter-13-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-13 Collective Behavior & Pattern Formation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-14/Chapter-14-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-14 Computational Neuroscience
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-15/Chapter-15-WorkBook.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-15 Graph and Network Models
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CodeBooks
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    CodeBooks
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Chapter-1-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-1 Foundations of Stochastic Simulation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-2/Chapter-2-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-2 The Ising Model
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-3/Chapter-3-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-3 Lattice Gauge Theory
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-4/Chapter-4-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-4 Monte Carlo Option Pricing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-5/Chapter-5-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-5 Stochastic Systems Biology
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-6/Chapter-6-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-6 Advanced Monte Carlo Methods
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-7/Chapter-7-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-7 Molecular Dynamics (MD)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-8/Chapter-8-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-8 The Stochastic Calculus (SDEs)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-9/Chapter-9-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-9 Black-Scholes-Merton (BSM)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-10/Chapter-10-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-10 Neuroscience (Hodgkin-Huxley)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-11/Chapter-11-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-11 Agent-Based & Network Models
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-12/Chapter-12-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-12 Collective Behavior & Pattern Formation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-13/Chapter-13-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-13 Collective Behavior & Pattern Formation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-14/Chapter-14-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-14 Computational Neuroscience
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-15/Chapter-15-CodeBook.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-15 Graph and Network Models
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#11-the-curse-of-dimensionality" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1 The Curse of Dimensionality
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12-the-failure-of-simple-sampling-and-the-need-for-importance-expanded" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2 The Failure of Simple Sampling and the Need for Importance (Expanded)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#13-the-theoretical-foundation-markov-chains-expanded" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.3 The Theoretical Foundation: Markov Chains (Expanded)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#14-the-central-algorithm-metropolishastings-expanded" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.4 The Central Algorithm: Metropolis–Hastings (Expanded)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#15-core-application-sampling-a-1d-energy-landscape-expanded" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.5 Core Application: Sampling a 1D Energy Landscape (Expanded)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.5 Core Application: Sampling a 1D Energy Landscape (Expanded)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-potential" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The potential
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sampling-strategy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sampling strategy
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#low-temperature-vs-high-temperature-behavior" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Low temperature vs. high temperature behavior
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#interpreting-the-histogram" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Interpreting the histogram
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#takehome-messages-from-the-1d-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Take‑home messages from the 1D example
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#16-chapter-summary-bridge-to-chapter-2-expanded" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.6 Chapter Summary &amp; Bridge to Chapter 2 (Expanded)
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+    <a href="https://github.com/bigbookofcomputing/simulation/edit/master/docs/chapters/chapter-1/Chapter-1-Essay-OLD.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+    
+      
+    
+    <a href="https://github.com/bigbookofcomputing/simulation/raw/master/docs/chapters/chapter-1/Chapter-1-Essay-OLD.md" title="View source of this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.2 8.2 0 0 1-1.23-2"/></svg>
+    </a>
+  
+
+
+<h1 id="chapter-1-foundations-of-stochastic-simulation">Chapter 1: Foundations of Stochastic Simulation</h1>
+<h3 id="11-the-curse-of-dimensionality">1.1 The Curse of Dimensionality</h3>
+<p><strong>Why the many‑body problem is hard.</strong><br />
+In a system with <span class="arithmatex">\(N\)</span> interacting components (spins in a magnet, molecules in a fluid, neurons in a network, or agents in a financial market) each degree of freedom can typically take on several discrete or continuous values. For a binary spin model like the Ising model, each spin <span class="arithmatex">\(s_i\)</span> can be <span class="arithmatex">\(\pm 1\)</span>. A <span class="arithmatex">\(30 \times 30\)</span> Ising lattice contains 900 spins; the total number of spin configurations is <span class="arithmatex">\(2^{900}\)</span>, an astronomically large number (∼<span class="arithmatex">\(10^{270}\)</span>). Enumerating or even iterating over all these configurations is therefore impossible.</p>
+<p><strong>Combinatorial explosion.</strong><br />
+The phrase “curse of dimensionality” was coined by Richard Bellman to emphasize that many algorithms suffer exponential slow‑down as the dimensionality of the problem grows. Even in the simplest case of <span class="arithmatex">\(d\)</span> binary variables, the number of possible combinations doubles with each added dimension. This phenomenon appears in many contexts:</p>
+<ul>
+<li>
+<p><strong>Sampling on grids.</strong><br />
+  To sample a unit interval with resolution <span class="arithmatex">\(10^{-2}\)</span> you need roughly <span class="arithmatex">\(10^2 = 100\)</span> points. To achieve the same resolution in a 10‑dimensional hypercube, you would need <span class="arithmatex">\(10^{20}\)</span> lattice points—impractical for any computer.</p>
+</li>
+<li>
+<p><strong>Exploding state space.</strong><br />
+  In physics, each additional particle doubles the possible spin or occupation states; in finance, adding another asset multiplies the dimensionality of the price vector; in biology, adding another gene or neuron doubles the possible configuration states. Naively scanning or integrating over all combinations thus becomes exponentially expensive.</p>
+</li>
+<li>
+<p><strong>Volume concentration.</strong><br />
+  As dimension increases, the geometry of space changes: most of the volume of a high‑dimensional cube concentrates near its boundary. For a <span class="arithmatex">\(d\)</span>-dimensional hypercube, the ratio of the volume of an inscribed hypersphere to the cube’s volume shrinks to zero as <span class="arithmatex">\(d \to \infty\)</span>. Randomly sampling points uniformly in a high‑dimensional hypercube means that almost all points lie near the “surface”; very few points represent the deep interior. This makes intuitive notions like “nearby” or “central” meaningless and undermines naive Monte Carlo sampling strategies.</p>
+</li>
+</ul>
+<p><strong>Implications for statistical mechanics.</strong><br />
+In statistical mechanics, macroscopic observables are computed from sums over all microstates weighted by <span class="arithmatex">\(\mathrm{e}^{-\beta E(\mathbf{s})}\)</span>. Because the volume of state space grows exponentially with system size, direct summation is impossible. Moreover, most states are extremely high‑energy and contribute negligibly to the partition function. Therefore, a random uniform sampling of all microstates yields almost exclusively useless samples, and the variance of estimates skyrockets. This is why <strong>importance sampling</strong> and <strong>Markov Chain Monte Carlo</strong> methods are indispensable: they concentrate sampling in the low‑energy regions of configuration space that actually matter.</p>
+<p><strong>Takeaway.</strong><br />
+The curse of dimensionality reminds us that high‑dimensional spaces behave very differently from our everyday intuition: volumes explode, “typical” points live near the boundaries, and the number of possibilities grows faster than any polynomial. To study many‑body systems, we must use stochastic methods that navigate these spaces intelligently rather than exhaustively.</p>
+<h3 id="12-the-failure-of-simple-sampling-and-the-need-for-importance-expanded">1.2 The Failure of Simple Sampling and the Need for Importance (Expanded)</h3>
+<p><strong>Why naïve Monte Carlo fails.</strong><br />
+In classical numerical integration, one can estimate an expectation value of an observable <span class="arithmatex">\(A(\mathbf{s})\)</span> by drawing states <span class="arithmatex">\(\mathbf{s}\)</span> uniformly at random and averaging <span class="arithmatex">\(A\)</span>. In statistical mechanics the quantity of interest is</p>
+<div class="arithmatex">\[
+\langle A \rangle := \frac{1}{Z} \sum_{\mathbf{s}} A(\mathbf{s})\, \mathrm{e}^{-\beta E(\mathbf{s})}, \qquad
+Z = \sum_{\mathbf{s}} \mathrm{e}^{-\beta E(\mathbf{s})},
+\]</div>
+<p>where <span class="arithmatex">\(E(\mathbf{s})\)</span> is the energy of configuration <span class="arithmatex">\(\mathbf{s}\)</span> and <span class="arithmatex">\(\beta = 1/(k_\mathrm{B}T)\)</span>. A “simple” Monte Carlo estimator would draw configurations uniformly from the state space and use the sample mean</p>
+<div class="arithmatex">\[
+\hat{A}_\text{uniform} := \frac{1}{N} \sum_{i=1}^N A(\mathbf{s}^{(i)})\, \mathrm{e}^{-\beta E(\mathbf{s}^{(i)})}.
+\]</div>
+<p>The problem is that <strong>most of the state space consists of extremely high‑energy configurations</strong>. According to the Boltzmann distribution, the probability of occupying a state <span class="arithmatex">\(i\)</span> with energy <span class="arithmatex">\(\varepsilon_i\)</span> is proportional to <span class="arithmatex">\(\exp(-\varepsilon_i / (k_\mathrm{B}T))\)</span>. The ratio of probabilities of two states depends only on their energy difference:</p>
+<div class="arithmatex">\[
+\frac{p_i}{p_j} = \exp\left(\frac{\varepsilon_j - \varepsilon_i}{k_\mathrm{B}T}\right).
+\]</div>
+<p>Low‑energy states are exponentially more probable; high‑energy states contribute essentially zero to the average. When we sample uniformly, almost every draw is a high‑energy state with a negligible Boltzmann weight. Consequently:</p>
+<ul>
+<li>
+<p><strong>The estimator wastes work.</strong><br />
+  The vast majority of samples contribute almost nothing to the sum.</p>
+</li>
+<li>
+<p><strong>The variance explodes.</strong><br />
+  Because only a tiny fraction of states have appreciable weight, the estimator’s variance is extremely large. To achieve a given statistical accuracy, the required number of uniform samples grows exponentially with system size.</p>
+</li>
+</ul>
+<p>A simple thought experiment illustrates the problem. Consider a system with just two states: one at energy <span class="arithmatex">\(E_\text{low}\)</span> and one at energy <span class="arithmatex">\(E_\text{high}\)</span>, where <span class="arithmatex">\(E_\text{high} - E_\text{low} \gg k_\mathrm{B}T\)</span>. Uniform sampling draws each state 50 % of the time, but the Boltzmann weights might differ by a factor of <span class="arithmatex">\(\exp[-(E_\text{high} - E_\text{low}) / (k_\mathrm{B}T)]\)</span>, making the contribution from the high‑energy state negligible. Half of your samples are essentially wasted.</p>
+<p><strong>Importance sampling to the rescue.</strong><br />
+The remedy is to draw samples from a <strong>proposal distribution</strong> <span class="arithmatex">\(p(\mathbf{s})\)</span> that resembles the target Boltzmann distribution <span class="arithmatex">\(P(\mathbf{s}) \propto \mathrm{e}^{-\beta E(\mathbf{s})}\)</span>. In importance sampling, one writes the expectation as</p>
+<div class="arithmatex">\[
+\langle A \rangle = \sum_{\mathbf{s}} A(\mathbf{s})\, \frac{P(\mathbf{s})}{p(\mathbf{s})}\, p(\mathbf{s}),
+\]</div>
+<p>and estimates it by drawing samples <span class="arithmatex">\(\mathbf{s}^{(i)}\)</span> from <span class="arithmatex">\(p(\mathbf{s})\)</span> and computing</p>
+<div class="arithmatex">\[
+\hat{A}_\text{IS} := \frac{\sum_{i=1}^{N} A(\mathbf{s}^{(i)})\, w(\mathbf{s}^{(i)})}{\sum_{i=1}^{N} w(\mathbf{s}^{(i)})}, \qquad
+w(\mathbf{s}) = \frac{P(\mathbf{s})}{p(\mathbf{s})}.
+\]</div>
+<p>If <span class="arithmatex">\(p(\mathbf{s})\)</span> is chosen so that <span class="arithmatex">\(p(\mathbf{s}) \approx P(\mathbf{s})\)</span>, then all weights <span class="arithmatex">\(w(\mathbf{s}^{(i)})\)</span> are of similar magnitude and the estimator variance is small. In the ideal case where <span class="arithmatex">\(p(\mathbf{s}) = P(\mathbf{s})\)</span>, every weight <span class="arithmatex">\(w = 1\)</span> and the estimator reduces to a simple average.</p>
+<p>In the context of the Boltzmann distribution, importance sampling means sampling more frequently from low‑energy states and rarely from high‑energy states. <strong>Markov Chain Monte Carlo</strong> algorithms such as the Metropolis–Hastings method achieve this by constructing a random walk that spends time in each state proportional to its Boltzmann weight. Rather than drawing independent samples from a proposal distribution, MCMC incrementally explores state space using transition probabilities that satisfy detailed balance. This allows us to bypass the need for a closed‑form proposal distribution <span class="arithmatex">\(p(\mathbf{s})\)</span> and to generate samples whose empirical distribution converges to the desired <span class="arithmatex">\(P(\mathbf{s})\)</span>.</p>
+<p><strong>Key points to remember.</strong></p>
+<ul>
+<li>Uniform (simple) sampling is inefficient in high dimensions because nearly all randomly chosen configurations are high‑energy and have negligible Boltzmann weight.</li>
+<li>Importance sampling re‑weights the integrand to sample preferentially from regions that contribute most to the expectation.</li>
+<li>MCMC implements importance sampling in a dynamic way by constructing a Markov chain whose stationary distribution is the target distribution. This resolves the variance explosion and makes the computation of thermodynamic averages feasible.</li>
+</ul>
+<h3 id="13-the-theoretical-foundation-markov-chains-expanded">1.3 The Theoretical Foundation: Markov Chains (Expanded)</h3>
+<p><strong>Defining a Markov chain.</strong><br />
+A (time‑homogeneous) Markov chain is a sequence of random variables <span class="arithmatex">\(\{\mathbf{s}_0, \mathbf{s}_1, \mathbf{s}_2, \dots\}\)</span> taking values in a discrete state space <span class="arithmatex">\(\mathcal{S}\)</span> such that the probability of moving to the next state depends only on the current state:</p>
+<div class="arithmatex">\[
+\Pr(\mathbf{s}_{n+1} = \mathbf{s}' \mid \mathbf{s}_n = \mathbf{s}, \mathbf{s}_{n-1}, \dots, \mathbf{s}_0) = \Pr(\mathbf{s}_{n+1} = \mathbf{s}' \mid \mathbf{s}_n = \mathbf{s}) = W(\mathbf{s} \to \mathbf{s}').
+\]</div>
+<p>The collection of transition probabilities <span class="arithmatex">\(W(\mathbf{s} \to \mathbf{s}')\)</span> for all <span class="arithmatex">\(\mathbf{s}, \mathbf{s}' \in \mathcal{S}\)</span> forms the <strong>transition matrix</strong> <span class="arithmatex">\(T\)</span>. For a finite state space, <span class="arithmatex">\(T\)</span> is a square matrix with non‑negative entries satisfying <span class="arithmatex">\(\sum_{\mathbf{s}'} T_{\mathbf{s}\mathbf{s}'} = 1\)</span> for each <span class="arithmatex">\(\mathbf{s}\)</span>.</p>
+<p><strong>Stationary distributions.</strong><br />
+A distribution <span class="arithmatex">\(\pi\)</span> on <span class="arithmatex">\(\mathcal{S}\)</span> is <strong>stationary</strong> with respect to <span class="arithmatex">\(T\)</span> if it remains unchanged by the Markov dynamics:</p>
+<div class="arithmatex">\[
+\pi(\mathbf{s}') = \sum_{\mathbf{s} \in \mathcal{S}} \pi(\mathbf{s})\, T_{\mathbf{s}\mathbf{s}'} \quad \text{for all } \mathbf{s}' \in \mathcal{S}.
+\]</div>
+<p>In matrix notation, <span class="arithmatex">\(\pi\)</span> is a <strong>left eigenvector</strong> of <span class="arithmatex">\(T\)</span> with eigenvalue 1. Existence of a stationary distribution is guaranteed if <span class="arithmatex">\(T\)</span> is <strong>stochastic</strong> (rows sum to one) and <strong>irreducible</strong> (it is possible to reach any state from any other state). The stationary distribution is unique if the chain is also <strong>aperiodic</strong> (returns to each state with period 1). Under these conditions, the chain is called <strong>ergodic</strong>: as <span class="arithmatex">\(n \to \infty\)</span>, the distribution of <span class="arithmatex">\(\mathbf{s}_n\)</span> approaches <span class="arithmatex">\(\pi\)</span> regardless of the initial state, and time averages converge to ensemble averages. The Oxford notes on Markov chains state that for an irreducible chain with stationary distribution <span class="arithmatex">\(\pi\)</span>, the ergodic theorem guarantees <span class="arithmatex">\(\Pr(X_n = i) \to \pi_i\)</span> as <span class="arithmatex">\(n \to \infty\)</span> and the fraction of time spent in state <span class="arithmatex">\(i\)</span> converges to <span class="arithmatex">\(\pi_i\)</span>.</p>
+<p><strong>Global balance and detailed balance.</strong><br />
+If <span class="arithmatex">\(\pi\)</span> is stationary for <span class="arithmatex">\(T\)</span>, it must satisfy the <strong>global balance</strong> condition: the total probability flow into every state equals the flow out:</p>
+<div class="arithmatex">\[
+\sum_{\mathbf{s}} \pi(\mathbf{s})\, T_{\mathbf{s}\mathbf{s}'} = \pi(\mathbf{s}') = \sum_{\mathbf{s}''} \pi(\mathbf{s}')\, T_{\mathbf{s}'\mathbf{s}''}.
+\]</div>
+<p>A sufficient (but stronger) condition is <strong>detailed balance</strong>:</p>
+<div class="arithmatex">\[
+\pi(\mathbf{s})\, T_{\mathbf{s}\mathbf{s}'} = \pi(\mathbf{s}')\, T_{\mathbf{s}'\mathbf{s}} \quad \text{for all } \mathbf{s}, \mathbf{s}' \in \mathcal{S}.
+\]</div>
+<p>Detailed balance implies global balance and has a physical interpretation: at equilibrium each elementary process is balanced by its reverse process. The detailed balance principle arises from microscopic reversibility in kinetic theory and is widely used in the design of Monte Carlo algorithms. Many chains used in statistical mechanics (including the Metropolis–Hastings algorithm) are <strong>reversible</strong> with respect to their target distribution because they are constructed to satisfy detailed balance.</p>
+<p><strong>Ergodicity (reachability and aperiodicity).</strong><br />
+For MCMC to work, the chain must be able to explore the entire relevant region of configuration space. This means:</p>
+<ul>
+<li>
+<p><strong>Irreducibility (reachability).</strong><br />
+  From any state <span class="arithmatex">\(\mathbf{s}\)</span> there is a sequence of transitions with nonzero probability that reaches any other state <span class="arithmatex">\(\mathbf{s}'\)</span>. Without irreducibility, the chain could get trapped in a subset of states and never sample the rest of the distribution.</p>
+</li>
+<li>
+<p><strong>Aperiodicity.</strong><br />
+  The chain should not cycle deterministically through states with period <span class="arithmatex">\(&gt; 1\)</span>. Formally, the greatest common divisor of the set <span class="arithmatex">\(\{n : \Pr(\mathbf{s}_n = \mathbf{s} \mid \mathbf{s}_0 = \mathbf{s}) &gt; 0\}\)</span> must be 1 for every <span class="arithmatex">\(\mathbf{s}\)</span>. Aperiodicity ensures that the chain does not oscillate but rather mixes smoothly.</p>
+</li>
+</ul>
+<p>These properties together ensure the existence of a unique stationary distribution and guarantee convergence of long‑run averages. In practice, MCMC algorithms often add a small probability of remaining in the current state or include random “lazy” steps to break periodicity.</p>
+<p><strong>Markov chains in MCMC.</strong><br />
+In Markov Chain Monte Carlo, we deliberately construct a Markov chain whose stationary distribution is the target distribution <span class="arithmatex">\(P(\mathbf{s})\)</span>. The Metropolis–Hastings algorithm achieves this by proposing a candidate state <span class="arithmatex">\(\mathbf{s}'\)</span> and accepting it with a probability chosen to satisfy detailed balance. Ergodicity is enforced by ensuring the proposal mechanism can, over time, reach any region of state space (e.g., by allowing single‑spin flips in the Ising model) and by including occasional acceptance of higher‑energy states to avoid getting trapped in local minima. Once the chain has “burned in” and reached stationarity, time averages of observables converge to ensemble averages under <span class="arithmatex">\(P(\mathbf{s})\)</span>.</p>
+<p><strong>Mixing time and autocorrelation.</strong><br />
+An important practical consideration is <strong>mixing time</strong>—how quickly the chain approaches its stationary distribution. Poorly chosen proposals may lead to slow mixing; the chain spends a long time exploring one region before moving to others, resulting in highly correlated samples. Techniques such as tuning the proposal step size, using cluster moves (e.g., Wolff or Swendsen–Wang algorithms for spin systems), or employing advanced methods like parallel tempering can dramatically reduce mixing time.</p>
+<p>By understanding these foundational concepts—Markov chains, stationary distributions, ergodicity and detailed balance—we can design Monte Carlo algorithms that sample correctly and efficiently from complex, high‑dimensional probability distributions.</p>
+<h3 id="14-the-central-algorithm-metropolishastings-expanded">1.4 The Central Algorithm: Metropolis–Hastings (Expanded)</h3>
+<p><strong>Origins and generality.</strong><br />
+The Metropolis algorithm was introduced in 1953 by Nicholas Metropolis and collaborators for simulating particles in statistical physics. The original formulation assumed a <strong>symmetric proposal distribution</strong> <span class="arithmatex">\(g(\mathbf{s} \to \mathbf{s}') = g(\mathbf{s}' \to \mathbf{s})\)</span>, leading to a simple acceptance rule based solely on energy difference. In 1970, W.K. Hastings generalized the algorithm to allow <strong>asymmetric proposals</strong>; his work introduced the ratio of proposal probabilities into the acceptance function, giving the modern Metropolis–Hastings (MH) framework. Today MH is a cornerstone of Monte Carlo methods and has countless variants (Gibbs sampling, slice sampling, Hamiltonian/Hybrid Monte Carlo, etc.).</p>
+<p><strong>Transition kernel construction.</strong><br />
+The goal is to construct a Markov chain with stationary distribution <span class="arithmatex">\(P(\mathbf{s}) \propto \mathrm{e}^{-\beta E(\mathbf{s})}\)</span>. In MH this is done by factorizing the transition probability <span class="arithmatex">\(W(\mathbf{s} \to \mathbf{s}')\)</span> into a <strong>proposal step</strong> and an <strong>acceptance step</strong>:</p>
+<div class="arithmatex">\[
+W(\mathbf{s} \to \mathbf{s}') := g(\mathbf{s} \to \mathbf{s}') \, \alpha(\mathbf{s} \to \mathbf{s}').
+\]</div>
+<p>Here <span class="arithmatex">\(g(\mathbf{s} \to \mathbf{s}')\)</span> is a proposal density that suggests a candidate state <span class="arithmatex">\(\mathbf{s}'\)</span> given the current state <span class="arithmatex">\(\mathbf{s}\)</span>, and <span class="arithmatex">\(\alpha(\mathbf{s} \to \mathbf{s}')\)</span> is the acceptance probability. We require <span class="arithmatex">\(g\)</span> to be <strong>ergodic</strong> (it must allow moves between any two states, perhaps in multiple steps) to ensure reachability.</p>
+<p><strong>Deriving the acceptance probability.</strong><br />
+To guarantee detailed balance with respect to <span class="arithmatex">\(P\)</span>, one chooses <span class="arithmatex">\(\alpha\)</span> such that</p>
+<div class="arithmatex">\[
+P(\mathbf{s})\, g(\mathbf{s} \to \mathbf{s}')\, \alpha(\mathbf{s} \to \mathbf{s}')
+=
+P(\mathbf{s}')\, g(\mathbf{s}' \to \mathbf{s})\, \alpha(\mathbf{s}' \to \mathbf{s}).
+\]</div>
+<p>A common solution is the <strong>Metropolis–Hastings acceptance rule</strong>,</p>
+<div class="arithmatex">\[
+\alpha(\mathbf{s} \to \mathbf{s}') =
+\min\left(1,
+\frac{P(\mathbf{s}')\, g(\mathbf{s}' \to \mathbf{s})}{P(\mathbf{s})\, g(\mathbf{s} \to \mathbf{s}')}\right)
+=
+\min\left(1,
+\frac{\mathrm{e}^{-\beta E(\mathbf{s}')} \, g(\mathbf{s}' \to \mathbf{s})}{\mathrm{e}^{-\beta E(\mathbf{s})} \, g(\mathbf{s} \to \mathbf{s}')}\right).
+\]</div>
+<p>This formula embodies two intuitive principles:</p>
+<ol>
+<li>
+<p><strong>Favour downhill moves.</strong><br />
+   If the proposed state has a lower energy than the current state, then <span class="arithmatex">\(\mathrm{e}^{-\beta (E(\mathbf{s}') - E(\mathbf{s}))} \ge 1\)</span>, so the proposal is accepted with probability 1.</p>
+</li>
+<li>
+<p><strong>Occasionally accept uphill moves.</strong><br />
+   If the proposal increases the energy (<span class="arithmatex">\(E(\mathbf{s}') &gt; E(\mathbf{s})\)</span>), it may still be accepted, but only with probability <span class="arithmatex">\(\exp[-\beta (E(\mathbf{s}') - E(\mathbf{s}))]\)</span> (for a symmetric proposal). This allows the chain to escape local minima and ensures ergodicity.</p>
+</li>
+</ol>
+<p>For symmetric proposals (<span class="arithmatex">\(g(\mathbf{s}' \to \mathbf{s}) = g(\mathbf{s} \to \mathbf{s}')\)</span>), the ratio of proposal densities cancels, and the acceptance probability reduces to the classic <strong>Metropolis rule</strong>:</p>
+<div class="arithmatex">\[
+\alpha(\mathbf{s} \to \mathbf{s}') = \min\left(1, \mathrm{e}^{-\beta [E(\mathbf{s}') - E(\mathbf{s})]}\right).
+\]</div>
+<p><strong>Algorithmic pseudocode.</strong><br />
+The Metropolis–Hastings algorithm can be summarized as follows:</p>
+<ol>
+<li><strong>Initialize</strong> the current state <span class="arithmatex">\(\mathbf{s}_0\)</span> and choose an inverse temperature <span class="arithmatex">\(\beta\)</span>.</li>
+<li>For each iteration <span class="arithmatex">\(t = 0,1,2,\dots\)</span>:</li>
+<li><strong>Propose a candidate</strong> <span class="arithmatex">\(\mathbf{s}'\)</span> from <span class="arithmatex">\(g(\mathbf{s}_t \to \cdot)\)</span>.</li>
+<li><strong>Compute</strong> the acceptance ratio
+      $$
+      A(\mathbf{s}_t, \mathbf{s}') = \frac{P(\mathbf{s}')\, g(\mathbf{s}' \to \mathbf{s}_t)}{P(\mathbf{s}_t)\, g(\mathbf{s}_t \to \mathbf{s}')}.
+      $$</li>
+<li><strong>Accept or reject</strong>: draw <span class="arithmatex">\(u \sim \mathrm{Uniform}(0,1)\)</span>. If <span class="arithmatex">\(u \le \min(1, A)\)</span>, set <span class="arithmatex">\(\mathbf{s}_{t+1} = \mathbf{s}'\)</span>; otherwise set <span class="arithmatex">\(\mathbf{s}_{t+1} = \mathbf{s}_t\)</span>.</li>
+<li><strong>Iterate</strong> to generate a sequence of states. After an initial “burn‑in” period the distribution of <span class="arithmatex">\(\mathbf{s}_t\)</span> approaches <span class="arithmatex">\(P\)</span>.</li>
+</ol>
+<p>Because the chain has memory (each sample depends on the previous one), consecutive samples are correlated. To reduce autocorrelation one can thin the chain (keep only every <span class="arithmatex">\(k\)</span>-th sample) or run multiple independent chains.</p>
+<p><strong>Choosing and tuning the proposal.</strong><br />
+The efficiency of MH depends critically on the proposal distribution <span class="arithmatex">\(g\)</span>. Common choices include:</p>
+<ul>
+<li>
+<p><strong>Random‑walk proposals:</strong> <span class="arithmatex">\(\mathbf{s}' = \mathbf{s} + \delta\)</span> with <span class="arithmatex">\(\delta\)</span> drawn from a symmetric distribution (e.g., uniform or Gaussian). The step size (variance of <span class="arithmatex">\(\delta\)</span>) controls the acceptance rate. If the step size is too small, moves are almost always accepted but explore the space slowly; if it is too large, proposals are often rejected and the chain stagnates. Theory suggests an optimal acceptance rate of about 50 % in one dimension, decreasing to about 23 % as the dimensionality increases. In practice, one tunes the step size during a preliminary “burn‑in” phase to achieve a desired acceptance rate.</p>
+</li>
+<li>
+<p><strong>Independence proposals:</strong> <span class="arithmatex">\(g(\mathbf{s} \to \mathbf{s}')\)</span> does not depend on the current state (e.g., drawing <span class="arithmatex">\(\mathbf{s}'\)</span> from a fixed distribution such as a Gaussian mixture). Independence proposals can work well when a good approximation to <span class="arithmatex">\(P\)</span> is known, but may suffer from low acceptance if the proposal is poorly matched.</p>
+</li>
+<li>
+<p><strong>Domain‑specific moves:</strong><br />
+  In lattice models, one might flip a single spin or exchange clusters of spins; in polymer simulations, one might pivot or crankshaft segments. Designing smart proposals that make non‑local changes can dramatically speed up mixing.</p>
+</li>
+</ul>
+<p><strong>Special cases and extensions.</strong><br />
+Several important sampling algorithms can be viewed as special cases or extensions of MH:</p>
+<ul>
+<li>
+<p><strong>Gibbs sampling</strong> sets <span class="arithmatex">\(g(\mathbf{s} \to \mathbf{s}')\)</span> to update one component of <span class="arithmatex">\(\mathbf{s}\)</span> at a time by drawing from its full conditional distribution; the acceptance probability is always 1 because detailed balance is satisfied exactly.</p>
+</li>
+<li>
+<p><strong>Slice sampling</strong> introduces an auxiliary variable and samples from the region under the graph of the target density; it can adaptively choose step sizes.</p>
+</li>
+<li>
+<p><strong>Hamiltonian/Hybrid Monte Carlo</strong> uses Hamiltonian dynamics to propose distant moves with higher acceptance rates, particularly useful for continuous, high‑dimensional spaces.</p>
+</li>
+<li>
+<p><strong>Parallel tempering (replica exchange)</strong> runs multiple chains at different temperatures and swaps configurations between them; this helps overcome energy barriers by occasionally allowing high‑temperature chains to visit low‑probability regions.</p>
+</li>
+</ul>
+<p><strong>Practical considerations.</strong></p>
+<ul>
+<li>
+<p><strong>Burn‑in.</strong><br />
+  Because the initial state may not be typical, the first part of the chain may not reflect the stationary distribution. One discards an initial segment (burn‑in) before collecting samples for estimating observables.</p>
+</li>
+<li>
+<p><strong>Autocorrelation and effective sample size.</strong><br />
+  The correlation time <span class="arithmatex">\(\tau\)</span> (number of steps needed for samples to become roughly independent) determines the <strong>effective sample size</strong>: from <span class="arithmatex">\(N\)</span> correlated samples one only gets <span class="arithmatex">\(N/\tau\)</span> independent pieces of information. Monitoring autocorrelation functions or computing effective sample size helps assess convergence.</p>
+</li>
+<li>
+<p><strong>Convergence diagnostics.</strong><br />
+  In practice one can run multiple chains from different starting points and use statistics like the Gelman–Rubin <span class="arithmatex">\(R\)</span>‑hat diagnostic to assess whether chains have converged to the same distribution.</p>
+</li>
+</ul>
+<p>Metropolis–Hastings is powerful because of its simplicity and generality—it can sample from any distribution for which the unnormalized density can be computed. By carefully choosing the proposal distribution and acceptance rule, we can explore extremely high‑dimensional energy landscapes and compute thermodynamic properties that would be impossible to obtain via brute force.</p>
+<h3 id="15-core-application-sampling-a-1d-energy-landscape-expanded">1.5 Core Application: Sampling a 1D Energy Landscape (Expanded)</h3>
+<p>To illustrate how the Metropolis algorithm works in practice, let us consider a simple yet instructive example: a single particle moving in a one‑dimensional <strong>double‑well potential</strong>. This toy model captures the essential difficulty of sampling multimodal distributions and highlights how temperature affects exploration.</p>
+<h4 id="the-potential">The potential</h4>
+<p>A standard double‑well potential takes the form</p>
+<div class="arithmatex">\[
+V(x) := x^4 - 2x^2 + 1,
+\]</div>
+<p>which has two minima at <span class="arithmatex">\(x = \pm 1\)</span> and a maximum at <span class="arithmatex">\(x = 0\)</span>. In a more general parameterization you may see</p>
+<div class="arithmatex">\[
+U_\gamma(x) = \gamma (x^2 - 1)^2,
+\]</div>
+<p>where <span class="arithmatex">\(\gamma &gt; 0\)</span> controls the barrier height: larger <span class="arithmatex">\(\gamma\)</span> makes the wells deeper and the barrier higher. The associated <strong>Boltzmann distribution</strong> for the particle’s position is</p>
+<div class="arithmatex">\[
+p_\beta(x) := \frac{1}{Z} \, \mathrm{e}^{-\beta V(x)},
+\]</div>
+<p>with normalization constant <span class="arithmatex">\(Z = \int_{-\infty}^{\infty} \mathrm{e}^{-\beta V(x)}\, \mathrm{d}x\)</span>. At thermal equilibrium, low‑energy (valley) regions have high probability weight, while the high‑energy barrier near <span class="arithmatex">\(x = 0\)</span> has exponentially small weight.</p>
+<h4 id="sampling-strategy">Sampling strategy</h4>
+<p>We use the Metropolis algorithm to generate samples from <span class="arithmatex">\(p_\beta(x)\)</span>. The algorithm proceeds as follows:</p>
+<ol>
+<li><strong>Initialize</strong> the particle at some position <span class="arithmatex">\(x_0\)</span>, typically in one of the wells.</li>
+<li>For each iteration <span class="arithmatex">\(t\)</span>:</li>
+<li><strong>Propose</strong> a trial move by adding a small random displacement: <span class="arithmatex">\(x' = x_t + \delta\)</span>, where <span class="arithmatex">\(\delta\)</span> is drawn from a symmetric distribution (e.g., uniform in <span class="arithmatex">\([-\Delta, \Delta]\)</span> or Gaussian with zero mean). The parameter <span class="arithmatex">\(\Delta\)</span> controls the step size.</li>
+<li><strong>Compute</strong> the energy difference <span class="arithmatex">\(\Delta V = V(x') - V(x_t)\)</span>.</li>
+<li>
+<p><strong>Accept or reject</strong> according to the Metropolis rule:</p>
+<p>$$
+ x_{t+1} =
+ \begin{cases}
+ x', &amp; \text{if } \Delta V \le 0, \
+ x', &amp; \text{if } \Delta V &gt; 0 \text{ and } u &lt; \mathrm{e}^{-\beta \Delta V}, \
+ x_t, &amp; \text{otherwise},
+ \end{cases}
+ $$</p>
+<p>where <span class="arithmatex">\(u \sim \mathrm{Uniform}(0,1)\)</span>. In words: always accept moves that lower the potential, and accept uphill moves with probability <span class="arithmatex">\(\exp(-\beta \Delta V)\)</span>.
+3. <strong>Record</strong> the current position <span class="arithmatex">\(x_t\)</span> after a suitable burn‑in period to build up a histogram of visited positions.</p>
+</li>
+</ol>
+<p>Because the proposal distribution is symmetric, the acceptance probability reduces to <span class="arithmatex">\(\alpha = \min\{1,\, \mathrm{e}^{-\beta \Delta V} \}\)</span>. The step size <span class="arithmatex">\(\Delta\)</span> should be tuned to achieve a reasonable acceptance rate (neither always accepting tiny moves nor rejecting nearly all moves due to overly large jumps).</p>
+<h4 id="low-temperature-vs-high-temperature-behavior">Low temperature vs. high temperature behavior</h4>
+<p>This simple system vividly demonstrates how temperature (<span class="arithmatex">\(1/\beta\)</span>) affects sampling:</p>
+<ul>
+<li>
+<p><strong>Low temperature (large <span class="arithmatex">\(\beta\)</span>).</strong><br />
+  When <span class="arithmatex">\(\beta\)</span> is large, <span class="arithmatex">\(\mathrm{e}^{-\beta \Delta V}\)</span> is tiny for even moderate energy increases. Thus the particle seldom accepts moves that climb the central barrier. The chain tends to remain trapped in whichever well it starts in, occasionally making small excursions around the minimum. The histogram of sampled <span class="arithmatex">\(x\)</span> values shows two sharply peaked distributions at <span class="arithmatex">\(x \approx \pm 1\)</span>, with very few samples near <span class="arithmatex">\(x = 0\)</span>. In the language of statistical mechanics, the system explores one metastable state for a long time before transitioning to the other.</p>
+</li>
+<li>
+<p><strong>High temperature (small <span class="arithmatex">\(\beta\)</span>).</strong><br />
+  When <span class="arithmatex">\(\beta\)</span> is small, uphill moves are accepted more readily; thermal fluctuations frequently propel the particle over the barrier. The sampler crosses between the wells more often, and the histogram becomes broader and may even appear unimodal if the temperature is high enough. The distribution flattens out towards the two peaks and the barrier region no longer forbids crossing.</p>
+</li>
+</ul>
+<p>A blog demonstration of this effect uses the potential <span class="arithmatex">\(U_\gamma(x) = \gamma (x^2 - 1)^2\)</span> and shows that as the barrier height <span class="arithmatex">\(\gamma\)</span> increases, a Metropolis chain initialized in one well jumps to the other well less and less frequently. At very high barriers the chain may remain stuck in one mode for the entire simulation, illustrating the challenge of sampling multimodal landscapes. This example motivates advanced techniques like <strong>parallel tempering</strong> (replica exchange), which run multiple chains at different temperatures and exchange configurations to facilitate barrier crossing.</p>
+<h4 id="interpreting-the-histogram">Interpreting the histogram</h4>
+<p>After running the Metropolis algorithm for many iterations (discarding burn‑in), one can construct a histogram <span class="arithmatex">\(H(x)\)</span> of visited positions. When normalized appropriately, <span class="arithmatex">\(H(x)\)</span> approximates the target density <span class="arithmatex">\(p_\beta(x)\)</span>. Comparing <span class="arithmatex">\(H(x)\)</span> for different temperatures reveals the interplay between energy barriers and thermal fluctuations:</p>
+<ul>
+<li>At low <span class="arithmatex">\(T\)</span>: two separate peaks at the minima; practically no samples at the barrier.</li>
+<li>At intermediate <span class="arithmatex">\(T\)</span>: peaks still visible but connected by a low plateau; barrier crossing becomes common.</li>
+<li>At high <span class="arithmatex">\(T\)</span>: the histogram approaches a single broad distribution; the particle spends comparable time in all regions.</li>
+</ul>
+<p>These observations confirm that the Metropolis algorithm samples according to the Boltzmann weight <span class="arithmatex">\(\exp(-\beta V(x))\)</span> and that the acceptance probability correctly embodies the physics of thermal activation over energy barriers.</p>
+<h4 id="takehome-messages-from-the-1d-example">Take‑home messages from the 1D example</h4>
+<ul>
+<li>
+<p><strong>Validation of MCMC.</strong><br />
+  The double‑well test shows that Metropolis sampling reproduces the correct distribution for a system with known analytic form.</p>
+</li>
+<li>
+<p><strong>Temperature dependence.</strong><br />
+  Increasing temperature increases barrier crossing frequency; decreasing temperature leads to metastability.</p>
+</li>
+<li>
+<p><strong>Barrier height matters.</strong><br />
+  For fixed temperature, increasing the barrier height (through <span class="arithmatex">\(\gamma\)</span>) slows mixing dramatically. This insight foreshadows the difficulties encountered when sampling high‑dimensional, multimodal distributions, and motivates the need for enhanced sampling methods.</p>
+</li>
+<li>
+<p><strong>Tunability of proposals.</strong><br />
+  Even in one dimension, the choice of step size <span class="arithmatex">\(\Delta\)</span> influences acceptance rates and sampling efficiency; similar tuning is crucial in higher‑dimensional applications.</p>
+</li>
+</ul>
+<p>Overall, the 1D double‑well example is a pedagogical playground for understanding the strengths and limitations of the basic Metropolis algorithm before applying it to the vastly more complex landscapes encountered in many‑body systems.</p>
+<h3 id="16-chapter-summary-bridge-to-chapter-2-expanded">1.6 Chapter Summary &amp; Bridge to Chapter 2 (Expanded)</h3>
+<p><strong>What we learned in this chapter.</strong><br />
+The goal of Chapter 1 was to lay the foundations for stochastic simulation of complex systems. We confronted the curse of dimensionality head‑on by noting that the state space of many‑body systems grows exponentially with system size; brute‑force enumeration is impossible. Naïve Monte Carlo sampling fails because most randomly chosen configurations have extremely high energy and contribute negligibly to thermodynamic averages. To overcome this, we introduced importance sampling and the theory of Markov chains. The key takeaways are:</p>
+<ul>
+<li>
+<p>A <strong>Markov chain</strong> is a memoryless process described by a transition matrix <span class="arithmatex">\(T\)</span>. Under conditions of <strong>ergodicity</strong> (irreducibility and aperiodicity), a Markov chain has a unique stationary distribution. If the chain satisfies <strong>detailed balance</strong> with respect to a desired distribution <span class="arithmatex">\(P\)</span>, then <span class="arithmatex">\(P\)</span> is its stationary distribution. This ensures that long‑run time averages equal ensemble averages drawn from <span class="arithmatex">\(P\)</span>.</p>
+</li>
+<li>
+<p>The <strong>Metropolis–Hastings algorithm</strong> provides a general recipe for constructing such a Markov chain when one can evaluate the unnormalized density <span class="arithmatex">\(P(\mathbf{s})\)</span> (e.g., the Boltzmann weight <span class="arithmatex">\(\mathrm{e}^{-\beta E(\mathbf{s})}\)</span>). By proposing random moves and accepting them with a probability that depends on the ratio of target densities (and proposal densities in the general case), MH yields samples distributed according to <span class="arithmatex">\(P(\mathbf{s})\)</span> in equilibrium.</p>
+</li>
+<li>
+<p>In a <strong>double‑well potential</strong> example we saw how MCMC works in practice. We observed that at low temperatures the sampler becomes trapped in one well for long times, while at higher temperatures it crosses the barrier more easily. This illustrates both the correctness of the Metropolis acceptance rule and the challenges associated with sampling multimodal distributions.</p>
+</li>
+</ul>
+<p>These concepts provide the <strong>engine</strong> for the rest of the book. We now have a reliable method to sample from complicated probability distributions by constructing Markov chains that satisfy detailed balance.</p>
+<p><strong>Looking ahead to Chapter 2.</strong><br />
+The next logical step is to apply this engine to a non‑trivial many‑body system. Chapter 2 introduces the <strong>two‑dimensional Ising model</strong>, one of the simplest models in statistical physics to exhibit a phase transition. In the Ising model, each lattice site <span class="arithmatex">\(i\)</span> carries a spin <span class="arithmatex">\(s_i = \pm 1\)</span> that interacts with its nearest neighbours. The energy function is</p>
+<div class="arithmatex">\[
+E(\mathbf{s}) = -J \sum_{\langle i,j\rangle} s_i s_j - h \sum_{i} s_i,
+\]</div>
+<p>where <span class="arithmatex">\(J\)</span> is the coupling constant and <span class="arithmatex">\(h\)</span> an external magnetic field. At low temperature and zero field, the system spontaneously magnetizes (<span class="arithmatex">\(\langle s_i \rangle \neq 0\)</span>), whereas at high temperature it remains disordered (<span class="arithmatex">\(\langle s_i \rangle = 0\)</span>). Between these regimes lies a critical temperature at which the system undergoes a continuous phase transition. The 2D Ising model thus embodies the emergence of collective order from microscopic interactions.</p>
+<p>In Chapter 2 we will:</p>
+<ul>
+<li>Use the Metropolis algorithm developed in Chapter 1 to sample spin configurations according to the Boltzmann weight <span class="arithmatex">\(\mathrm{e}^{-\beta E(\mathbf{s})}\)</span>.</li>
+<li>Compute macroscopic observables such as magnetization, susceptibility and energy.</li>
+<li>Observe how the system behaves as the temperature is varied: spontaneous symmetry breaking, critical fluctuations and phase transitions.</li>
+<li>Discuss finite‑size effects and techniques for estimating critical exponents.</li>
+</ul>
+<p>The Ising model serves as the “Hello, World!” of complex systems. It introduces key concepts—order parameters, criticality, universality—and provides a proving ground for Monte Carlo methods. By the end of Chapter 2 you will have not only a deeper appreciation for statistical mechanics but also a concrete demonstration of how the Metropolis engine can reveal emergent phenomena in high‑dimensional state spaces.</p>
+<p>With these foundations in place, we are ready to simulate and understand a wide array of complex systems—from magnets to biological networks and financial markets—in the chapters that follow.</p>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://bigbookofcomputing.github.io" target="_blank" rel="noopener" title="bigbookofcomputing.github.io" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://x.com/bigbookofcomputing" target="_blank" rel="noopener" title="x.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M459.4 151.7c.3 4.5.3 9.1.3 13.6 0 138.7-105.6 298.6-298.6 298.6-59.5 0-114.7-17.2-161.1-47.1 8.4 1 16.6 1.3 25.3 1.3 49.1 0 94.2-16.6 130.3-44.8-46.1-1-84.8-31.2-98.1-72.8 6.5 1 13 1.6 19.8 1.6 9.4 0 18.8-1.3 27.6-3.6-48.1-9.7-84.1-52-84.1-103v-1.3c14 7.8 30.2 12.7 47.4 13.3-28.3-18.8-46.8-51-46.8-87.4 0-19.5 5.2-37.4 14.3-53C87.4 130.8 165 172.4 252.1 176.9c-1.6-7.8-2.6-15.9-2.6-24C249.5 95.1 296.3 48 354.4 48c30.2 0 57.5 12.7 76.7 33.1 23.7-4.5 46.5-13.3 66.6-25.3-7.8 24.4-24.4 44.8-46.1 57.8 21.1-2.3 41.6-8.1 60.4-16.2-14.3 20.8-32.2 39.3-52.6 54.3"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.facebook.com/bigbookofcomputing" target="_blank" rel="noopener" title="www.facebook.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M512 256C512 114.6 397.4 0 256 0S0 114.6 0 256c0 120 82.7 220.8 194.2 248.5V334.2h-52.8V256h52.8v-33.7c0-87.1 39.4-127.5 125-127.5 16.2 0 44.2 3.2 55.7 6.4V172c-6-.6-16.5-1-29.6-1-42 0-58.2 15.9-58.2 57.2V256h83.6l-14.4 78.2H287v175.9C413.8 494.8 512 386.9 512 256"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.linkedin.com/bigbookofcomputing" target="_blank" rel="noopener" title="www.linkedin.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3M135.4 416H69V202.2h66.5V416zM102.2 96a38.5 38.5 0 1 1 0 77 38.5 38.5 0 1 1 0-77m282.1 320h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.youtube.com/@big-book-of-computing" target="_blank" rel="noopener" title="www.youtube.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M549.7 124.1c-6.2-23.7-24.8-42.3-48.3-48.6C458.9 64 288.1 64 288.1 64S117.3 64 74.7 75.5c-23.5 6.3-42 24.9-48.3 48.6C15 167 15 256.4 15 256.4s0 89.4 11.4 132.3c6.3 23.6 24.8 41.5 48.3 47.8C117.3 448 288.1 448 288.1 448s170.8 0 213.4-11.5c23.5-6.3 42-24.2 48.3-47.8 11.4-42.9 11.4-132.3 11.4-132.3s0-89.4-11.4-132.3zM232.2 337.6V175.2l142.7 81.2z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+      <div class="md-consent" data-md-component="consent" id="__consent" hidden>
+        <div class="md-consent__overlay"></div>
+        <aside class="md-consent__inner">
+          <form class="md-consent__form md-grid md-typeset" name="consent">
+            
+
+
+  
+
+
+<h4>Cookie consent</h4>
+<p>We use cookies to recognize your repeated visits and preferences, as well as to measure the effectiveness of our documentation and whether users find what they're searching for. With your consent, you're helping us to make our documentation better.</p>
+<input class="md-toggle" type="checkbox" id="__settings" >
+<div class="md-consent__settings">
+  <ul class="task-list">
+    
+    
+      
+        
+  
+  
+    
+    
+  
+  <li class="task-list-item">
+    <label class="task-list-control">
+      <input type="checkbox" name="analytics" checked>
+      <span class="task-list-indicator"></span>
+      Google Analytics
+    </label>
+  </li>
+
+      
+    
+    
+      
+        
+  
+  
+    
+    
+  
+  <li class="task-list-item">
+    <label class="task-list-control">
+      <input type="checkbox" name="github" checked>
+      <span class="task-list-indicator"></span>
+      GitHub
+    </label>
+  </li>
+
+      
+    
+    
+  </ul>
+</div>
+<div class="md-consent__controls">
+  
+    
+      <button class="md-button md-button--primary">Accept</button>
+    
+    
+    
+  
+    
+    
+    
+      <label class="md-button" for="__settings">Manage settings</label>
+    
+  
+</div>
+          </form>
+        </aside>
+      </div>
+      <script>var consent=__md_get("__consent");if(consent)for(var input of document.forms.consent.elements)input.name&&(input.checked=consent[input.name]||!1);else"file:"!==location.protocol&&setTimeout((function(){document.querySelector("[data-md-component=consent]").hidden=!1}),250);var form=document.forms.consent;for(var action of["submit","reset"])form.addEventListener(action,(function(e){if(e.preventDefault(),"reset"===e.type)for(var n of document.forms.consent.elements)n.name&&(n.checked=!1);__md_set("__consent",Object.fromEntries(Array.from(new FormData(form).keys()).map((function(e){return[e,!0]})))),location.hash="",location.reload()}))</script>
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["announce.dismiss", "content.action.edit", "content.action.view", "content.code.annotate", "content.code.copy", "content.tooltips", "navigation.footer", "navigation.indexes", "navigation.sections", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../../static/mathjax-config.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.0/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

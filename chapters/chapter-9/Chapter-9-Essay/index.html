@@ -1,0 +1,3615 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="A comprehensive guide to the foundations of stochastic simulation">
+      
+      
+        <meta name="author" content="Big Book of Computing">
+      
+      
+        <link rel="canonical" href="https://bigbookofcomputing.github.io/chapters/chapter-9/Chapter-9-Essay/">
+      
+      
+        <link rel="prev" href="../../chapter-8/Chapter-8-Essay/">
+      
+      
+        <link rel="next" href="../../chapter-10/Chapter-10-Essay/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/logo.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>Chapter-9 Black-Scholes-Merton (BSM) - Big Book of Computing | Simulation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+      <link rel="stylesheet" href="../../../static/styles.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  
+
+
+  
+  
+
+<script id="__analytics">function __md_analytics(){function e(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],e("js",new Date),e("config","G-ECS7B3X8JM"),document.addEventListener("DOMContentLoaded",(function(){document.forms.search&&document.forms.search.query.addEventListener("blur",(function(){this.value&&e("event","search",{search_term:this.value})}));document$.subscribe((function(){var t=document.forms.feedback;if(void 0!==t)for(var a of t.querySelectorAll("[type=submit]"))a.addEventListener("click",(function(a){a.preventDefault();var n=document.location.pathname,d=this.getAttribute("data-md-value");e("event","feedback",{page:n,data:d}),t.firstElementChild.disabled=!0;var r=t.querySelector(".md-feedback__note [data-md-value='"+d+"']");r&&(r.hidden=!1)})),t.hidden=!1})),location$.subscribe((function(t){e("config","G-ECS7B3X8JM",{page_path:t.pathname})}))}));var t=document.createElement("script");t.async=!0,t.src="https://www.googletagmanager.com/gtag/js?id=G-ECS7B3X8JM",document.getElementById("__analytics").insertAdjacentElement("afterEnd",t)}</script>
+  
+    <script>if("undefined"!=typeof __md_analytics){var consent=__md_get("__consent");consent&&consent.analytics&&__md_analytics()}</script>
+  
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#chapter-9-black-scholes-merton-equation" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="Big Book of Computing | Simulation" class="md-header__button md-logo" aria-label="Big Book of Computing | Simulation" data-md-component="logo">
+      
+  <img src="../../../assets/logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Big Book of Computing | Simulation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Chapter-9 Black-Scholes-Merton (BSM)
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1M8 13h8v-2H8zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4a5 5 0 0 0 5-5 5 5 0 0 0-5-5"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h10a5 5 0 0 0 5-5 5 5 0 0 0-5-5m0 8a3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3 3 3 0 0 1-3 3"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="indigo"  aria-label="Switch to system preference"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to system preference" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h10a5 5 0 0 0 5-5 5 5 0 0 0-5-5M7 15a3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3 3 3 0 0 1-3 3"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/bigbookofcomputing/simulation" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../contents/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Contents
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../introduction/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Introduction
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../chapter-1/Chapter-1-Essay/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Chapters
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../chapter-1/Chapter-1-WorkBook/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  WorkBooks
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../chapter-1/Chapter-1-CodeBook/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  CodeBooks
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Big Book of Computing | Simulation" class="md-nav__button md-logo" aria-label="Big Book of Computing | Simulation" data-md-component="logo">
+      
+  <img src="../../../assets/logo.png" alt="logo">
+
+    </a>
+    Big Book of Computing | Simulation
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/bigbookofcomputing/simulation" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contents/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contents
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introduction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapters
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Chapters
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-1/Chapter-1-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-1 Foundations of Stochastic Simulation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-2/Chapter-2-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-2 The Ising Model
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-3/Chapter-3-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-3 Lattice Gauge Theory
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-4/Chapter-4-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-4 Monte Carlo Option Pricing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-5/Chapter-5-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-5 Stochastic Systems Biology
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-6/Chapter-6-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-6 Advanced Monte Carlo Methods
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-7/Chapter-7-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-7 Molecular Dynamics (MD)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-8/Chapter-8-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-8 The Stochastic Calculus (SDEs)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-9 Black-Scholes-Merton (BSM)
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-9 Black-Scholes-Merton (BSM)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Introduction
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#chapter-outline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Chapter Outline
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#91-from-random-paths-to-deterministic-price" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.1 From Random Paths to Deterministic Price
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9.1 From Random Paths to Deterministic Price">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#from-random-motion-to-predictable-value" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        From Random Motion to Predictable Value
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-blackscholesmerton-breakthrough" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Black–Scholes–Merton Breakthrough
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-core-idea-the-delta-hedged-portfolio" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Core Idea: The Delta-Hedged Portfolio
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-blackscholesmerton-pde" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Black–Scholes–Merton PDE
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-physics-connection-diffusion-in-price-space" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Physics Connection: Diffusion in Price Space
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#92-the-derivation-applying-itos-lemma" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.2 The Derivation: Applying Itō's Lemma
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9.2 The Derivation: Applying Itō&#39;s Lemma">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-1-the-stochastic-dynamics-of-the-asset-and-option" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 1: The Stochastic Dynamics of the Asset and Option
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2-constructing-the-delta-hedged-portfolio" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2: Constructing the Delta-Hedged Portfolio
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-3-eliminating-randomness-the-hedge-ratio-delta" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3: Eliminating Randomness (The Hedge Ratio \(\Delta\))
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-4-the-no-arbitrage-condition" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 4: The No-Arbitrage Condition
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-5-deriving-the-bsm-pde" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 5: Deriving the BSM PDE
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-profound-result-risk-neutral-valuation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Profound Result: Risk-Neutral Valuation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#93-the-bsm-equation-as-a-heat-equation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.3 The BSM Equation as a Heat Equation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9.3 The BSM Equation as a Heat Equation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-financial-pde-and-the-physics-analogy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Financial PDE and the Physics Analogy
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-transformation-to-a-pure-diffusion-equation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Transformation to a Pure Diffusion Equation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The Transformation to a Pure Diffusion Equation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-1-logarithmic-price-and-time-reversal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 1: Logarithmic Price and Time Reversal
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2-removing-the-first-derivative-and-decay-terms" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2: Removing the First Derivative and Decay Terms
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#initial-and-boundary-conditions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Initial and Boundary Conditions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-analytical-solution-and-numerical-implications" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Analytical Solution and Numerical Implications
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#94-simulation-solving-american-options-with-the-finite-difference-method-fdm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.4 Simulation: Solving American Options with the Finite Difference Method (FDM)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9.4 Simulation: Solving American Options with the Finite Difference Method (FDM)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-free-boundary-problem-of-american-options" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Free-Boundary Problem of American Options
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-inequality-constraint" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Inequality Constraint
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#finite-difference-method-fdm-framework" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Finite Difference Method (FDM) Framework
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#implementing-the-early-exercise-constraint" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Implementing the Early Exercise Constraint
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#financial-interpretation-of-the-solution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Financial Interpretation of the Solution
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#95-chapter-summary-bridge-to-chapter-10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.5 Chapter Summary &amp; Bridge to Chapter 10
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9.5 Chapter Summary &amp; Bridge to Chapter 10">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-unification-of-stochastic-and-deterministic-dynamics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Unification of Stochastic and Deterministic Dynamics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#solving-the-free-boundary-problem" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Solving the Free Boundary Problem
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bridge-to-chapter-10-from-financial-diffusion-to-neural-dynamics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bridge to Chapter 10: From Financial Diffusion to Neural Dynamics
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        References
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-10/Chapter-10-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-10 Neuroscience (Hodgkin-Huxley)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-11/Chapter-11-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-11 Agent-Based & Network Models
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-12/Chapter-12-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-12 Collective Behavior & Pattern Formation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-13/Chapter-13-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-13 Collective Behavior & Pattern Formation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-14/Chapter-14-Essay/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-14 Computational Neuroscience
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-15/Chapter-15-Essay.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-15 Graph and Network Models
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    WorkBooks
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    WorkBooks
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-1/Chapter-1-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-1 Foundations of Stochastic Simulation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-2/Chapter-2-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-2 The Ising Model
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-3/Chapter-3-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-3 Lattice Gauge Theory
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-4/Chapter-4-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-4 Monte Carlo Option Pricing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-5/Chapter-5-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-5 Stochastic Systems Biology
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-6/Chapter-6-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-6 Advanced Monte Carlo Methods
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-7/Chapter-7-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-7 Molecular Dynamics (MD)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-8/Chapter-8-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-8 The Stochastic Calculus (SDEs)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Chapter-9-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-9 Black-Scholes-Merton (BSM)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-10/Chapter-10-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-10 Neuroscience (Hodgkin-Huxley)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-11/Chapter-11-WorkBook" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-11 Agent-Based & Network Models
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-12/Chapter-12-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-12 Collective Behavior & Pattern Formation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-13/Chapter-13-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-13 Collective Behavior & Pattern Formation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-14/Chapter-14-WorkBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-14 Computational Neuroscience
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-15/Chapter-15-WorkBook.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-15 Graph and Network Models
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CodeBooks
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    CodeBooks
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-1/Chapter-1-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-1 Foundations of Stochastic Simulation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-2/Chapter-2-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-2 The Ising Model
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-3/Chapter-3-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-3 Lattice Gauge Theory
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-4/Chapter-4-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-4 Monte Carlo Option Pricing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-5/Chapter-5-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-5 Stochastic Systems Biology
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-6/Chapter-6-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-6 Advanced Monte Carlo Methods
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-7/Chapter-7-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-7 Molecular Dynamics (MD)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-8/Chapter-8-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-8 The Stochastic Calculus (SDEs)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Chapter-9-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-9 Black-Scholes-Merton (BSM)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-10/Chapter-10-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-10 Neuroscience (Hodgkin-Huxley)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-11/Chapter-11-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-11 Agent-Based & Network Models
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-12/Chapter-12-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-12 Collective Behavior & Pattern Formation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-13/Chapter-13-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-13 Collective Behavior & Pattern Formation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-14/Chapter-14-CodeBook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-14 Computational Neuroscience
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter-15/Chapter-15-CodeBook.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chapter-15 Graph and Network Models
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Introduction
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#chapter-outline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Chapter Outline
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#91-from-random-paths-to-deterministic-price" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.1 From Random Paths to Deterministic Price
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9.1 From Random Paths to Deterministic Price">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#from-random-motion-to-predictable-value" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        From Random Motion to Predictable Value
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-blackscholesmerton-breakthrough" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Black–Scholes–Merton Breakthrough
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-core-idea-the-delta-hedged-portfolio" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Core Idea: The Delta-Hedged Portfolio
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-blackscholesmerton-pde" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Black–Scholes–Merton PDE
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-physics-connection-diffusion-in-price-space" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Physics Connection: Diffusion in Price Space
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#92-the-derivation-applying-itos-lemma" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.2 The Derivation: Applying Itō's Lemma
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9.2 The Derivation: Applying Itō&#39;s Lemma">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-1-the-stochastic-dynamics-of-the-asset-and-option" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 1: The Stochastic Dynamics of the Asset and Option
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2-constructing-the-delta-hedged-portfolio" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2: Constructing the Delta-Hedged Portfolio
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-3-eliminating-randomness-the-hedge-ratio-delta" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3: Eliminating Randomness (The Hedge Ratio \(\Delta\))
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-4-the-no-arbitrage-condition" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 4: The No-Arbitrage Condition
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-5-deriving-the-bsm-pde" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 5: Deriving the BSM PDE
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-profound-result-risk-neutral-valuation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Profound Result: Risk-Neutral Valuation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#93-the-bsm-equation-as-a-heat-equation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.3 The BSM Equation as a Heat Equation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9.3 The BSM Equation as a Heat Equation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-financial-pde-and-the-physics-analogy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Financial PDE and the Physics Analogy
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-transformation-to-a-pure-diffusion-equation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Transformation to a Pure Diffusion Equation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The Transformation to a Pure Diffusion Equation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-1-logarithmic-price-and-time-reversal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 1: Logarithmic Price and Time Reversal
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2-removing-the-first-derivative-and-decay-terms" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2: Removing the First Derivative and Decay Terms
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#initial-and-boundary-conditions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Initial and Boundary Conditions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-analytical-solution-and-numerical-implications" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Analytical Solution and Numerical Implications
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#94-simulation-solving-american-options-with-the-finite-difference-method-fdm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.4 Simulation: Solving American Options with the Finite Difference Method (FDM)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9.4 Simulation: Solving American Options with the Finite Difference Method (FDM)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-free-boundary-problem-of-american-options" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Free-Boundary Problem of American Options
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-inequality-constraint" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Inequality Constraint
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#finite-difference-method-fdm-framework" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Finite Difference Method (FDM) Framework
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#implementing-the-early-exercise-constraint" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Implementing the Early Exercise Constraint
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#financial-interpretation-of-the-solution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Financial Interpretation of the Solution
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#95-chapter-summary-bridge-to-chapter-10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.5 Chapter Summary &amp; Bridge to Chapter 10
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9.5 Chapter Summary &amp; Bridge to Chapter 10">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-unification-of-stochastic-and-deterministic-dynamics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Unification of Stochastic and Deterministic Dynamics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#solving-the-free-boundary-problem" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Solving the Free Boundary Problem
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bridge-to-chapter-10-from-financial-diffusion-to-neural-dynamics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bridge to Chapter 10: From Financial Diffusion to Neural Dynamics
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        References
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+    <a href="https://github.com/bigbookofcomputing/simulation/edit/master/docs/chapters/chapter-9/Chapter-9-Essay.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+    
+      
+    
+    <a href="https://github.com/bigbookofcomputing/simulation/raw/master/docs/chapters/chapter-9/Chapter-9-Essay.md" title="View source of this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.2 8.2 0 0 1-1.23-2"/></svg>
+    </a>
+  
+
+
+<h1 id="chapter-9-black-scholes-merton-equation"><strong>Chapter 9: Black-Scholes-Merton Equation</strong></h1>
+<hr />
+<h2 id="introduction"><strong>Introduction</strong></h2>
+<p>While stochastic differential equations (Chapter 8) correctly model the continuous randomness of asset price trajectories through geometric Brownian motion <span class="arithmatex">\(dS_t = \mu S_t dt + \sigma S_t dW_t\)</span>, they leave a profound puzzle for financial valuation: how can we assign a <strong>deterministic price</strong> to derivatives whose payoffs depend on inherently random future prices? The naive approach—computing expected payoffs using Monte Carlo simulation—requires specifying the stock's expected return <span class="arithmatex">\(\mu\)</span>, which varies across investors with different risk preferences. The 1973 breakthrough by Fischer Black, Myron Scholes, and Robert Merton resolved this paradox through a stunning insight: by constructing a <strong>delta-hedged portfolio</strong> that holds the derivative and dynamically shorts <span class="arithmatex">\(\Delta = \frac{\partial V}{\partial S}\)</span> units of the underlying stock, the random terms <span class="arithmatex">\(dW_t\)</span> driving both assets <strong>cancel exactly</strong>, creating a riskless portfolio whose return must equal the risk-free rate <span class="arithmatex">\(r\)</span> by no-arbitrage. This forces derivatives to satisfy a deterministic partial differential equation independent of <span class="arithmatex">\(\mu\)</span>—the <strong>Black–Scholes–Merton (BSM) equation</strong>.</p>
+<p>This chapter derives, analyzes, and numerically solves the BSM equation, revealing its deep connection to classical physics. We begin by applying Itō's Lemma to the option value <span class="arithmatex">\(V(S,t)\)</span> and constructing the delta-hedged portfolio <span class="arithmatex">\(\Pi = V - \frac{\partial V}{\partial S} S\)</span>, showing how the cancellation of stochastic terms yields the BSM PDE: <span class="arithmatex">\(\frac{\partial V}{\partial t} + \frac{1}{2}\sigma^2 S^2 \frac{\partial^2 V}{\partial S^2} + rS\frac{\partial V}{\partial S} - rV = 0\)</span>. Through logarithmic transformation <span class="arithmatex">\(x = \ln S\)</span> and time reversal <span class="arithmatex">\(\tau = T - t\)</span>, we expose the BSM equation's equivalence to the <strong>heat diffusion equation</strong> <span class="arithmatex">\(\frac{\partial u}{\partial \tau} = \frac{1}{2}\sigma^2 \frac{\partial^2 u}{\partial x^2}\)</span>, where volatility acts as thermal diffusivity and option prices diffuse backward from the sharp payoff function at expiry. For European options, this yields the famous analytical solution <span class="arithmatex">\(V = SN(d_1) - Ke^{-r(T-t)}N(d_2)\)</span> via the heat kernel. American options, however, introduce a <strong>free-boundary problem</strong> requiring numerical solution.</p>
+<p>By the end of this chapter, you will master the complete BSM framework: deriving the PDE through hedging arguments, transforming it to canonical diffusion form, and implementing the <strong>Crank–Nicolson finite difference method</strong> to solve American options with early exercise constraints <span class="arithmatex">\(V(S,t) = \max(V_{\text{hold}}, V_{\text{intrinsic}})\)</span>. You will understand why the BSM equation eliminates dependence on expected returns (risk-neutral valuation), how the Itō correction term <span class="arithmatex">\(\frac{1}{2}\sigma^2 S^2 V_{SS}\)</span> emerges from quadratic variation, and why option pricing is fundamentally a diffusion problem. These techniques bridge stochastic modeling (Part I-II) to numerical PDE methods, preparing you for Chapter 10's exploration of reaction-diffusion systems in neuroscience, where similar mathematical structures govern action potential propagation.</p>
+<hr />
+<h2 id="chapter-outline"><strong>Chapter Outline</strong></h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;"><strong>Sec.</strong></th>
+<th style="text-align: left;"><strong>Title</strong></th>
+<th style="text-align: left;"><strong>Core Ideas &amp; Examples</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>9.1</strong></td>
+<td style="text-align: left;">From Random Paths to Deterministic Price</td>
+<td style="text-align: left;"><strong>Delta-hedged portfolio</strong>: <span class="arithmatex">\(\Pi = V - \Delta S\)</span> with <span class="arithmatex">\(\Delta = \frac{\partial V}{\partial S}\)</span> cancels <span class="arithmatex">\(dW_t\)</span> terms. <strong>No-arbitrage principle</strong>: Riskless portfolio must earn <span class="arithmatex">\(d\Pi = r\Pi dt\)</span>, eliminating dependence on <span class="arithmatex">\(\mu\)</span>. <strong>Risk-neutral valuation</strong>: Option price independent of investor preferences. BSM PDE as parabolic diffusion equation.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>9.2</strong></td>
+<td style="text-align: left;">The Derivation via Itō's Lemma</td>
+<td style="text-align: left;"><strong>Stochastic dynamics</strong>: Stock <span class="arithmatex">\(dS = \mu S dt + \sigma S dW_t\)</span>, option <span class="arithmatex">\(dV = (\frac{\partial V}{\partial t} + \mu S V_S + \frac{1}{2}\sigma^2 S^2 V_{SS})dt + \sigma S V_S dW_t\)</span>. <strong>Hedging construction</strong>: <span class="arithmatex">\(d\Pi = dV - \Delta dS\)</span>, choosing <span class="arithmatex">\(\Delta = V_S\)</span> eliminates random terms. <strong>BSM PDE derivation</strong>: <span class="arithmatex">\(V_t + \frac{1}{2}\sigma^2 S^2 V_{SS} + rS V_S - rV = 0\)</span>, with <span class="arithmatex">\(\mu\)</span> term canceling.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>9.3</strong></td>
+<td style="text-align: left;">BSM as Heat Equation</td>
+<td style="text-align: left;"><strong>Mathematical equivalence</strong>: BSM PDE <span class="arithmatex">\(\leftrightarrow\)</span> heat diffusion equation. <strong>Variable transformations</strong>: Log-price <span class="arithmatex">\(x = \ln S\)</span>, time-to-expiry <span class="arithmatex">\(\tau = T-t\)</span>, exponential substitution <span class="arithmatex">\(V = e^{\alpha x + \beta \tau}u(x,\tau)\)</span> yields pure diffusion <span class="arithmatex">\(u_\tau = \frac{1}{2}\sigma^2 u_{xx}\)</span>. <strong>Analytical solution</strong>: Heat kernel yields closed-form <span class="arithmatex">\(V = SN(d_1) - Ke^{-r\tau}N(d_2)\)</span> for European calls.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>9.4</strong></td>
+<td style="text-align: left;">American Options with FDM</td>
+<td style="text-align: left;"><strong>Free-boundary problem</strong>: Unknown optimal exercise boundary <span class="arithmatex">\(S^*(t)\)</span> analogous to Stefan problem. <strong>Crank–Nicolson scheme</strong>: Unconditionally stable, second-order accurate <span class="arithmatex">\(\mathcal{O}(\Delta t^2, \Delta S^2)\)</span>, tridiagonal system <span class="arithmatex">\(A\mathbf{V}^{n+1} = B\mathbf{V}^n\)</span>. <strong>Early exercise constraint</strong>: <span class="arithmatex">\(V_i^n = \max(V_{\text{hold},i}^n, V_{\text{intrinsic}}(S_i))\)</span> at every time step. Exercise frontier visualization.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>9.5</strong></td>
+<td style="text-align: left;">Chapter Summary &amp; Bridge</td>
+<td style="text-align: left;"><strong>Conceptual synthesis</strong>: Stochastic GBM <span class="arithmatex">\(\to\)</span> Itō's Lemma <span class="arithmatex">\(\to\)</span> delta hedging <span class="arithmatex">\(\to\)</span> deterministic BSM PDE <span class="arithmatex">\(\to\)</span> diffusion analogy. <strong>Risk neutralization</strong>: Randomness eliminates itself through hedging, leaving only volatility and risk-free rate. Bridge to Chapter 10: From financial diffusion to neural reaction-diffusion (Hodgkin–Huxley model), nonlinear coupled ODEs for action potentials, transition from PDEs back to stiff ODE systems.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="91-from-random-paths-to-deterministic-price"><strong>9.1 From Random Paths to Deterministic Price</strong></h2>
+<hr />
+<h3 id="from-random-motion-to-predictable-value"><strong>From Random Motion to Predictable Value</strong></h3>
+<p>In Chapter 8, we established the dynamics of a stock price <span class="arithmatex">\(S_t\)</span> using the <strong>Geometric Brownian Motion (GBM)</strong>, recognizing that prices follow a <strong>random walk in continuous time</strong>. The GBM SDE is expressed as:</p>
+<div class="arithmatex">\[dS_t = \mu S_t dt + \sigma S_t dW_t\]</div>
+<p>Here, <span class="arithmatex">\(\mu\)</span> is the expected drift (return), <span class="arithmatex">\(\sigma\)</span> is the volatility, and <span class="arithmatex">\(dW_t\)</span> is the stochastic shock from the Wiener Process. This continuous randomness presents a challenge to <strong>option pricing</strong>, which requires estimating a value dependent on the uncertain future price.</p>
+<p>While this expected value can be computed using computationally intensive statistical methods, such as <strong>Monte Carlo simulation</strong>, the 1973 breakthrough by <strong>Fischer Black, Myron Scholes, and Robert Merton</strong> provided a more profound insight: <strong>option values obey a deterministic Partial Differential Equation (PDE)</strong>.</p>
+<hr />
+<h3 id="the-blackscholesmerton-breakthrough"><strong>The Black–Scholes–Merton Breakthrough</strong></h3>
+<p>The core realization of the BSM model is that, despite the stochastic nature of the asset price, it is possible to <strong>eliminate risk entirely</strong> by constructing a dynamically managed portfolio. The model's key insight is that the randomness (<span class="arithmatex">\(dW_t\)</span> term) driving the stock price and the randomness driving the option value <strong>cancel out</strong> perfectly in a specifically constructed combination of the two assets.</p>
+<p>This cancellation turns a probabilistic problem into a problem of determining a fair, <strong>riskless</strong> price in an arbitrage-free market.</p>
+<hr />
+<h3 id="the-core-idea-the-delta-hedged-portfolio"><strong>The Core Idea: The Delta-Hedged Portfolio</strong></h3>
+<p>To achieve this risk neutralization, a <strong>delta-hedged portfolio (<span class="arithmatex">\(\Pi\)</span>)</strong> is constructed by holding one unit of the option (value <span class="arithmatex">\(V\)</span>) and simultaneously shorting a specific number (<span class="arithmatex">\(\Delta\)</span>) of the underlying stock (<span class="arithmatex">\(S\)</span>):</p>
+<div class="arithmatex">\[\Pi = V - \Delta S\]</div>
+<p>The goal is to choose the hedge ratio <span class="arithmatex">\(\Delta\)</span> such that the change in the portfolio value (<span class="arithmatex">\(d\Pi\)</span>) over time <span class="arithmatex">\(dt\)</span> is purely deterministic (contains no <span class="arithmatex">\(dW_t\)</span> term).</p>
+<p>The choice that perfectly cancels the stochastic terms is the option's <strong>delta</strong>:
+$<span class="arithmatex">\(\Delta = \frac{\partial V}{\partial S}\)</span>$</p>
+<p>By setting <span class="arithmatex">\(\Delta\)</span> to this value, the resulting portfolio change, <span class="arithmatex">\(d\Pi\)</span>, becomes deterministic. According to the <strong>no-arbitrage principle</strong>, any riskless portfolio must earn the <strong>risk-free rate (<span class="arithmatex">\(r\)</span>)</strong>. This condition forces the deterministic change <span class="arithmatex">\(d\Pi\)</span> to equal the return on a risk-free bond, leading directly to the BSM PDE.</p>
+<hr />
+<h3 id="the-blackscholesmerton-pde"><strong>The Black–Scholes–Merton PDE</strong></h3>
+<p>After rigorously applying <strong>Itō’s Lemma</strong> (Chapter 8) to the option value <span class="arithmatex">\(V(S,t)\)</span>, substituting the result into <span class="arithmatex">\(d\Pi = dV - \Delta dS\)</span>, and setting the <span class="arithmatex">\(dW_t\)</span> term to zero (by choosing <span class="arithmatex">\(\Delta = \partial V/\partial S\)</span>), the following equation emerges:</p>
+<div class="arithmatex">\[\frac{\partial V}{\partial t} + \frac{1}{2}\sigma^2 S^2 \frac{\partial^2 V}{\partial S^2} + r S \frac{\partial V}{\partial S} - r V = 0\]</div>
+<p>This is the <strong>Black–Scholes–Merton (BSM) equation</strong>. Notably, the PDE <strong>does not depend on the stock's expected return (<span class="arithmatex">\(\mu\)</span>)</strong>. This independence is the core of <strong>risk-neutral valuation</strong>, stating that the option price is determined solely by volatility (<span class="arithmatex">\(\sigma\)</span>), the risk-free rate (<span class="arithmatex">\(r\)</span>), and the option's characteristics.</p>
+<hr />
+<h3 id="the-physics-connection-diffusion-in-price-space"><strong>The Physics Connection: Diffusion in Price Space</strong></h3>
+<p>The BSM equation is a <strong>parabolic PDE</strong>, which is mathematically identical to the well-known <strong>heat or diffusion equation</strong> from physics. This equivalence allows for the application of established computational methods:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Concept</th>
+<th style="text-align: left;">Physics (Heat Equation)</th>
+<th style="text-align: left;">Finance (BSM Equation)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Field variable</td>
+<td style="text-align: left;">Temperature <span class="arithmatex">\(T(x,t)\)</span></td>
+<td style="text-align: left;">Option price <span class="arithmatex">\(V(S,t)\)</span></td>
+</tr>
+<tr>
+<td style="text-align: left;">Spatial variable</td>
+<td style="text-align: left;">Position <span class="arithmatex">\(x\)</span></td>
+<td style="text-align: left;">Asset price <span class="arithmatex">\(S\)</span></td>
+</tr>
+<tr>
+<td style="text-align: left;">Diffusion coefficient</td>
+<td style="text-align: left;">Thermal diffusivity <span class="arithmatex">\(\alpha\)</span></td>
+<td style="text-align: left;">Volatility term <span class="arithmatex">\(\frac{1}{2}\sigma^2 S^2\)</span></td>
+</tr>
+<tr>
+<td style="text-align: left;">Initial condition</td>
+<td style="text-align: left;">Temperature profile at <span class="arithmatex">\(t=0\)</span></td>
+<td style="text-align: left;">Payoff function at expiry <span class="arithmatex">\(V(S,T)\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>The option price, <span class="arithmatex">\(V(S,t)\)</span>, behaves like a heat profile that <strong>diffuses backward in financial time</strong> from the sharp initial condition of the payoff function at expiration. This mathematical analogy allows for the reuse of numerical techniques like the <strong>Finite Difference Method (FDM)</strong> to solve the option pricing problem efficiently.</p>
+<hr />
+<h2 id="92-the-derivation-applying-itos-lemma"><strong>9.2 The Derivation: Applying Itō's Lemma</strong></h2>
+<p>We now formally derive the BSM PDE by applying <strong>Itō's Lemma</strong> to the option price function.</p>
+<p>The Black–Scholes–Merton (BSM) equation is derived by combining the stochastic dynamics of the asset price (Chapter 8) with the powerful financial principle of <strong>no arbitrage</strong>. The objective is to construct a portfolio that is instantaneously <strong>risk-free</strong>, forcing its return to equal the risk-free rate (<span class="arithmatex">\(r\)</span>).</p>
+<hr />
+<h3 id="step-1-the-stochastic-dynamics-of-the-asset-and-option"><strong>Step 1: The Stochastic Dynamics of the Asset and Option</strong></h3>
+<p>We begin with the stochastic differential equations governing the assets:</p>
+<ol>
+<li>
+<p><strong>Stock Price Dynamics (Geometric Brownian Motion):</strong> The price <span class="arithmatex">\(S\)</span> follows:
+    $<span class="arithmatex">\(dS = \mu S dt + \sigma S dW_t\)</span>$
+    where <span class="arithmatex">\(\mu\)</span> is the expected return, <span class="arithmatex">\(\sigma\)</span> is the volatility, and <span class="arithmatex">\(dW_t\)</span> is the Wiener Process increment.</p>
+</li>
+<li>
+<p><strong>Option Value Dynamics (Itō's Lemma):</strong> The derivative's value <span class="arithmatex">\(V(S, t)\)</span> is a function of the stochastic variable <span class="arithmatex">\(S\)</span>. Applying <strong>Itō's Lemma</strong> (Chapter 8) to <span class="arithmatex">\(V(S, t)\)</span> yields its evolution:
+    $<span class="arithmatex">\(dV = \left(\frac{\partial V}{\partial t} + \mu S \frac{\partial V}{\partial S} + \frac{1}{2}\sigma^2 S^2 \frac{\partial^2 V}{\partial S^2}\right) dt + \sigma S \frac{\partial V}{\partial S} dW_t\)</span>$</p>
+</li>
+</ol>
+<div class="admonition tip">
+<p class="admonition-title">Why Delta Hedging Eliminates Randomness</p>
+<p>The key insight: when you hold <span class="arithmatex">\(\Delta = \frac{\partial V}{\partial S}\)</span> shares of stock and short one option, the instantaneous changes <span class="arithmatex">\(dS_t\)</span> and <span class="arithmatex">\(dV_t\)</span> <strong>cancel out perfectly</strong> in the combined portfolio. The <span class="arithmatex">\(dW_t\)</span> terms disappear, leaving only a deterministic drift that must equal the risk-free rate to prevent arbitrage.</p>
+</div>
+<hr />
+<h3 id="step-2-constructing-the-delta-hedged-portfolio"><strong>Step 2: Constructing the Delta-Hedged Portfolio</strong></h3>
+<p>To eliminate the risk associated with the random term (<span class="arithmatex">\(dW_t\)</span>), we form a dynamically self-adjusting portfolio <span class="arithmatex">\(\Pi\)</span> that is <strong>long one option</strong> (<span class="arithmatex">\(+V\)</span>) and <strong>short a specific amount (<span class="arithmatex">\(\Delta\)</span>) of the underlying stock</strong> (<span class="arithmatex">\(-S\)</span>):
+$<span class="arithmatex">\(\Pi = V - \Delta S\)</span>$</p>
+<p>The change in the portfolio value (<span class="arithmatex">\(d\Pi\)</span>) is:
+$<span class="arithmatex">\(d\Pi = dV - \Delta dS\)</span>$</p>
+<p>Substituting the expressions for <span class="arithmatex">\(dV\)</span> and <span class="arithmatex">\(dS\)</span> into <span class="arithmatex">\(d\Pi\)</span> results in a long expression grouped by <span class="arithmatex">\(dt\)</span> (deterministic terms) and <span class="arithmatex">\(dW_t\)</span> (stochastic terms):</p>
+<div class="arithmatex">\[d\Pi = \underbrace{\left[\frac{\partial V}{\partial t} + \mu S \frac{\partial V}{\partial S} + \frac{1}{2}\sigma^2 S^2 \frac{\partial^2 V}{\partial S^2} - \Delta \mu S \right] dt}_{\text{Deterministic Terms}} + \underbrace{\left[\sigma S \frac{\partial V}{\partial S} - \Delta \sigma S \right] dW_t}_{\text{Stochastic Terms}}\]</div>
+<hr />
+<h3 id="step-3-eliminating-randomness-the-hedge-ratio-delta"><strong>Step 3: Eliminating Randomness (The Hedge Ratio <span class="arithmatex">\(\Delta\)</span>)</strong></h3>
+<p>The essence of the BSM breakthrough is choosing the hedge ratio <span class="arithmatex">\(\Delta\)</span> such that the stochastic term (the multiplier of <span class="arithmatex">\(dW_t\)</span>) is exactly zero:</p>
+<div class="arithmatex">\[\sigma S \frac{\partial V}{\partial S} - \Delta \sigma S = 0\]</div>
+<p>Solving for <span class="arithmatex">\(\Delta\)</span>:
+$<span class="arithmatex">\(\Delta = \frac{\partial V}{\partial S}\)</span>$</p>
+<p>This quantity <span class="arithmatex">\(\Delta\)</span> is the <strong>option delta</strong>, representing the sensitivity of the option price to a change in the stock price. By holding this precise ratio, the random market movement is neutralized, making <span class="arithmatex">\(d\Pi\)</span> purely deterministic.</p>
+<p>Substituting <span class="arithmatex">\(\Delta = \frac{\partial V}{\partial S}\)</span> back into the <span class="arithmatex">\(d\Pi\)</span> equation results in the deterministic change in the risk-free portfolio:</p>
+<p>$<span class="arithmatex">\(d\Pi = \left[\frac{\partial V}{\partial t} + \frac{1}{2}\sigma^2 S^2 \frac{\partial^2 V}{\partial S^2}\right] dt\)</span>$
+<em>Note: The <span class="arithmatex">\(\mu S \frac{\partial V}{\partial S}\)</span> term, which contained the stock's expected return <span class="arithmatex">\(\mu\)</span>, canceled with the <span class="arithmatex">\(-\Delta \mu S\)</span> term, which contained <span class="arithmatex">\(\mu\)</span> via the hedge ratio <span class="arithmatex">\(\Delta\)</span>.</em></p>
+<hr />
+<h3 id="step-4-the-no-arbitrage-condition"><strong>Step 4: The No-Arbitrage Condition</strong></h3>
+<p>Since the portfolio <span class="arithmatex">\(\Pi\)</span> is now riskless, the <strong>no-arbitrage principle</strong> dictates that its return must be the <strong>risk-free rate (<span class="arithmatex">\(r\)</span>)</strong> over time <span class="arithmatex">\(dt\)</span>:</p>
+<div class="arithmatex">\[d\Pi = r\Pi dt\]</div>
+<p>Substituting the definition of <span class="arithmatex">\(\Pi = V - \Delta S = V - S \frac{\partial V}{\partial S}\)</span> into this condition:
+$<span class="arithmatex">\(d\Pi = r\left(V - S \frac{\partial V}{\partial S}\right) dt\)</span>$</p>
+<hr />
+<h3 id="step-5-deriving-the-bsm-pde"><strong>Step 5: Deriving the BSM PDE</strong></h3>
+<p>By equating the two deterministic expressions for <span class="arithmatex">\(d\Pi\)</span> (the Itō derivation and the no-arbitrage condition), we eliminate <span class="arithmatex">\(dt\)</span> and arrive at the final PDE:</p>
+<div class="arithmatex">\[\frac{\partial V}{\partial t} + \frac{1}{2}\sigma^2 S^2 \frac{\partial^2 V}{\partial S^2} = rV - rS \frac{\partial V}{\partial S}\]</div>
+<p>Rearranging to the standard form yields the <strong>Black–Scholes–Merton Equation</strong>:</p>
+<div class="arithmatex">\[\boxed{\frac{\partial V}{\partial t} + \frac{1}{2}\sigma^2 S^2 \frac{\partial^2 V}{\partial S^2} + r S \frac{\partial V}{\partial S} - r V = 0}\]</div>
+<hr />
+<h3 id="the-profound-result-risk-neutral-valuation"><strong>The Profound Result: Risk-Neutral Valuation</strong></h3>
+<p>The final BSM PDE is notable because it is entirely independent of the stock's expected rate of return (<span class="arithmatex">\(\mu\)</span>). This is the mathematical cornerstone of <strong>risk-neutral valuation</strong>: the price of the option does not depend on the market's collective forecast of future returns, only on the observable risk parameters (<span class="arithmatex">\(\sigma\)</span> and <span class="arithmatex">\(r\)</span>).</p>
+<hr />
+<h2 id="93-the-bsm-equation-as-a-heat-equation"><strong>9.3 The BSM Equation as a Heat Equation</strong></h2>
+<p>The <strong>Black–Scholes–Merton (BSM) equation</strong> is a parabolic partial differential equation that, despite its financial origin, is mathematically analogous to the classical <strong>heat (diffusion) equation</strong> from physics. This equivalence is crucial because it allows the problem of option pricing to be solved using established analytical and numerical techniques developed for diffusion processes.</p>
+<hr />
+<h3 id="the-financial-pde-and-the-physics-analogy"><strong>The Financial PDE and the Physics Analogy</strong></h3>
+<p>The BSM equation derived from the no-arbitrage principle is:</p>
+<div class="arithmatex">\[\frac{\partial V}{\partial t} + \frac{1}{2}\sigma^2 S^2 \frac{\partial^2 V}{\partial S^2} + r S \frac{\partial V}{\partial S} - r V = 0\]</div>
+<p>The mathematical structure reveals its diffusion nature:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Concept</th>
+<th style="text-align: left;">Physics (Heat Equation)</th>
+<th style="text-align: left;">Finance (BSM Equation)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Field variable</strong></td>
+<td style="text-align: left;">Temperature <span class="arithmatex">\(T(x,t)\)</span></td>
+<td style="text-align: left;">Option price <span class="arithmatex">\(V(S,t)\)</span></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Spatial variable</strong></td>
+<td style="text-align: left;">Position <span class="arithmatex">\(x\)</span></td>
+<td style="text-align: left;">Asset price <span class="arithmatex">\(S\)</span></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Diffusion</strong></td>
+<td style="text-align: left;">Thermal conductivity <span class="arithmatex">\(\alpha\)</span></td>
+<td style="text-align: left;">Volatility term <span class="arithmatex">\(\frac{1}{2}\sigma^2 S^2\)</span></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Source/Sink term</strong></td>
+<td style="text-align: left;">Heat loss (or gain)</td>
+<td style="text-align: left;">Discounting term <span class="arithmatex">\(-rV\)</span></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition example">
+<p class="admonition-title">The Heat Equation Analogy: Volatility as Thermal Diffusivity</p>
+<p>Just as heat diffuses through a rod with diffusivity <span class="arithmatex">\(\kappa\)</span>, option value diffuses through stock price space with diffusivity proportional to <span class="arithmatex">\(\sigma^2\)</span>. High volatility = rapid diffusion of option value. The boundary conditions (strike price, expiration) act like temperature constraints at the rod's endpoints.</p>
+</div>
+<p>The analogy implies that uncertainty, driven by volatility (<span class="arithmatex">\(\sigma\)</span>), causes the option value to <strong>diffuse</strong> or spread out over the space of possible stock prices (<span class="arithmatex">\(S\)</span>) as time progresses.</p>
+<hr />
+<h3 id="the-transformation-to-a-pure-diffusion-equation"><strong>The Transformation to a Pure Diffusion Equation</strong></h3>
+<p>To fully expose this mathematical equivalence, the BSM equation is converted into the canonical form of the heat equation (<span class="arithmatex">\(\frac{\partial u}{\partial \tau} = D \frac{\partial^2 u}{\partial x^2}\)</span>) using a series of variable substitutions.</p>
+<hr />
+<h4 id="step-1-logarithmic-price-and-time-reversal"><strong>Step 1: Logarithmic Price and Time Reversal</strong></h4>
+<p>Two initial transformations simplify the PDE by handling the multiplicative risk and reversing the time flow:
+1.  <strong>Logarithmic Price (<span class="arithmatex">\(x\)</span>):</strong> The substitution <span class="arithmatex">\(x = \ln S\)</span> linearizes the multiplicative terms (<span class="arithmatex">\(\propto S \frac{\partial V}{\partial S}\)</span> and <span class="arithmatex">\(\propto S^2 \frac{\partial^2 V}{\partial S^2}\)</span>) by moving from price space to log-price space. This removes the variable coefficient <span class="arithmatex">\(S^2\)</span> from the second derivative term.
+2.  <strong>Time to Expiry (<span class="arithmatex">\(\tau\)</span>):</strong> The substitution <span class="arithmatex">\(\tau = T - t\)</span> flips the time axis such that the equation is solved forward in time-to-expiry (<span class="arithmatex">\(\tau\)</span>), starting from the known payoff at <span class="arithmatex">\(\tau=0\)</span> (expiry, <span class="arithmatex">\(t=T\)</span>).</p>
+<p>Applying these changes transforms the BSM equation into a simpler, but not yet pure, diffusion form:</p>
+<div class="arithmatex">\[\frac{\partial V}{\partial \tau} = \frac{1}{2}\sigma^2 \frac{\partial^2 V}{\partial x^2} + \left(r - \frac{1}{2}\sigma^2\right)\frac{\partial V}{\partial x} - rV\]</div>
+<hr />
+<h4 id="step-2-removing-the-first-derivative-and-decay-terms"><strong>Step 2: Removing the First Derivative and Decay Terms</strong></h4>
+<p>The remaining terms—the first derivative term <span class="arithmatex">\(\propto \frac{\partial V}{\partial x}\)</span> and the decay term <span class="arithmatex">\(\propto -rV\)</span>—prevent the equation from being a standard heat equation.</p>
+<p>A second, more complex substitution is used to eliminate these terms:
+$<span class="arithmatex">\(V(x, \tau) = e^{\alpha x + \beta \tau} u(x, \tau)\)</span>$</p>
+<p>By carefully selecting constants <span class="arithmatex">\(\alpha\)</span> and <span class="arithmatex">\(\beta\)</span> to ensure the coefficients of <span class="arithmatex">\(u_x\)</span> and <span class="arithmatex">\(u\)</span> vanish, the equation reduces to the final, pure <strong>heat (diffusion) equation</strong> in the scaled variable <span class="arithmatex">\(u\)</span>:</p>
+<div class="arithmatex">\[\frac{\partial u}{\partial \tau} = \frac{1}{2}\sigma^2 \frac{\partial^2 u}{\partial x^2}\]</div>
+<hr />
+<h3 id="initial-and-boundary-conditions"><strong>Initial and Boundary Conditions</strong></h3>
+<p>The option pricing problem is defined by its boundary and final conditions. When solving the PDE backward in time (<span class="arithmatex">\(t \to 0\)</span> from <span class="arithmatex">\(t=T\)</span>), the <strong>initial condition</strong> in the transformed time <span class="arithmatex">\(\tau\)</span> is the known final payoff at expiry:</p>
+<ul>
+<li><strong>Initial Condition (<span class="arithmatex">\(\tau=0\)</span>):</strong> This is the option's payoff function at maturity. For a call option with strike <span class="arithmatex">\(K\)</span>, this is <span class="arithmatex">\(V(S, T) = \max(S - K, 0)\)</span>. In the heat analogy, this acts as a localized "heat pulse" that dissipates backward in time.</li>
+<li><strong>Boundary Conditions:</strong> These ensure the solution behaves correctly at extreme prices (<span class="arithmatex">\(S=0\)</span> and <span class="arithmatex">\(S \to \infty\)</span>). For example, a call option is worthless when the stock price is zero (<span class="arithmatex">\(V(0,t)=0\)</span>).</li>
+</ul>
+<hr />
+<h3 id="the-analytical-solution-and-numerical-implications"><strong>The Analytical Solution and Numerical Implications</strong></h3>
+<p>The pure diffusion form <span class="arithmatex">\(u_\tau = \frac{1}{2}\sigma^2 u_{xx}\)</span> has a known analytical solution involving the <strong>heat kernel</strong>. Transforming this solution back to the original variables (<span class="arithmatex">\(V(S,t)\)</span>) yields the famous <strong>Black–Scholes closed-form solution</strong>:</p>
+<div class="arithmatex">\[V(S,t) = S N(d_1) - K e^{-r(T-t)} N(d_2)\]</div>
+<p>This analytical solution relies on the <strong>Gaussian weighting</strong> function, which is mathematically equivalent to the diffusing heat kernel.</p>
+<p>For cases where analytical solutions are impossible (such as for <strong>American options</strong>, due to the early exercise constraint), the established equivalence means that robust numerical methods like the <strong>Finite Difference Method (FDM)</strong>, including the Crank–Nicolson scheme, can be directly applied to the BSM PDE.</p>
+<hr />
+<h2 id="94-simulation-solving-american-options-with-the-finite-difference-method-fdm"><strong>9.4 Simulation: Solving American Options with the Finite Difference Method (FDM)</strong></h2>
+<hr />
+<h3 id="the-free-boundary-problem-of-american-options"><strong>The Free-Boundary Problem of American Options</strong></h3>
+<p>While European-style options, exercisable only at maturity, yield to the analytical closed-form solution of the Black–Scholes–Merton (BSM) equation, <strong>American-style options</strong> cannot be solved analytically. The difficulty arises because the holder has the right to exercise the option <strong>at any time</strong> before expiry (<span class="arithmatex">\(t \le T\)</span>).</p>
+<details class="question">
+<summary>American vs European Options: When Does Early Exercise Matter?</summary>
+<p>For American <strong>call options</strong> on non-dividend-paying stocks, early exercise is <strong>never optimal</strong> (can be proven mathematically). But for American <strong>put options</strong>, early exercise becomes optimal when the stock price falls sufficiently below the strike—the option holder can capture the intrinsic value immediately rather than waiting and risking the stock price recovery. This asymmetry makes American puts significantly more complex to price than their European counterparts.</p>
+</details>
+<p>This early exercise feature introduces a <strong>free-boundary problem</strong> into the governing PDE:</p>
+<ol>
+<li><strong>The Governing Region:</strong> The BSM PDE holds only in the region where it is optimal to <strong>hold</strong> the option.</li>
+<li><strong>The Exercise Region:</strong> In the region where the intrinsic value (immediate payoff) is greater than the holding value, it is optimal to <strong>exercise</strong> immediately.</li>
+<li><strong>The Free Boundary (<span class="arithmatex">\(\boldsymbol{S^*(t)}\)</span>):</strong> The boundary separating these two regions—the optimal exercise price <span class="arithmatex">\(S^* (t)\)</span>—is unknown and must be determined as part of the solution.</li>
+</ol>
+<p>This situation is mathematically analogous to the <strong>Stefan problem</strong> in heat transfer, which models a moving phase front (like a melting or freezing boundary) in a diffusion system.</p>
+<hr />
+<h3 id="the-inequality-constraint"><strong>The Inequality Constraint</strong></h3>
+<p>The value of an American option <span class="arithmatex">\(V(S, t)\)</span> must satisfy the standard BSM PDE in the holding region, but everywhere it must also satisfy the fundamental constraint that its value is never less than its immediate exercise payoff (<span class="arithmatex">\(V_{\text{intrinsic}}\)</span>):</p>
+<div class="arithmatex">\[V(S, t) \ge V_{\text{intrinsic}}(S, t)\]</div>
+<p>This makes the BSM equation an inequality known as a <strong>Linear Complementarity Problem (LCP)</strong>. The intrinsic value is the immediate payoff: <span class="arithmatex">\(\max(S - K, 0)\)</span> for a call or <span class="arithmatex">\(\max(K - S, 0)\)</span> for a put.</p>
+<hr />
+<h3 id="finite-difference-method-fdm-framework"><strong>Finite Difference Method (FDM) Framework</strong></h3>
+<p>Due to the free-boundary problem, numerical methods, particularly the <strong>Finite Difference Method (FDM)</strong>, are required. FDM discretizes the continuous space of the price (<span class="arithmatex">\(S\)</span>) and time (<span class="arithmatex">\(t\)</span>) into a finite grid.</p>
+<p>The <strong>Crank–Nicolson scheme</strong> is the preferred method for solving the BSM PDE numerically. This semi-implicit scheme balances <strong>stability</strong> (unconditionally stable) and <strong>accuracy</strong> (<span class="arithmatex">\(\mathcal{O}(\Delta t^2, \Delta S^2)\)</span>), making it ideal for the diffusion-like nature of the problem.</p>
+<p>The solution process involves solving the BSM PDE <strong>backward in time</strong> from the known payoff at expiry (<span class="arithmatex">\(t=T\)</span> or <span class="arithmatex">\(\tau=0\)</span>):</p>
+<ol>
+<li><strong>Discretization:</strong> The PDE is approximated by a tridiagonal system of linear equations (<span class="arithmatex">\(A \mathbf{V}^{n+1} = B \mathbf{V}^{n}\)</span>) at each time step.</li>
+<li><strong>Boundary Conditions:</strong> Appropriate conditions (e.g., <span class="arithmatex">\(V(0,t)=0\)</span> for a call) are enforced at the edges of the price grid.</li>
+</ol>
+<p>In an <strong>implicit scheme</strong> like <strong>Crank–Nicolson</strong>, the values of <span class="arithmatex">\(V\)</span> at time level <span class="arithmatex">\(n+1\)</span> are coupled, forming a system of linear equations:</p>
+<div class="arithmatex">\[
+\mathbf{A} \mathbf{V}^{n+1} = \mathbf{B} \mathbf{V}^n
+\]</div>
+<p>Here is the algorithm structure:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">crank_nicolson_american_option</span><span class="p">(</span><span class="n">S_grid</span><span class="p">,</span> <span class="n">t_grid</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">option_type</span><span class="o">=</span><span class="s1">&#39;put&#39;</span><span class="p">):</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="sd">    Solve American option pricing using Crank-Nicolson FDM with early exercise.</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="sd">    Parameters:</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="sd">    - S_grid: Stock price grid (spatial discretization)</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="sd">    - t_grid: Time grid (temporal discretization, backward from T to 0)</span>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="sd">    - r: Risk-free rate</span>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="sd">    - sigma: Volatility</span>
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="sd">    - K: Strike price</span>
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="sd">    - option_type: &#39;put&#39; or &#39;call&#39;</span>
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>    <span class="n">M</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">S_grid</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>  <span class="c1"># Number of spatial steps</span>
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>    <span class="n">N</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">t_grid</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>  <span class="c1"># Number of time steps</span>
+</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>    <span class="n">dS</span> <span class="o">=</span> <span class="n">S_grid</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">S_grid</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>    <span class="n">dt</span> <span class="o">=</span> <span class="n">t_grid</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">t_grid</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>
+</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>    <span class="c1"># Initialize option value at maturity (terminal condition)</span>
+</span><span id="__span-0-19"><a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>    <span class="k">if</span> <span class="n">option_type</span> <span class="o">==</span> <span class="s1">&#39;put&#39;</span><span class="p">:</span>
+</span><span id="__span-0-20"><a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>        <span class="n">V</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">K</span> <span class="o">-</span> <span class="n">S_grid</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>  <span class="c1"># Intrinsic value at expiration</span>
+</span><span id="__span-0-21"><a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>    <span class="k">else</span><span class="p">:</span>
+</span><span id="__span-0-22"><a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>        <span class="n">V</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">S_grid</span> <span class="o">-</span> <span class="n">K</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+</span><span id="__span-0-23"><a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a>
+</span><span id="__span-0-24"><a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a>    <span class="c1"># Build tridiagonal matrices A and B for Crank-Nicolson</span>
+</span><span id="__span-0-25"><a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a>    <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.25</span> <span class="o">*</span> <span class="n">dt</span> <span class="o">*</span> <span class="p">(</span><span class="n">sigma</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">M</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="n">r</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">M</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
+</span><span id="__span-0-26"><a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a>    <span class="n">beta</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.5</span> <span class="o">*</span> <span class="n">dt</span> <span class="o">*</span> <span class="p">(</span><span class="n">sigma</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">M</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="n">r</span><span class="p">)</span>
+</span><span id="__span-0-27"><a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a>    <span class="n">gamma</span> <span class="o">=</span> <span class="mf">0.25</span> <span class="o">*</span> <span class="n">dt</span> <span class="o">*</span> <span class="p">(</span><span class="n">sigma</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">M</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="n">r</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">M</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
+</span><span id="__span-0-28"><a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a>
+</span><span id="__span-0-29"><a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a>    <span class="c1"># March backward in time</span>
+</span><span id="__span-0-30"><a id="__codelineno-0-30" name="__codelineno-0-30" href="#__codelineno-0-30"></a>    <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+</span><span id="__span-0-31"><a id="__codelineno-0-31" name="__codelineno-0-31" href="#__codelineno-0-31"></a>        <span class="c1"># Solve A * V_new = B * V_old (tridiagonal system)</span>
+</span><span id="__span-0-32"><a id="__codelineno-0-32" name="__codelineno-0-32" href="#__codelineno-0-32"></a>        <span class="n">V_new</span> <span class="o">=</span> <span class="n">solve_tridiagonal_system</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">V</span><span class="p">)</span>
+</span><span id="__span-0-33"><a id="__codelineno-0-33" name="__codelineno-0-33" href="#__codelineno-0-33"></a>
+</span><span id="__span-0-34"><a id="__codelineno-0-34" name="__codelineno-0-34" href="#__codelineno-0-34"></a>        <span class="c1"># Apply early exercise constraint (American option)</span>
+</span><span id="__span-0-35"><a id="__codelineno-0-35" name="__codelineno-0-35" href="#__codelineno-0-35"></a>        <span class="k">if</span> <span class="n">option_type</span> <span class="o">==</span> <span class="s1">&#39;put&#39;</span><span class="p">:</span>
+</span><span id="__span-0-36"><a id="__codelineno-0-36" name="__codelineno-0-36" href="#__codelineno-0-36"></a>            <span class="n">V_intrinsic</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">K</span> <span class="o">-</span> <span class="n">S_grid</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+</span><span id="__span-0-37"><a id="__codelineno-0-37" name="__codelineno-0-37" href="#__codelineno-0-37"></a>        <span class="k">else</span><span class="p">:</span>
+</span><span id="__span-0-38"><a id="__codelineno-0-38" name="__codelineno-0-38" href="#__codelineno-0-38"></a>            <span class="n">V_intrinsic</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">S_grid</span> <span class="o">-</span> <span class="n">K</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+</span><span id="__span-0-39"><a id="__codelineno-0-39" name="__codelineno-0-39" href="#__codelineno-0-39"></a>
+</span><span id="__span-0-40"><a id="__codelineno-0-40" name="__codelineno-0-40" href="#__codelineno-0-40"></a>        <span class="n">V</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">V_new</span><span class="p">,</span> <span class="n">V_intrinsic</span><span class="p">)</span>  <span class="c1"># Choose max of hold vs exercise</span>
+</span><span id="__span-0-41"><a id="__codelineno-0-41" name="__codelineno-0-41" href="#__codelineno-0-41"></a>
+</span><span id="__span-0-42"><a id="__codelineno-0-42" name="__codelineno-0-42" href="#__codelineno-0-42"></a>    <span class="k">return</span> <span class="n">V</span>  <span class="c1"># Option value at t=0 for all stock prices</span>
+</span></code></pre></div>
+<hr />
+<h3 id="implementing-the-early-exercise-constraint"><strong>Implementing the Early Exercise Constraint</strong></h3>
+<p>The crucial step in the FDM algorithm for American options is the enforcement of the early exercise constraint <strong>at every single time step</strong>. After the Crank–Nicolson scheme is solved (which yields the value assuming the option is held), the solution must be immediately checked against the intrinsic value:</p>
+<div class="arithmatex">\[V_i^{n} = \max\left(V_{\text{hold}, i}^{n}, V_{\text{intrinsic}}(S_i, t_n)\right)\]</div>
+<p>where <span class="arithmatex">\(V_{\text{hold}}\)</span> is the value computed by the PDE discretization. This selection ensures that the calculated price <span class="arithmatex">\(V\)</span> is always the maximum of the continuation value (holding) and the exercise value (intrinsic).</p>
+<p>This constant application of the <span class="arithmatex">\(\max\)</span> function dynamically captures the optimal exercise strategy and correctly tracks the location of the <strong>free boundary</strong> <span class="arithmatex">\(S^*(t)\)</span> as the solution propagates backward from expiry to the present.</p>
+<hr />
+<h3 id="financial-interpretation-of-the-solution"><strong>Financial Interpretation of the Solution</strong></h3>
+<p>The FDM simulation provides a complete picture of the option's value surface <span class="arithmatex">\(V(S,t)\)</span> over the entire domain of price and time.</p>
+<ul>
+<li><strong>Early Exercise Premium:</strong> The numerical American price will always be greater than or equal to the corresponding European price (<span class="arithmatex">\(V_{\text{American}} \ge V_{\text{European}}\)</span>) due to the added flexibility, with the difference representing the <strong>early exercise premium</strong>.</li>
+<li><strong>Exercise Frontier:</strong> Visualizing the boundary where <span class="arithmatex">\(V(S,t) = V_{\text{intrinsic}}(S,t)\)</span> reveals the <strong>optimal exercise strategy</strong>—the price at which a rational investor should exercise the option immediately. For American put options, this boundary is active when the stock price is low, signaling that the option should be exercised before discounting erodes the large intrinsic value.</li>
+</ul>
+<p>This numerical solution demonstrates how the combination of a continuous stochastic model (GBM), a deterministic parabolic PDE (BSM), and a discrete boundary constraint (FDM) provides a complete model for complex derivative valuation.</p>
+<hr />
+<h2 id="95-chapter-summary-bridge-to-chapter-10"><strong>9.5 Chapter Summary &amp; Bridge to Chapter 10</strong></h2>
+<p>Chapter 9 completed the derivation and computational solution of the <strong>Black–Scholes–Merton (BSM) equation</strong>, marking a synthesis of stochastic mathematics and deterministic partial differential equations (PDEs). The central achievement was transforming the inherent randomness of asset prices into a predictable valuation framework.</p>
+<pre class="mermaid"><code>flowchart TD
+    A[Stock Price: GBM Model&lt;br/&gt;dS = μS dt + σS dW] --&gt; B[Apply Itō's Lemma&lt;br/&gt;to Option Value V(S,t)]
+    B --&gt; C[Construct Delta-Hedged Portfolio&lt;br/&gt;Π = V - ΔS]
+    C --&gt; D[Compute Portfolio Change dΠ]
+    D --&gt; E{Cancel dW Terms&lt;br/&gt;via Δ = ∂V/∂S}
+    E --&gt; F[Deterministic Portfolio Drift&lt;br/&gt;No Randomness Remaining]
+    F --&gt; G[Apply No-Arbitrage Condition&lt;br/&gt;dΠ = rΠ dt]
+    G --&gt; H[Black-Scholes-Merton PDE&lt;br/&gt;∂V/∂t + ½σ²S²∂²V/∂S² + rS∂V/∂S - rV = 0]
+    H --&gt; I{Option Type?}
+    I --&gt;|European| J[Analytical Solution&lt;br/&gt;BSM Formula]
+    I --&gt;|American| K[Numerical Solution&lt;br/&gt;Crank-Nicolson FDM]
+    K --&gt; L[Free-Boundary Problem&lt;br/&gt;Early Exercise Constraint]
+
+    style H fill:#e1f5ff
+    style J fill:#d4edda
+    style K fill:#fff3cd</code></pre>
+<hr />
+<h3 id="the-unification-of-stochastic-and-deterministic-dynamics"><strong>The Unification of Stochastic and Deterministic Dynamics</strong></h3>
+<p>The BSM framework hinges on the dynamic interplay of several mathematical components:</p>
+<ul>
+<li><strong>Stochastic Foundation:</strong> The asset price dynamics, modeled as <strong>Geometric Brownian Motion</strong> (<span class="arithmatex">\(dS = \mu S dt + \sigma S dW_t\)</span>), required <strong>Itō's Lemma</strong> to correctly calculate the change in the option's value (<span class="arithmatex">\(dV\)</span>).</li>
+<li><strong>Risk Neutralization:</strong> By constructing a <strong>delta-hedged portfolio</strong> (<span class="arithmatex">\(\Pi = V - \frac{\partial V}{\partial S} S\)</span>), the random <span class="arithmatex">\(dW_t\)</span> term in the dynamics of <span class="arithmatex">\(\Pi\)</span> was perfectly <strong>canceled out</strong>.</li>
+<li><strong>Deterministic Law:</strong> The no-arbitrage condition forced the resulting riskless change (<span class="arithmatex">\(d\Pi\)</span>) to equal the risk-free return (<span class="arithmatex">\(r\Pi dt\)</span>), leading to the final BSM PDE:
+    $<span class="arithmatex">\(\frac{\partial V}{\partial t} + \frac{1}{2}\sigma^2 S^2 \frac{\partial^2 V}{\partial S^2} + r S \frac{\partial V}{\partial S} - r V = 0.\)</span>$</li>
+<li><strong>Physical Equivalence:</strong> This PDE is mathematically identical to the <strong>Heat (Diffusion) Equation</strong>, confirming that option pricing is fundamentally a problem of <strong>diffusion in price space</strong>, where <strong>volatility (<span class="arithmatex">\(\sigma\)</span>) acts as the thermal diffusivity</strong>.</li>
+</ul>
+<hr />
+<h3 id="solving-the-free-boundary-problem"><strong>Solving the Free Boundary Problem</strong></h3>
+<p>The BSM equivalence to the diffusion equation allowed the application of robust numerical solvers:</p>
+<ul>
+<li><strong>European Options</strong> were solvable via the analytical closed form, derived from the fundamental solution (the heat kernel).</li>
+<li><strong>American Options</strong> presented a complex <strong>free-boundary problem</strong> due to the optimal early exercise constraint. This was handled numerically by solving the BSM PDE backward in time using the stable <strong>Crank–Nicolson FDM scheme</strong>, while enforcing the inequality constraint: <span class="arithmatex">\(V(S, t) = \max\big(V_{\text{hold}}(S, t), V_{\text{intrinsic}}(S, t)\big)\)</span> at every time step.</li>
+</ul>
+<p>This numerical technique for the American option is analogous to tracking a <strong>moving phase boundary</strong> (e.g., a melting front) in physical diffusion problems.</p>
+<hr />
+<h3 id="bridge-to-chapter-10-from-financial-diffusion-to-neural-dynamics"><strong>Bridge to Chapter 10: From Financial Diffusion to Neural Dynamics</strong></h3>
+<p>The preceding chapters demonstrated that systems governed by <strong>diffusion</strong> and <strong>non-linear feedback</strong> can be found across different disciplines.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Domain</th>
+<th style="text-align: left;">Dynamic Variable</th>
+<th style="text-align: left;">Governing Process</th>
+<th style="text-align: left;">Key Mathematical Form</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Finance</strong></td>
+<td style="text-align: left;">Option Price (<span class="arithmatex">\(V\)</span>)</td>
+<td style="text-align: left;">Diffusion under Volatility</td>
+<td style="text-align: left;">BSM PDE</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Neuroscience</strong></td>
+<td style="text-align: left;">Membrane Voltage (<span class="arithmatex">\(V_m\)</span>)</td>
+<td style="text-align: left;">Reaction–Diffusion of Ions</td>
+<td style="text-align: left;">Coupled Nonlinear ODEs</td>
+</tr>
+</tbody>
+</table>
+<p>In the financial model, <strong>information</strong> diffuses through the market as price fluctuations. In the upcoming <strong>Biological model</strong>, <strong>ions</strong> diffuse across a neural membrane, generating electrical impulses.</p>
+<p><strong>Chapter 10</strong> will introduce the <strong>Hodgkin–Huxley model</strong>, which describes how a neuron generates an <strong>action potential</strong> (a nerve impulse). This system shifts the computational focus back from <strong>PDEs</strong> to a highly nonlinear system of <strong>coupled Ordinary Differential Equations (ODEs)</strong>:</p>
+<div class="arithmatex">\[C_m \frac{dV_m}{dt} = -I_{\text{ion}} + I_{\text{stim}}\]</div>
+<p>The simulation challenge here is no longer diffusion across space but the intricate, non-linear time-evolution of <strong>voltage (<span class="arithmatex">\(V_m\)</span>)</strong> and <strong>gating variables (<span class="arithmatex">\(m, h, n\)</span>)</strong> that control ion channels, requiring specialized numerical integration techniques for stiff ODEs. The continuous narrative remains: local interactions (ion current) lead to emergent global phenomena (neural signal).</p>
+<p>These techniques will continue to serve as mathematical foundations for understanding <strong>complex, high-dimensional stochastic systems</strong> encountered in the subsequent chapters.</p>
+<hr />
+<h2 id="references"><strong>References</strong></h2>
+<ol>
+<li>
+<p><strong>Black, F., &amp; Scholes, M. (1973).</strong> "The Pricing of Options and Corporate Liabilities." <em>Journal of Political Economy</em>, 81(3), 637–654. — The original groundbreaking paper deriving the BSM formula.</p>
+</li>
+<li>
+<p><strong>Merton, R. C. (1973).</strong> "Theory of Rational Option Pricing." <em>Bell Journal of Economics and Management Science</em>, 4(1), 141–183. — Extends Black-Scholes framework with rigorous no-arbitrage theory.</p>
+</li>
+<li>
+<p><strong>Hull, J. C. (2022).</strong> <em>Options, Futures, and Other Derivatives</em> (11<sup>th</sup> ed.). Pearson. — Comprehensive textbook covering option pricing theory and numerical methods.</p>
+</li>
+<li>
+<p><strong>Wilmott, P. (2006).</strong> <em>Paul Wilmott on Quantitative Finance</em> (2<sup>nd</sup> ed.). Wiley. — Detailed treatment of BSM derivation, Greeks, and numerical PDE methods for option pricing.</p>
+</li>
+<li>
+<p><strong>Crank, J., &amp; Nicolson, P. (1947).</strong> "A Practical Method for Numerical Evaluation of Solutions of Partial Differential Equations of the Heat-Conduction Type." <em>Proceedings of the Cambridge Philosophical Society</em>, 43(1), 50–67. — Original paper on the Crank-Nicolson implicit scheme.</p>
+</li>
+<li>
+<p><strong>Brennan, M. J., &amp; Schwartz, E. S. (1977).</strong> "The Valuation of American Put Options." <em>Journal of Finance</em>, 32(2), 449–462. — Early work on numerical methods for American option pricing with free-boundary problems.</p>
+</li>
+<li>
+<p><strong>Shreve, S. E. (2004).</strong> <em>Stochastic Calculus for Finance II: Continuous-Time Models</em>. Springer. — Rigorous treatment of martingale pricing theory and BSM derivation using risk-neutral valuation.</p>
+</li>
+<li>
+<p><strong>Tavella, D., &amp; Randall, C. (2000).</strong> <em>Pricing Financial Instruments: The Finite Difference Method</em>. Wiley. — Practical guide to implementing FDM for option pricing, including American options.</p>
+</li>
+<li>
+<p><strong>Duffy, D. J. (2013).</strong> <em>Finite Difference Methods in Financial Engineering: A Partial Differential Equation Approach</em>. Wiley. — Comprehensive coverage of numerical PDE techniques for computational finance.</p>
+</li>
+<li>
+<p><strong>Glasserman, P. (2003).</strong> <em>Monte Carlo Methods in Financial Engineering</em>. Springer. — Comparison of PDE vs Monte Carlo approaches for option pricing; highlights when each method excels.</p>
+</li>
+</ol>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../../chapter-8/Chapter-8-Essay/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Chapter-8 The Stochastic Calculus (SDEs)">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Chapter-8 The Stochastic Calculus (SDEs)
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../../chapter-10/Chapter-10-Essay/" class="md-footer__link md-footer__link--next" aria-label="Next: Chapter-10 Neuroscience (Hodgkin-Huxley)">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Chapter-10 Neuroscience (Hodgkin-Huxley)
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://bigbookofcomputing.github.io" target="_blank" rel="noopener" title="bigbookofcomputing.github.io" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://x.com/bigbookofcomputing" target="_blank" rel="noopener" title="x.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M459.4 151.7c.3 4.5.3 9.1.3 13.6 0 138.7-105.6 298.6-298.6 298.6-59.5 0-114.7-17.2-161.1-47.1 8.4 1 16.6 1.3 25.3 1.3 49.1 0 94.2-16.6 130.3-44.8-46.1-1-84.8-31.2-98.1-72.8 6.5 1 13 1.6 19.8 1.6 9.4 0 18.8-1.3 27.6-3.6-48.1-9.7-84.1-52-84.1-103v-1.3c14 7.8 30.2 12.7 47.4 13.3-28.3-18.8-46.8-51-46.8-87.4 0-19.5 5.2-37.4 14.3-53C87.4 130.8 165 172.4 252.1 176.9c-1.6-7.8-2.6-15.9-2.6-24C249.5 95.1 296.3 48 354.4 48c30.2 0 57.5 12.7 76.7 33.1 23.7-4.5 46.5-13.3 66.6-25.3-7.8 24.4-24.4 44.8-46.1 57.8 21.1-2.3 41.6-8.1 60.4-16.2-14.3 20.8-32.2 39.3-52.6 54.3"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.facebook.com/bigbookofcomputing" target="_blank" rel="noopener" title="www.facebook.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M512 256C512 114.6 397.4 0 256 0S0 114.6 0 256c0 120 82.7 220.8 194.2 248.5V334.2h-52.8V256h52.8v-33.7c0-87.1 39.4-127.5 125-127.5 16.2 0 44.2 3.2 55.7 6.4V172c-6-.6-16.5-1-29.6-1-42 0-58.2 15.9-58.2 57.2V256h83.6l-14.4 78.2H287v175.9C413.8 494.8 512 386.9 512 256"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.linkedin.com/bigbookofcomputing" target="_blank" rel="noopener" title="www.linkedin.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3M135.4 416H69V202.2h66.5V416zM102.2 96a38.5 38.5 0 1 1 0 77 38.5 38.5 0 1 1 0-77m282.1 320h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.youtube.com/@big-book-of-computing" target="_blank" rel="noopener" title="www.youtube.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M549.7 124.1c-6.2-23.7-24.8-42.3-48.3-48.6C458.9 64 288.1 64 288.1 64S117.3 64 74.7 75.5c-23.5 6.3-42 24.9-48.3 48.6C15 167 15 256.4 15 256.4s0 89.4 11.4 132.3c6.3 23.6 24.8 41.5 48.3 47.8C117.3 448 288.1 448 288.1 448s170.8 0 213.4-11.5c23.5-6.3 42-24.2 48.3-47.8 11.4-42.9 11.4-132.3 11.4-132.3s0-89.4-11.4-132.3zM232.2 337.6V175.2l142.7 81.2z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+      <div class="md-consent" data-md-component="consent" id="__consent" hidden>
+        <div class="md-consent__overlay"></div>
+        <aside class="md-consent__inner">
+          <form class="md-consent__form md-grid md-typeset" name="consent">
+            
+
+
+  
+
+
+<h4>Cookie consent</h4>
+<p>We use cookies to recognize your repeated visits and preferences, as well as to measure the effectiveness of our documentation and whether users find what they're searching for. With your consent, you're helping us to make our documentation better.</p>
+<input class="md-toggle" type="checkbox" id="__settings" >
+<div class="md-consent__settings">
+  <ul class="task-list">
+    
+    
+      
+        
+  
+  
+    
+    
+  
+  <li class="task-list-item">
+    <label class="task-list-control">
+      <input type="checkbox" name="analytics" checked>
+      <span class="task-list-indicator"></span>
+      Google Analytics
+    </label>
+  </li>
+
+      
+    
+    
+      
+        
+  
+  
+    
+    
+  
+  <li class="task-list-item">
+    <label class="task-list-control">
+      <input type="checkbox" name="github" checked>
+      <span class="task-list-indicator"></span>
+      GitHub
+    </label>
+  </li>
+
+      
+    
+    
+  </ul>
+</div>
+<div class="md-consent__controls">
+  
+    
+      <button class="md-button md-button--primary">Accept</button>
+    
+    
+    
+  
+    
+    
+    
+      <label class="md-button" for="__settings">Manage settings</label>
+    
+  
+</div>
+          </form>
+        </aside>
+      </div>
+      <script>var consent=__md_get("__consent");if(consent)for(var input of document.forms.consent.elements)input.name&&(input.checked=consent[input.name]||!1);else"file:"!==location.protocol&&setTimeout((function(){document.querySelector("[data-md-component=consent]").hidden=!1}),250);var form=document.forms.consent;for(var action of["submit","reset"])form.addEventListener(action,(function(e){if(e.preventDefault(),"reset"===e.type)for(var n of document.forms.consent.elements)n.name&&(n.checked=!1);__md_set("__consent",Object.fromEntries(Array.from(new FormData(form).keys()).map((function(e){return[e,!0]})))),location.hash="",location.reload()}))</script>
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["announce.dismiss", "content.action.edit", "content.action.view", "content.code.annotate", "content.code.copy", "content.tooltips", "navigation.footer", "navigation.indexes", "navigation.sections", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../../static/mathjax-config.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.0/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>
