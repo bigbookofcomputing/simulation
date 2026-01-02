@@ -1,0 +1,244 @@
+site_name: Big Book of Computing | Simulation
+site_description: A comprehensive guide to the foundations of stochastic simulation
+site_author: Big Book of Computing
+site_url: https://bigbookofcomputing.github.io
+site_language: en
+
+repo_url: https://github.com/bigbookofcomputing/simulation
+
+extra_javascript:
+  - static/mathjax-config.js
+  - https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.0/es5/tex-mml-chtml.js
+
+extra_css:
+  - https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css
+  - static/styles.css
+
+
+
+
+markdown_extensions:
+  - abbr
+  - attr_list
+  - def_list
+  - footnotes
+  - admonition
+  - pymdownx.arithmatex:
+      generic: true
+  - pymdownx.betterem:
+      smart_enable: all
+  - pymdownx.caret
+  - pymdownx.details
+  - pymdownx.emoji:
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.keys
+  - pymdownx.magiclink:
+      normalize_issue_symbols: true
+      repo_url_shorthand: true
+      user: squidfunk
+      repo: mkdocs-material
+  - pymdownx.mark
+  - pymdownx.smartsymbols
+  - pymdownx.snippets:
+      auto_append:
+        - includes/mkdocs.md
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
+      combine_header_slug: true
+      slugify: !!python/object/apply:pymdownx.slugs.slugify
+        kwds:
+          case: lower
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - codehilite:
+      linenums: false
+      guess_lang: false
+      use_pygments: true
+      noclasses: true
+      pygments_style: manni
+
+  
+
+  
+theme:
+  name: 'material'
+  #custom_dir: overrides
+  highlightjs: true
+  hljs_languages: [python]
+  include_homepage_in_sidebar: true
+  prev_next_buttons_location: bottom
+  navigation_depth: 4
+  titles_only: false
+  sticky_navigation: true
+  collapse_navigation: true
+  logo: assets/logo.png
+  favicon: assets/logo.png
+  features:
+    - announce.dismiss
+    - content.action.edit
+    - content.action.view
+    - content.code.annotate
+    - content.code.copy
+    # - content.code.select
+    # - content.footnote.tooltips
+    # - content.tabs.link
+    - content.tooltips
+    # - header.autohide
+    # - navigation.expand
+    - navigation.footer
+    - navigation.indexes
+    # - navigation.instant
+    # - navigation.instant.prefetch
+    # - navigation.instant.progress
+    # - navigation.prune
+    - navigation.sections
+    - navigation.tabs
+    # - navigation.tabs.sticky
+    - navigation.top
+    - navigation.tracking
+    - search.highlight
+    - search.share
+    - search.suggest
+    - toc.follow
+    # - toc.integrate
+  palette:
+    - media: "(prefers-color-scheme)"
+      toggle:
+        icon: material/link
+        name: Switch to light mode
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/toggle-switch
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: black
+      accent: indigo
+      toggle:
+        icon: material/toggle-switch-off
+        name: Switch to system preference
+  font:
+    text: Roboto
+    code: Roboto Mono
+# Plugins
+  plugins:
+    - blog
+    - search:
+        separator: '[\s\u200b\-_,:!=\[\]()"`/]+|\.(?!\d)|&[lg]t;|(?!\b)(?=[A-Z][a-z])'
+    - minify:
+        minify_html: true
+  
+
+
+
+extra:
+  analytics:
+    provider: google
+    property: G-ECS7B3X8JM
+  feedback:
+    title: Was this page helpful?
+    ratings:
+      - icon: material/emoticon-happy-outline
+        name: This page was helpful
+        data: 1
+        note: >-
+          Thanks for your feedback!
+      - icon: material/emoticon-sad-outline
+        name: This page could be improved
+        data: 0
+        note: >- 
+          Thanks for your feedback! Help us improve this page by
+          using our <a href="..." target="_blank" rel="noopener">feedback form</a>.
+  consent:
+    title: Cookie consent
+    description: >- 
+      We use cookies to recognize your repeated visits and preferences, as well
+      as to measure the effectiveness of our documentation and whether users
+      find what they're searching for. With your consent, you're helping us to
+      make our documentation better.
+  social:
+    - icon: fontawesome/brands/github
+      link: https://bigbookofcomputing.github.io
+    - icon: fontawesome/brands/twitter
+      link: https://x.com/bigbookofcomputing
+    - icon: fontawesome/brands/facebook
+      link: https://www.facebook.com/bigbookofcomputing
+    - icon: fontawesome/brands/linkedin
+      link: https://www.linkedin.com/bigbookofcomputing
+    - icon: fontawesome/brands/youtube
+      link: https://www.youtube.com/@big-book-of-computing
+
+
+
+nav:
+- Home: index.md
+- Contents: chapters/contents.md
+- Introduction: chapters/introduction.md
+
+
+- Chapters:
+  - Chapter-1 Foundations of Stochastic Simulation: chapters/chapter-1/Chapter-1-Essay.md
+  - Chapter-2 The Ising Model: chapters/chapter-2/Chapter-2-Essay.md
+  - Chapter-3 Lattice Gauge Theory: chapters/chapter-3/Chapter-3-Essay.md
+  - Chapter-4 Monte Carlo Option Pricing: chapters/chapter-4/Chapter-4-Essay.md
+  - Chapter-5 Stochastic Systems Biology: chapters/chapter-5/Chapter-5-Essay.md
+  - Chapter-6 Advanced Monte Carlo Methods: chapters/chapter-6/Chapter-6-Essay.md
+  - Chapter-7 Molecular Dynamics (MD): chapters/chapter-7/Chapter-7-Essay.md
+  - Chapter-8 The Stochastic Calculus (SDEs): chapters/chapter-8/Chapter-8-Essay.md
+  - Chapter-9 Black-Scholes-Merton (BSM): chapters/chapter-9/Chapter-9-Essay.md
+  - Chapter-10 Neuroscience (Hodgkin-Huxley): chapters/chapter-10/Chapter-10-Essay.md
+  - Chapter-11 Agent-Based & Network Models: chapters/chapter-11/Chapter-11-Essay.md
+  - Chapter-12 Collective Behavior & Pattern Formation: chapters/chapter-12/Chapter-12-Essay.md
+  - Chapter-13 Collective Behavior & Pattern Formation: chapters/chapter-13/Chapter-13-Essay.md
+  - Chapter-14 Computational Neuroscience: chapters/chapter-14/Chapter-14-Essay.md
+  - Chapter-15 Graph and Network Models: chapters/chapter-15/Chapter-15-Essay.md
+  
+
+- WorkBooks:
+  - Chapter-1 Foundations of Stochastic Simulation: chapters/chapter-1/Chapter-1-WorkBook.md
+  - Chapter-2 The Ising Model: chapters/chapter-2/Chapter-2-WorkBook.md
+  - Chapter-3 Lattice Gauge Theory: chapters/chapter-3/Chapter-3-WorkBook.md
+  - Chapter-4 Monte Carlo Option Pricing: chapters/chapter-4/Chapter-4-WorkBook.md
+  - Chapter-5 Stochastic Systems Biology: chapters/chapter-5/Chapter-5-WorkBook.md
+  - Chapter-6 Advanced Monte Carlo Methods: chapters/chapter-6/Chapter-6-WorkBook.md
+  - Chapter-7 Molecular Dynamics (MD): chapters/chapter-7/Chapter-7-WorkBook.md
+  - Chapter-8 The Stochastic Calculus (SDEs): chapters/chapter-8/Chapter-8-WorkBook.md
+  - Chapter-9 Black-Scholes-Merton (BSM): chapters/chapter-9/Chapter-9-WorkBook.md
+  - Chapter-10 Neuroscience (Hodgkin-Huxley): chapters/chapter-10/Chapter-10-WorkBook.md
+  - Chapter-11 Agent-Based & Network Models: chapters/chapter-11/Chapter-11-WorkBook    
+  - Chapter-12 Collective Behavior & Pattern Formation: chapters/chapter-12/Chapter-12-WorkBook.md
+  - Chapter-13 Collective Behavior & Pattern Formation: chapters/chapter-13/Chapter-13-WorkBook.md
+  - Chapter-14 Computational Neuroscience: chapters/chapter-14/Chapter-14-WorkBook.md
+  - Chapter-15 Graph and Network Models: chapters/chapter-15/Chapter-15-WorkBook.md
+
+- CodeBooks:
+  - Chapter-1 Foundations of Stochastic Simulation: chapters/chapter-1/Chapter-1-CodeBook.md
+  - Chapter-2 The Ising Model: chapters/chapter-2/Chapter-2-CodeBook.md
+  - Chapter-3 Lattice Gauge Theory: chapters/chapter-3/Chapter-3-CodeBook.md
+  - Chapter-4 Monte Carlo Option Pricing: chapters/chapter-4/Chapter-4-CodeBook.md
+  - Chapter-5 Stochastic Systems Biology: chapters/chapter-5/Chapter-5-CodeBook.md
+  - Chapter-6 Advanced Monte Carlo Methods: chapters/chapter-6/Chapter-6-CodeBook.md 
+  - Chapter-7 Molecular Dynamics (MD): chapters/chapter-7/Chapter-7-CodeBook.md
+  - Chapter-8 The Stochastic Calculus (SDEs): chapters/chapter-8/Chapter-8-CodeBook.md
+  - Chapter-9 Black-Scholes-Merton (BSM): chapters/chapter-9/Chapter-9-CodeBook.md
+  - Chapter-10 Neuroscience (Hodgkin-Huxley): chapters/chapter-10/Chapter-10-CodeBook.md
+  - Chapter-11 Agent-Based & Network Models: chapters/chapter-11/Chapter-11-CodeBook.md
+  - Chapter-12 Collective Behavior & Pattern Formation: chapters/chapter-12/Chapter-12-CodeBook.md
+  - Chapter-13 Collective Behavior & Pattern Formation: chapters/chapter-13/Chapter-13-CodeBook.md
+  - Chapter-14 Computational Neuroscience: chapters/chapter-14/Chapter-14-CodeBook.md
+  - Chapter-15 Graph and Network Models: chapters/chapter-15/Chapter-15-CodeBook.md 
+
